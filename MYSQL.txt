@@ -1,0 +1,7 @@
+Servername: stevie.heliohost.org
+Port: 3306
+Databasename: 
+User: yukito
+Pass: 123456
+PHPMyAdmin: http://stevie.heliohost.org:2082/cpsess7400858270/3rdparty/phpMyAdmin/index.php
+Lưu ý: database không có kiểu nchar và nvarchar, sài char hoặc varchar nhưng nhớ set Character set: utf8 và Collation: utf8_vietnamese_ci là được
