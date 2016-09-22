@@ -18,3 +18,4 @@ Lưu ý:
 1. Sau khi tạo table thì vào table Options để sửa:
 +++ Engie: InnoDB
 +++ Row Format: COMPACT
+dsadsad
