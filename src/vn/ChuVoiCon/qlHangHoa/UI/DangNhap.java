@@ -9,32 +9,42 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
+import vn.ChuVoiCon.qlHangHoa.BUS.NhanVienBUS;
+import vn.ChuVoiCon.qlHangHoa.DLL.NhanVien;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class DangNhap extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblngNhp;
 	private JLabel lblNewLabel;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtTaiKhoan;
+	private JPasswordField txtPassWord;
 	private JLabel lblMtKhu;
-	private JButton btnngNhp;
+	private JButton btnDangNhap;
 	private JLabel lblTime;
 
 	/**
 	 * Launch the application.
 	 */
+	NhanVienBUS nvb = new NhanVienBUS();
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					DangNhap frame = new DangNhap();
 					frame.setVisible(true);
+					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,10 +66,10 @@ public class DangNhap extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getLblngNhp());
 		contentPane.add(getLblNewLabel());
-		contentPane.add(getTextField());
-		contentPane.add(getPasswordField());
+		contentPane.add(getTxtTaiKhoan());
+		contentPane.add(getTxtPassWord());
 		contentPane.add(getLblMtKhu());
-		contentPane.add(getBtnngNhp());
+		contentPane.add(getBtnDangNhap());
 		contentPane.add(getLblTime());
 	}
 	private JLabel getLblngNhp() {
@@ -80,20 +90,20 @@ public class DangNhap extends JFrame {
 		}
 		return lblNewLabel;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setBounds(153, 80, 146, 20);
-			textField.setColumns(10);
+	private JTextField getTxtTaiKhoan() {
+		if (txtTaiKhoan == null) {
+			txtTaiKhoan = new JTextField();
+			txtTaiKhoan.setBounds(153, 80, 146, 20);
+			txtTaiKhoan.setColumns(10);
 		}
-		return textField;
+		return txtTaiKhoan;
 	}
-	private JPasswordField getPasswordField() {
-		if (passwordField == null) {
-			passwordField = new JPasswordField();
-			passwordField.setBounds(153, 129, 146, 20);
+	private JPasswordField getTxtPassWord() {
+		if (txtPassWord == null) {
+			txtPassWord = new JPasswordField();
+			txtPassWord.setBounds(153, 129, 146, 20);
 		}
-		return passwordField;
+		return txtPassWord;
 	}
 	private JLabel getLblMtKhu() {
 		if (lblMtKhu == null) {
@@ -103,18 +113,30 @@ public class DangNhap extends JFrame {
 		}
 		return lblMtKhu;
 	}
-	private JButton getBtnngNhp() {
-		if (btnngNhp == null) {
-			btnngNhp = new JButton("\u0110\u0103ng nh\u1EADp");
-			btnngNhp.addActionListener(new ActionListener() {
+	private JButton getBtnDangNhap() {
+		if (btnDangNhap == null) {
+			btnDangNhap = new JButton("\u0110\u0103ng nh\u1EADp");
+			btnDangNhap.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					String user = txtTaiKhoan.getText();
+					String pass = txtPassWord.getText();
 					
+					ArrayList<NhanVien> ds = nvb.getDSNV();
+					for (NhanVien nv : ds) {
+						txtTaiKhoan.setText(nv.getTen_nhan_vien());
+						txtPassWord.setText((nv.getLuong()+""));
+						user = nv.getLuong()+"";
+						break;
+						
+					}
+					
+					JOptionPane.showMessageDialog(null,pass);
 				}
 			});
-			btnngNhp.setFont(new Font("Cambria Math", Font.PLAIN, 15));
-			btnngNhp.setBounds(153, 176, 111, 23);
+			btnDangNhap.setFont(new Font("Cambria Math", Font.PLAIN, 15));
+			btnDangNhap.setBounds(153, 176, 111, 23);
 		}
-		return btnngNhp;
+		return btnDangNhap;
 	}
 	private JLabel getLblTime() {
 		if (lblTime == null) {

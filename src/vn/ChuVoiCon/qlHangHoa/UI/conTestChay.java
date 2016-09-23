@@ -1,6 +1,6 @@
 package vn.ChuVoiCon.qlHangHoa.UI;
 
-import vn.ChuVoiCon.qlHangHoa.Model.DemoConnect;
+import vn.ChuVoiCon.qlHangHoa.DAO.DemoConnect;
 
 public class conTestChay {
 

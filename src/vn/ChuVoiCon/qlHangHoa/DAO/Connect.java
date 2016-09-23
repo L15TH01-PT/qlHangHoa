@@ -1,4 +1,4 @@
-package vn.ChuVoiCon.qlHangHoa.Model;
+package vn.ChuVoiCon.qlHangHoa.DAO;
 
 import java.util.ResourceBundle;
 import java.sql.Connection;
@@ -37,11 +37,11 @@ public class Connect {
 		if(!getConnection().isClosed())
 			getConnection().close();
 	}
-
+// để s/d dc sql, phải get statement
 	protected Statement getStatement() throws SQLException {
 		return getConnection().createStatement();
 	}
-
+// get statement là 1 dạng lấy ra DL
 	protected Statement getStatement(int arg0, int arg1) throws SQLException {
 		return getConnection().createStatement(arg0, arg1);
 	}
@@ -52,7 +52,7 @@ public class Connect {
 		st.close();
 		return r;
 	}
-
+// thực truy vấn CSDL
 	protected ResultSet executeQuery(String sqlQuery) throws SQLException {
 		return getStatement().executeQuery(sqlQuery);
 	}
@@ -62,13 +62,14 @@ public class Connect {
 		return getStatement(arg0, arg1).executeQuery(sqlQuery);
 	}
 
+//	Trả về số dòng bị ảnh hưởng
 	protected int executeUpdate(String sqlQuery) throws SQLException {
 		Statement st = getStatement();
 		int r = st.executeUpdate(sqlQuery);
 		st.close();
 		return r;
 	}
-
+// khi truyền vào tham số 
 	protected PreparedStatement getPreparedStatement(String sqlQuery)
 			throws SQLException {
 		return con.prepareStatement(sqlQuery);

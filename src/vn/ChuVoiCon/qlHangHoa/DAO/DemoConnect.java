@@ -1,4 +1,4 @@
-package vn.ChuVoiCon.qlHangHoa.Model;
+package vn.ChuVoiCon.qlHangHoa.DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
