@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class Connect {
 	private static Connection con;
 
-	private void khoiTao() {
+	private static void khoiTao() {
 		String driver = ResourceBundle.getBundle("db").getString("driver");
 		String server = ResourceBundle.getBundle("db").getString("server");
 		String user = ResourceBundle.getBundle("db").getString("user");
@@ -27,7 +27,7 @@ public class Connect {
 
 	}
 
-	protected Connection getConnection() {
+	protected static Connection getConnection() {
 		if (con == null)
 			khoiTao();
 		return con;
