@@ -12,6 +12,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DangNhap extends JFrame {
 
@@ -22,6 +24,7 @@ public class DangNhap extends JFrame {
 	private JPasswordField passwordField;
 	private JLabel lblMtKhu;
 	private JButton btnngNhp;
+	private JLabel lblTime;
 
 	/**
 	 * Launch the application.
@@ -32,6 +35,7 @@ public class DangNhap extends JFrame {
 				try {
 					DangNhap frame = new DangNhap();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,6 +60,7 @@ public class DangNhap extends JFrame {
 		contentPane.add(getPasswordField());
 		contentPane.add(getLblMtKhu());
 		contentPane.add(getBtnngNhp());
+		contentPane.add(getLblTime());
 	}
 	private JLabel getLblngNhp() {
 		if (lblngNhp == null) {
@@ -101,9 +106,21 @@ public class DangNhap extends JFrame {
 	private JButton getBtnngNhp() {
 		if (btnngNhp == null) {
 			btnngNhp = new JButton("\u0110\u0103ng nh\u1EADp");
+			btnngNhp.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+				}
+			});
 			btnngNhp.setFont(new Font("Cambria Math", Font.PLAIN, 15));
 			btnngNhp.setBounds(153, 176, 111, 23);
 		}
 		return btnngNhp;
+	}
+	private JLabel getLblTime() {
+		if (lblTime == null) {
+			lblTime = new JLabel("New label");
+			lblTime.setBounds(378, 236, 46, 14);
+		}
+		return lblTime;
 	}
 }
