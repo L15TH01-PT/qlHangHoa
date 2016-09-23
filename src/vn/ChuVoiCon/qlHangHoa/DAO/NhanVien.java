@@ -1,9 +1,9 @@
-package vn.ChuVoiCon.qlHangHoa.Model;
+package vn.ChuVoiCon.qlHangHoa.DAO;
 
 public class NhanVien extends Connect {
 	
 	public void GetDSNhanVien(){
-		this.connectDB();
+		//this.connectDB();
 		
 	}
 }

@@ -1,4 +1,5 @@
-package vn.ChuVoiCon.qlHangHoa.Model;
+package vn.ChuVoiCon.qlHangHoa.DLL;
+
 
 public class chi_tiet_hoa_don {
 	private long ma_hoa_don;

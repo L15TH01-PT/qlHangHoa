@@ -1,4 +1,4 @@
-package vn.ChuVoiCon.qlHangHoa.Model;
+package vn.ChuVoiCon.qlHangHoa.DAO;
 
 public class modelTest {
 	private int  id;

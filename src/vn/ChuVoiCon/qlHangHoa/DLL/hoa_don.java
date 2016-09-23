@@ -1,14 +1,15 @@
-package vn.ChuVoiCon.qlHangHoa.Model;
+package vn.ChuVoiCon.qlHangHoa.DLL;
 
 import java.sql.Date;
 import java.util.ArrayList;
+
 
 public class hoa_don {
 	private long ma_hoa_don;
 	private Date ngay_lap;
 	private String ten_khach_hang;
 	private int id_nv;
-	private int ghi_chu;
+	private String ghi_chu;
 	private Date ngay_huy;
 	private ArrayList<chi_tiet_hoa_don> chi_tiet_hoa_dons;
 	
@@ -36,10 +37,10 @@ public class hoa_don {
 	public void setId_nv(int id_nv) {
 		this.id_nv = id_nv;
 	}
-	public int getGhi_chu() {
+	public String getGhi_chu() {
 		return ghi_chu;
 	}
-	public void setGhi_chu(int ghi_chu) {
+	public void setGhi_chu(String ghi_chu) {
 		this.ghi_chu = ghi_chu;
 	}
 	public Date getNgay_huy() {
