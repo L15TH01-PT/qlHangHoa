@@ -27,14 +27,15 @@ public class Connect {
 
 	}
 
-	protected Connection getConnection() {
+	protected Connection getConnection() throws SQLException {
 		if (con == null)
 			khoiTao();
 		return con;
 	}
 
 	protected void close() throws SQLException {
-		getConnection().close();
+		if(!getConnection().isClosed())
+			getConnection().close();
 	}
 
 	protected Statement getStatement() throws SQLException {
