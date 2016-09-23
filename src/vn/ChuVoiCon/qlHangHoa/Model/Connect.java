@@ -1,6 +1,7 @@
 package vn.ChuVoiCon.qlHangHoa.Model;
 
 import java.util.ResourceBundle;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -34,10 +35,11 @@ public class Connect {
 	}
 
 	protected void close() throws SQLException {
-		if(!getConnection().isClosed())
+		if (!getConnection().isClosed())
 			getConnection().close();
 	}
 
+	// Statement
 	protected Statement getStatement() throws SQLException {
 		return getConnection().createStatement();
 	}
@@ -69,6 +71,7 @@ public class Connect {
 		return r;
 	}
 
+	// PreparedStatement
 	protected PreparedStatement getPreparedStatement(String sqlQuery)
 			throws SQLException {
 		return con.prepareStatement(sqlQuery);
@@ -93,6 +96,29 @@ public class Connect {
 	protected int executeUpdate(PreparedStatement pstm) throws SQLException {
 		int r = pstm.executeUpdate();
 		pstm.close();
+		return r;
+	}
+
+	// CallableStatement
+	protected CallableStatement getCallableStatement(String procedure)
+			throws SQLException {
+		return getConnection().prepareCall("{ call " + procedure + " }");
+	}
+
+	protected boolean execute(CallableStatement cstm) throws SQLException {
+		boolean r = cstm.execute();
+		cstm.close();
+		return r;
+	}
+
+	protected ResultSet executeQuery(CallableStatement cstm)
+			throws SQLException {
+		return cstm.executeQuery();
+	}
+
+	protected int executeUpdate(CallableStatement cstm) throws SQLException {
+		int r = cstm.executeUpdate();
+		cstm.close();
 		return r;
 	}
 
