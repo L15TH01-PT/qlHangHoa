@@ -78,12 +78,12 @@ public class Connect {
 	// khi truyền vào tham số
 	protected PreparedStatement getPreparedStatement(String sqlQuery)
 			throws SQLException {
-		return con.prepareStatement(sqlQuery);
+		return getConnection().prepareStatement(sqlQuery);
 	}
 
 	protected PreparedStatement getPreparedStatement(String sqlQuery, int arg0,
 			int arg1) throws SQLException {
-		return con.prepareStatement(sqlQuery, arg0, arg1);
+		return getConnection().prepareStatement(sqlQuery, arg0, arg1);
 	}
 
 	protected boolean execute(PreparedStatement pstm) throws SQLException {

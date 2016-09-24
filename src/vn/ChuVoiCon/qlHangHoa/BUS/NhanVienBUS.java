@@ -16,7 +16,8 @@ public class NhanVienBUS extends Connect{
 		try {
 //			ResultSet rs = executeQuery("select * from nhan_vien where id ="+1);
 			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id = ?");
-			ps.setInt(1, 1);
+			int temp = 1;
+			ps.setInt(1, temp);
 			ResultSet rs = executeQuery(ps);
 			while (rs.next()) {
 				NhanVien nv = new NhanVien();
