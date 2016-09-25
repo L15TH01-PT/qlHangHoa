@@ -123,20 +123,32 @@ public class FormDangNhap extends JFrame {
 					
 					String user = txtUser.getText();
 					String pass=String.valueOf(txtPassWord.getPassword());					
-					ArrayList<NhanVien> ds = nvb.getDSNV();
-					for (NhanVien nv : ds) {
-						if (user.equals(nv.getMa_nhan_vien()) && pass.equals(nv.getMat_khau())) {
-							FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText());
-							fmNhanVien.setVisible(true);
-							setVisible(false);					
-						}else{
-							JOptionPane.showMessageDialog(null, "Thông tin không đúng, vui lòng kiểm tra lại");
-							txtPassWord.setText("");
-							txtUser.setText("");
+//					ArrayList<NhanVien> ds = nvb.getDSNV();
+					NhanVien nv = nvb.getNV(user);
+//					for (NhanVien nv : ds) {
+//						if (user.equals(nv.getMa_nhan_vien()) && pass.equals(nv.getMat_khau())) {
+//							FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText());
+//							fmNhanVien.setVisible(true);
+//							setVisible(false);					
+//						}else{
+////							JOptionPane.showMessageDialog(null, "Thông tin không đúng, vui lòng kiểm tra lại");
+//							txtPassWord.setText("");
+//							txtUser.setText("");
+//							JOptionPane.showMessageDialog(null, user);
+//							JOptionPane.showMessageDialog(null, pass);
+//						}
+//						break;					
+//					}
+					if (user.equals(nv.getMa_nhan_vien()) && pass.equals(nv.getMat_khau())) {
+						FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText());
+						fmNhanVien.setVisible(true);
+						setVisible(false);
+					}else{
+						JOptionPane.showMessageDialog(null, "Thông tin không đúng, vui lòng kiểm tra lại");
+						txtPassWord.setText("");
+						txtUser.setText("");
 						}
-						break;					
-					}									
-				}
+					}
 			});
 			btnDangNhap.setFont(new Font("Cambria Math", Font.PLAIN, 15));
 			btnDangNhap.setBounds(73, 177, 111, 23);
