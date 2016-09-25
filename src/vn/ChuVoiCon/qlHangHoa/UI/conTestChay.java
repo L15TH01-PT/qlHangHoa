@@ -20,7 +20,7 @@ public class conTestChay {
 		// con.add(t);
 		// System.out.println(t.getId()+":"+t.getText());
 
-//		hoa_donBUS xl = new hoa_donBUS();
+		// hoa_donBUS xl = new hoa_donBUS();
 		// for (hoa_don item : xl.getDS(1)) {
 		// System.out.println(item.getMa_hoa_don() + ":"
 		// + item.getNgay_lap().toString());
