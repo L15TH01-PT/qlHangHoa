@@ -15,9 +15,8 @@ public class NhanVienBUS extends Connect{
 		ArrayList<NhanVien> arrNhanVien= new ArrayList<NhanVien>();
 		try {
 //			ResultSet rs = executeQuery("select * from nhan_vien where id ="+1);
-			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id = ?");
-			int temp = 1;
-			ps.setInt(1, temp);
+			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id =?");
+			ps.setInt(1, 1);
 			ResultSet rs = executeQuery(ps);
 			while (rs.next()) {
 				NhanVien nv = new NhanVien();
@@ -25,9 +24,8 @@ public class NhanVienBUS extends Connect{
 				nv.setLuong(rs.getInt("luong"));
 				nv.setMat_khau(rs.getString("mat_khau"));
 				arrNhanVien.add(nv);
+				
 			}
-			rs.close();
-			ps.close();
 			return arrNhanVien;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
