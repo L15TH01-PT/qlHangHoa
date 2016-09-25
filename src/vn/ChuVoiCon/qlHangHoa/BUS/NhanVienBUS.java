@@ -21,7 +21,7 @@ public class NhanVienBUS extends Connect{
 			ResultSet rs = executeQuery(ps);
 			while (rs.next()) {
 				NhanVien nv = new NhanVien();
-				nv.setTen_nhan_vien(rs.getString("ten_nhan_vien"));
+				nv.setMa_nhan_vien(rs.getString("ma_nhan_vien"));
 				nv.setLuong(rs.getInt("luong"));
 				nv.setMat_khau(rs.getString("mat_khau"));
 				arrNhanVien.add(nv);

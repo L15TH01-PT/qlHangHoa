@@ -1,6 +1,5 @@
 package vn.ChuVoiCon.qlHangHoa.UI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -23,12 +22,13 @@ import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class DangNhap extends JFrame {
+
+public class FormDangNhap extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblngNhp;
 	private JLabel lblNewLabel;
-	private JTextField txtTaiKhoan;
+	private JTextField txtUser;
 	private JPasswordField txtPassWord;
 	private JLabel lblMtKhu;
 	private JButton btnDangNhap;
@@ -38,14 +38,13 @@ public class DangNhap extends JFrame {
 	 * Launch the application.
 	 */
 	NhanVienBUS nvb = new NhanVienBUS();
+	private JButton btnThoat;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DangNhap frame = new DangNhap();
-					frame.setVisible(true);
-					
-					
+					FormDangNhap frame = new FormDangNhap();
+					frame.setVisible(true);				
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,7 +55,7 @@ public class DangNhap extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DangNhap() {
+	public FormDangNhap() {
 		setTitle("\u0110\u0103ng Nh\u1EADp");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -66,11 +65,13 @@ public class DangNhap extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getLblngNhp());
 		contentPane.add(getLblNewLabel());
-		contentPane.add(getTxtTaiKhoan());
+		contentPane.add(getTxtUser());
 		contentPane.add(getTxtPassWord());
 		contentPane.add(getLblMtKhu());
 		contentPane.add(getBtnDangNhap());
 		contentPane.add(getLblTime());
+		contentPane.add(getBtnThoat());
+		
 	}
 	private JLabel getLblngNhp() {
 		if (lblngNhp == null) {
@@ -90,13 +91,13 @@ public class DangNhap extends JFrame {
 		}
 		return lblNewLabel;
 	}
-	private JTextField getTxtTaiKhoan() {
-		if (txtTaiKhoan == null) {
-			txtTaiKhoan = new JTextField();
-			txtTaiKhoan.setBounds(153, 80, 146, 20);
-			txtTaiKhoan.setColumns(10);
+	private JTextField getTxtUser() {
+		if (txtUser == null) {
+			txtUser = new JTextField();
+			txtUser.setBounds(153, 80, 146, 20);
+			txtUser.setColumns(10);
 		}
-		return txtTaiKhoan;
+		return txtUser;
 	}
 	private JPasswordField getTxtPassWord() {
 		if (txtPassWord == null) {
@@ -113,28 +114,32 @@ public class DangNhap extends JFrame {
 		}
 		return lblMtKhu;
 	}
+	
 	private JButton getBtnDangNhap() {
 		if (btnDangNhap == null) {
 			btnDangNhap = new JButton("\u0110\u0103ng nh\u1EADp");
 			btnDangNhap.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					String user = txtTaiKhoan.getText();
-					String pass = txtPassWord.getText();
 					
+					String user = txtUser.getText();
+					String pass=String.valueOf(txtPassWord.getPassword());					
 					ArrayList<NhanVien> ds = nvb.getDSNV();
 					for (NhanVien nv : ds) {
-						txtTaiKhoan.setText(nv.getTen_nhan_vien());
-						txtPassWord.setText((nv.getLuong()+""));
-						user = nv.getLuong()+"";
-						break;
-						
-					}
-					
-					JOptionPane.showMessageDialog(null,pass);
+						if (user.equals(nv.getMa_nhan_vien()) && pass.equals(nv.getMat_khau())) {
+							FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText());
+							fmNhanVien.setVisible(true);
+							setVisible(false);					
+						}else{
+							JOptionPane.showMessageDialog(null, "Thông tin không đúng, vui lòng kiểm tra lại");
+							txtPassWord.setText("");
+							txtUser.setText("");
+						}
+						break;					
+					}									
 				}
 			});
 			btnDangNhap.setFont(new Font("Cambria Math", Font.PLAIN, 15));
-			btnDangNhap.setBounds(153, 176, 111, 23);
+			btnDangNhap.setBounds(73, 177, 111, 23);
 		}
 		return btnDangNhap;
 	}
@@ -144,5 +149,19 @@ public class DangNhap extends JFrame {
 			lblTime.setBounds(378, 236, 46, 14);
 		}
 		return lblTime;
+	}
+	private JButton getBtnThoat() {
+		if (btnThoat == null) {
+			btnThoat = new JButton("Thoát");
+			btnThoat.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					setVisible(false); //you can't see me!
+					dispose(); //Destroy the JFrame object
+				}
+			});
+			btnThoat.setFont(new Font("Cambria Math", Font.PLAIN, 15));
+			btnThoat.setBounds(208, 177, 111, 23);
+		}
+		return btnThoat;
 	}
 }
