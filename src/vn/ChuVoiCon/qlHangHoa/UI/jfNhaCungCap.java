@@ -20,15 +20,15 @@ public class jfNhaCungCap extends JFrame {
 	private JLabel lblNgiLinH;
 	private JLabel lblSinThoi;
 	private JLabel lblaCh;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JList list;
+	private JTextField txtMaNCC;
+	private JTextField txtTenNCC;
+	private JTextField txtNguoiLienHe;
+	private JTextField txtSoDT;
+	private JTextField txtDiaChi;
+	private JButton btnThem;
+	private JButton btnXoa;
+	private JButton btnSua;
+	private JList listNCC;
 
 	/**
 	 * Launch the application.
@@ -52,7 +52,7 @@ public class jfNhaCungCap extends JFrame {
 	public jfNhaCungCap() {
 		setTitle("Nh\u1EADp Li\u1EC7u Nh\u00E0 Cung C\u1EA5p");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 538, 300);
+		setBounds(100, 100, 605, 379);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,15 +62,15 @@ public class jfNhaCungCap extends JFrame {
 		contentPane.add(getLblNgiLinH());
 		contentPane.add(getLblSinThoi());
 		contentPane.add(getLblaCh());
-		contentPane.add(getTextField());
-		contentPane.add(getTextField_1());
-		contentPane.add(getTextField_2());
-		contentPane.add(getTextField_3());
-		contentPane.add(getTextField_4());
-		contentPane.add(getBtnNewButton());
-		contentPane.add(getBtnNewButton_1());
-		contentPane.add(getBtnNewButton_2());
-		contentPane.add(getList());
+		contentPane.add(getTxtMaNCC());
+		contentPane.add(getTxtTenNCC());
+		contentPane.add(getTxtNguoiLienHe());
+		contentPane.add(getTxtSoDT());
+		contentPane.add(getTxtDiaChi());
+		contentPane.add(getBtnThem());
+		contentPane.add(getBtnXoa());
+		contentPane.add(getBtnSua());
+		contentPane.add(getListNCC());
 	}
 
 	private JLabel getLblMNhCung() {
@@ -113,72 +113,72 @@ public class jfNhaCungCap extends JFrame {
 		}
 		return lblaCh;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setBounds(138, 7, 128, 20);
-			textField.setColumns(10);
+	private JTextField getTxtMaNCC() {
+		if (txtMaNCC == null) {
+			txtMaNCC = new JTextField();
+			txtMaNCC.setBounds(138, 7, 128, 20);
+			txtMaNCC.setColumns(10);
 		}
-		return textField;
+		return txtMaNCC;
 	}
-	private JTextField getTextField_1() {
-		if (textField_1 == null) {
-			textField_1 = new JTextField();
-			textField_1.setBounds(138, 32, 221, 20);
-			textField_1.setColumns(10);
+	private JTextField getTxtTenNCC() {
+		if (txtTenNCC == null) {
+			txtTenNCC = new JTextField();
+			txtTenNCC.setBounds(138, 32, 325, 20);
+			txtTenNCC.setColumns(10);
 		}
-		return textField_1;
+		return txtTenNCC;
 	}
-	private JTextField getTextField_2() {
-		if (textField_2 == null) {
-			textField_2 = new JTextField();
-			textField_2.setBounds(138, 57, 221, 20);
-			textField_2.setColumns(10);
+	private JTextField getTxtNguoiLienHe() {
+		if (txtNguoiLienHe == null) {
+			txtNguoiLienHe = new JTextField();
+			txtNguoiLienHe.setBounds(138, 57, 221, 20);
+			txtNguoiLienHe.setColumns(10);
 		}
-		return textField_2;
+		return txtNguoiLienHe;
 	}
-	private JTextField getTextField_3() {
-		if (textField_3 == null) {
-			textField_3 = new JTextField();
-			textField_3.setBounds(138, 82, 128, 20);
-			textField_3.setColumns(10);
+	private JTextField getTxtSoDT() {
+		if (txtSoDT == null) {
+			txtSoDT = new JTextField();
+			txtSoDT.setBounds(138, 82, 221, 20);
+			txtSoDT.setColumns(10);
 		}
-		return textField_3;
+		return txtSoDT;
 	}
-	private JTextField getTextField_4() {
-		if (textField_4 == null) {
-			textField_4 = new JTextField();
-			textField_4.setBounds(138, 109, 272, 20);
-			textField_4.setColumns(10);
+	private JTextField getTxtDiaChi() {
+		if (txtDiaChi == null) {
+			txtDiaChi = new JTextField();
+			txtDiaChi.setBounds(138, 109, 325, 20);
+			txtDiaChi.setColumns(10);
 		}
-		return textField_4;
+		return txtDiaChi;
 	}
-	private JButton getBtnNewButton() {
-		if (btnNewButton == null) {
-			btnNewButton = new JButton("Th\u00EAm");
-			btnNewButton.setBounds(423, 16, 89, 38);
+	private JButton getBtnThem() {
+		if (btnThem == null) {
+			btnThem = new JButton("Th\u00EAm");
+			btnThem.setBounds(473, 10, 89, 38);
 		}
-		return btnNewButton;
+		return btnThem;
 	}
-	private JButton getBtnNewButton_1() {
-		if (btnNewButton_1 == null) {
-			btnNewButton_1 = new JButton("Xo\u00E1");
-			btnNewButton_1.setBounds(423, 55, 89, 38);
+	private JButton getBtnXoa() {
+		if (btnXoa == null) {
+			btnXoa = new JButton("Xo\u00E1");
+			btnXoa.setBounds(473, 49, 89, 38);
 		}
-		return btnNewButton_1;
+		return btnXoa;
 	}
-	private JButton getBtnNewButton_2() {
-		if (btnNewButton_2 == null) {
-			btnNewButton_2 = new JButton("S\u1EEDa");
-			btnNewButton_2.setBounds(423, 94, 89, 38);
+	private JButton getBtnSua() {
+		if (btnSua == null) {
+			btnSua = new JButton("S\u1EEDa");
+			btnSua.setBounds(473, 88, 89, 38);
 		}
-		return btnNewButton_2;
+		return btnSua;
 	}
-	private JList getList() {
-		if (list == null) {
-			list = new JList();
-			list.setBounds(10, 136, 502, 114);
+	private JList getListNCC() {
+		if (listNCC == null) {
+			listNCC = new JList();
+			listNCC.setBounds(10, 136, 569, 193);
 		}
-		return list;
+		return listNCC;
 	}
 }
