@@ -24,7 +24,7 @@ public class DemoConnect extends Connect {
 	public String getData(String id) {
 		String r = null;
 		try {
-			PreparedStatement ps = getPreparedStatement("SELECT text FROM test where text = ?");//
+			PreparedStatement ps = getPreparedStatement("SELECT text FROM test where text = ?");
 			ps.setString(1, id);
 			ResultSet rs = executeQuery(ps);
 			while (rs.next()) {
