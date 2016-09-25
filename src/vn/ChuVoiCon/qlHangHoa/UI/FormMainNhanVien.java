@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Choice;
 
 public class FormMainNhanVien extends JFrame {
 
@@ -29,6 +30,9 @@ public class FormMainNhanVien extends JFrame {
 	private JLabel lblXinCho;
 	private JLabel lblU;
 	private JButton btnThemNV;
+	private JLabel lblNewLabel;
+	private JLabel lblPhngBan;
+	private Choice choice;
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +66,9 @@ public class FormMainNhanVien extends JFrame {
 		currentUser = a;
 		lblU.setText(currentUser+"!");
 		contentPane.add(getBtnThemNV());
+		contentPane.add(getLblNewLabel());
+		contentPane.add(getLblPhngBan());
+		contentPane.add(getChoice());
 		if (!(currentUser.equals("Admin"))) {
 			btnThemNV.setEnabled(false);
 		}
@@ -69,7 +76,7 @@ public class FormMainNhanVien extends JFrame {
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 47, 200, 413);
+			scrollPane.setBounds(28, 94, 200, 413);
 			scrollPane.setViewportView(getTbleNhanVien());
 		}
 		return scrollPane;
@@ -83,7 +90,7 @@ public class FormMainNhanVien extends JFrame {
 		return tbleNhanVien;
 	}
 	/**
-	 * @wbp.nonvisual location=77,59
+	 * @wbp.nonvisual location=57,19
 	 */
 	private DefaultTableModel getNhanVienModel() {
 		if (NhanVienModel == null) {
@@ -112,5 +119,26 @@ public class FormMainNhanVien extends JFrame {
 			btnThemNV.setBounds(254, 44, 89, 23);
 		}
 		return btnThemNV;
+	}
+	private JLabel getLblNewLabel() {
+		if (lblNewLabel == null) {
+			lblNewLabel = new JLabel("Danh S\u00E1ch NH\u00E2n Vi\u00EAn");
+			lblNewLabel.setBounds(47, 22, 103, 14);
+		}
+		return lblNewLabel;
+	}
+	private JLabel getLblPhngBan() {
+		if (lblPhngBan == null) {
+			lblPhngBan = new JLabel("Ph\u00F2ng ban");
+			lblPhngBan.setBounds(10, 48, 60, 14);
+		}
+		return lblPhngBan;
+	}
+	private Choice getChoice() {
+		if (choice == null) {
+			choice = new Choice();
+			choice.setBounds(76, 47, 89, 20);
+		}
+		return choice;
 	}
 }
