@@ -1,4 +1,4 @@
-package vn.ChuVoiCon.qlHangHoa.Model;
+package vn.ChuVoiCon.qlHangHoa.DAO;
 
 public class kho extends Connect {
 	private String ma_sp;
