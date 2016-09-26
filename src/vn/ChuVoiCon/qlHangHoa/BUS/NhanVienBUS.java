@@ -15,8 +15,9 @@ public class NhanVienBUS extends Connect{
 		ArrayList<NhanVien> arrNhanVien= new ArrayList<NhanVien>();
 		try {
 //			ResultSet rs = executeQuery("select * from nhan_vien where id ="+1);
-			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id =?");
-			ps.setInt(1, 1);
+//			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id =?");
+//			ps.setInt(1, 1);
+			PreparedStatement ps = getPreparedStatement("select * from nhan_vien");	
 			ResultSet rs = executeQuery(ps);
 			while (rs.next()) {
 				NhanVien nv = new NhanVien();
@@ -32,12 +33,26 @@ public class NhanVienBUS extends Connect{
 			e.printStackTrace();
 		}
 		return null;
-		
 	}
 	
-	public NhanVien getNV(String id){
-		
-		return null;
-		
+	public NhanVien getNV(String manv){
+		NhanVien nv = new NhanVien();
+		try {
+			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where ma_nhan_vien = ?");
+			ps.setString(1, manv);
+			ResultSet rs = executeQuery(ps);
+			while (rs.next()) {			
+				nv.setMa_nhan_vien(rs.getString("ma_nhan_vien"));
+				nv.setLuong(rs.getInt("luong"));
+				nv.setMat_khau(rs.getString("mat_khau"));		
+			}
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nv;
+				
 	}
 }
