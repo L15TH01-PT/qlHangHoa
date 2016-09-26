@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
 
-public class hoa_donDAO extends baseDAO<hoa_don, Long> {
+public class hoa_donDAO extends Connect {
 	// Collum sql
 	private final String ma_hoa_don = "ma_hoa_don";
 	private final String ngay_lap = "ngay_lap";
@@ -22,7 +22,6 @@ public class hoa_donDAO extends baseDAO<hoa_don, Long> {
 	private final String procInsert = "hoa_donInsert(?,?,?,?,?,?)";
 	private final String procSetHuy = "hoa_donSetHuy(?)";
 
-	@Override
 	protected hoa_don convertData(ResultSet rs) throws SQLException {
 		hoa_don r = new hoa_don();
 		r.setMa_hoa_don(rs.getLong(ma_hoa_don));
@@ -34,13 +33,11 @@ public class hoa_donDAO extends baseDAO<hoa_don, Long> {
 		return r;
 	}
 
-	@Override
 	protected void addIDParmater(CallableStatement cstm, Long id)
 			throws SQLException {
 		cstm.setLong(1, id);
 	}
 
-	@Override
 	protected void addAllParmater(CallableStatement cstm, hoa_don data)
 			throws SQLException {
 		cstm.setLong(1, data.getMa_hoa_don());
@@ -49,6 +46,36 @@ public class hoa_donDAO extends baseDAO<hoa_don, Long> {
 		cstm.setInt(4, data.getId_nv());
 		cstm.setString(5, data.getGhi_chu());
 		cstm.setDate(6, data.getNgay_huy());
+	}
+	protected ArrayList<hoa_don> getDS(CallableStatement cstm) throws SQLException {
+		ResultSet rs = cstm.executeQuery();
+		ArrayList<hoa_don> r = new ArrayList<hoa_don>();
+		while (rs.next()) {
+			r.add(convertData(rs));
+		}
+		rs.close();
+		cstm.close();
+		return r;
+	}
+	
+	protected hoa_don getData(CallableStatement cstm) throws SQLException {
+		ResultSet rs = cstm.executeQuery();
+		hoa_don r = null;
+		if (rs.next()) {
+			r = convertData(rs);
+		}
+		rs.close();
+		cstm.close();
+		return r;
+	}
+	
+	protected int callProcWithData(String procedure, hoa_don data) throws SQLException {
+		CallableStatement cstm = getCallableStatement(procedure);
+		addAllParmater(cstm, data);
+		int r = 0;
+		r = cstm.executeUpdate();
+		cstm.close();
+		return r;
 	}
 
 	public ArrayList<hoa_don> getDS() throws SQLException {
@@ -75,7 +102,7 @@ public class hoa_donDAO extends baseDAO<hoa_don, Long> {
 		cstm.registerOutParameter(2,  java.sql.Types.DATE);
 		cstm.setString(3, hd.getTen_khach_hang());
 		cstm.setInt(4, hd.getId_nv());
-		cstm.setString(5, "tsts");
+		cstm.setString(5, hd.getGhi_chu());
 		cstm.setDate(6, null);
 		int r = cstm.executeUpdate();
 		hd.setMa_hoa_don(cstm.getLong(1));
