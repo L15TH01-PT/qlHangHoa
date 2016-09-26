@@ -9,7 +9,6 @@ public class kho extends Connect {
 	// -- Constructor --
 	public kho() {
 		super();
-		kho.getConnection();
 	}
 
 	public kho(String ma_sp, String ma_loai, int tonkho, boolean trangthai) {
