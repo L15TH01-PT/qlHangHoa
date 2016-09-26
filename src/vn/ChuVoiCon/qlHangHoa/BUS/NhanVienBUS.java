@@ -14,17 +14,19 @@ public class NhanVienBUS extends Connect{
 		
 		ArrayList<NhanVien> arrNhanVien= new ArrayList<NhanVien>();
 		try {
-			PreparedStatement ps = getPreparedStatement("select * from nhan_vien");			
+//			ResultSet rs = executeQuery("select * from nhan_vien where id ="+1);
+//			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id =?");
+//			ps.setInt(1, 1);
+			PreparedStatement ps = getPreparedStatement("select * from nhan_vien");	
 			ResultSet rs = executeQuery(ps);
 			while (rs.next()) {
 				NhanVien nv = new NhanVien();
-				nv.setMa_nhan_vien(rs.getString("ma_nhan_vien"));
+				nv.setTen_nhan_vien(rs.getString("ten_nhan_vien"));
 				nv.setLuong(rs.getInt("luong"));
 				nv.setMat_khau(rs.getString("mat_khau"));
 				arrNhanVien.add(nv);
+				
 			}
-			rs.close();
-			ps.close();
 			return arrNhanVien;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

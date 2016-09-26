@@ -13,10 +13,12 @@ public class Connect {
 	private static Connection con;
 
 	private void khoiTao() {
-		String driver = ResourceBundle.getBundle("db").getString("driver");
-		String server = ResourceBundle.getBundle("db").getString("server");
-		String user = ResourceBundle.getBundle("db").getString("user");
-		String pass = ResourceBundle.getBundle("db").getString("pass");
+		//ResourceBundle rb = ResourceBundle.getBundle("dbLocal");
+		ResourceBundle rb = ResourceBundle.getBundle("db");
+		String driver = rb.getString("driver");
+		String server = rb.getString("server");
+		String user = rb.getString("user");
+		String pass = rb.getString("pass");
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(server, user, pass);
@@ -106,7 +108,7 @@ public class Connect {
 	// CallableStatement
 	protected CallableStatement getCallableStatement(String procedure)
 			throws SQLException {
-		return getConnection().prepareCall("{ call " + procedure + " }");
+		return getConnection().prepareCall("{ CALL " + procedure + " }");
 	}
 
 	protected boolean execute(CallableStatement cstm) throws SQLException {
