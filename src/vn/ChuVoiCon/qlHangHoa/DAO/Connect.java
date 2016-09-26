@@ -13,8 +13,8 @@ public class Connect {
 	private static Connection con;
 
 	private void khoiTao() {
-		//ResourceBundle rb = ResourceBundle.getBundle("dbLocal");
-		ResourceBundle rb = ResourceBundle.getBundle("db");
+		ResourceBundle rb = ResourceBundle.getBundle("dbLocal");
+		//ResourceBundle rb = ResourceBundle.getBundle("db");
 		String driver = rb.getString("driver");
 		String server = rb.getString("server");
 		String user = rb.getString("user");
