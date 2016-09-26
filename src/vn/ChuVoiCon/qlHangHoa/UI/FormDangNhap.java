@@ -1,3 +1,4 @@
+
 package vn.ChuVoiCon.qlHangHoa.UI;
 
 import java.awt.EventQueue;
@@ -132,7 +133,7 @@ public class FormDangNhap extends JFrame {
 //							fmNhanVien.setVisible(true);
 //							setVisible(false);					
 //						}else{
-////							JOptionPane.showMessageDialog(null, "Thông tin không đúng, vui lòng kiểm tra lại");
+////							JOptionPane.showMessageDialog(null, "ThÃ´ng tin khÃ´ng Ä‘Ãºng, vui lÃ²ng kiá»ƒm tra láº¡i");
 //							txtPassWord.setText("");
 //							txtUser.setText("");
 //							JOptionPane.showMessageDialog(null, user);
@@ -145,7 +146,7 @@ public class FormDangNhap extends JFrame {
 						fmNhanVien.setVisible(true);
 						setVisible(false);
 					}else{
-						JOptionPane.showMessageDialog(null, "Thông tin không đúng, vui lòng kiểm tra lại");
+						JOptionPane.showMessageDialog(null, "Thông tin không chính xác. Xin vui lòng nhập lại.");
 						txtPassWord.setText("");
 						txtUser.setText("");
 						}
@@ -165,7 +166,7 @@ public class FormDangNhap extends JFrame {
 	}
 	private JButton getBtnThoat() {
 		if (btnThoat == null) {
-			btnThoat = new JButton("Thoát");
+			btnThoat = new JButton("ThoÃ¡t");
 			btnThoat.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					setVisible(false); //you can't see me!
