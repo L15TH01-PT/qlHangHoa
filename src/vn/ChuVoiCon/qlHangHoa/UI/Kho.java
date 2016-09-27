@@ -11,6 +11,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
+import vn.ChuVoiCon.qlHangHoa.BUS.nhap_khoBUS;
+import vn.ChuVoiCon.qlHangHoa.DLL.nhap_kho;
+
 public class Kho extends JFrame {
 
 	private JPanel contentPane;
@@ -24,6 +27,7 @@ public class Kho extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -40,6 +44,7 @@ public class Kho extends JFrame {
 	 * Create the frame.
 	 */
 	public Kho() {
+		nhap_khoBUS nk=new nhap_khoBUS();
 		setTitle("KHO H\u00C0NG H\u00D3A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -55,7 +60,7 @@ public class Kho extends JFrame {
 		tbKho = new JTable();
 		scrollPane.setViewportView(tbKho);
 		tbKho.setModel(modelKho);
-		String colname[]= {"Mã sản phẩm","Mã loại","Nhà cung cấp","Tên Sản Phẩm","Nội dung", "Bảo hành"};
+		String colname[]= {"Mã phiếu", "Ngày lập", "Nhân viên nhập"};
 		modelKho.setColumnIdentifiers(colname);
 		
 		JButton btnNhapKho = new JButton("Nh\u1EADp h\u00E0ng h\u00F3a");
@@ -69,6 +74,12 @@ public class Kho extends JFrame {
 		JButton btnXaPhiu = new JButton("X\u00F3a phi\u1EBFu");
 		btnXaPhiu.setBounds(302, 217, 122, 23);
 		contentPane.add(btnXaPhiu);
+		
+		for (nhap_kho a : nk.getDS()) {
+			String value[]={a.getMa_phieu_nhap()+"",a.getNgay_lap()+"",a.getId_nv()+""};
+			modelKho.addRow(value);
+		}
+		
 	}
 	
 	private void loadData(){
