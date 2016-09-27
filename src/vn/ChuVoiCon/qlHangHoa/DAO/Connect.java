@@ -13,7 +13,7 @@ public class Connect {
 	private static Connection con;
 
 	private void khoiTao() {
-		//ResourceBundle rb = ResourceBundle.getBundle("dbLocal");
+		// ResourceBundle rb = ResourceBundle.getBundle("dbLocal");
 		ResourceBundle rb = ResourceBundle.getBundle("db");
 		String driver = rb.getString("driver");
 		String server = rb.getString("server");
@@ -83,6 +83,12 @@ public class Connect {
 		return getConnection().prepareStatement(sqlQuery);
 	}
 
+	protected PreparedStatement getPreparedStatementWithGenKey(String sqlQuery)
+			throws SQLException {
+		return getConnection().prepareStatement(sqlQuery,
+				PreparedStatement.RETURN_GENERATED_KEYS);
+	}
+
 	protected PreparedStatement getPreparedStatement(String sqlQuery, int arg0,
 			int arg1) throws SQLException {
 		return getConnection().prepareStatement(sqlQuery, arg0, arg1);
@@ -109,6 +115,10 @@ public class Connect {
 	protected CallableStatement getCallableStatement(String procedure)
 			throws SQLException {
 		return getConnection().prepareCall("{ CALL " + procedure + " }");
+	}
+	protected CallableStatement getCallableStatementWithGenKey(String procedure)
+			throws SQLException {
+		return getConnection().prepareCall("{ ? = CALL " + procedure + " }");
 	}
 
 	protected boolean execute(CallableStatement cstm) throws SQLException {
