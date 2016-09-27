@@ -3,19 +3,22 @@ package vn.ChuVoiCon.qlHangHoa.BUS;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import vn.ChuVoiCon.qlHangHoa.DAO.chi_tiet_hoa_donDAO;
 import vn.ChuVoiCon.qlHangHoa.DAO.hoa_donDAO;
 import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
 
 public class hoa_donBUS {
-	private hoa_donDAO data;
+	private hoa_donDAO hdDAO;
+	private chi_tiet_hoa_donDAO cthdDAO;
 
 	public hoa_donBUS() {
-		data = new hoa_donDAO();
+		hdDAO = new hoa_donDAO();
+		cthdDAO = new chi_tiet_hoa_donDAO();
 	}
 
 	public ArrayList<hoa_don> getDS() {
 		try {
-			return data.getDS();
+			return hdDAO.getDS();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -24,7 +27,7 @@ public class hoa_donBUS {
 
 	public ArrayList<hoa_don> getDS(int id_nv) {
 		try {
-			return data.getDS(id_nv);
+			return hdDAO.getDS(id_nv);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -33,7 +36,9 @@ public class hoa_donBUS {
 
 	public hoa_don getData(long ma_hoa_don) {
 		try {
-			return data.getData(ma_hoa_don);
+			hoa_don r= hdDAO.getData(ma_hoa_don);
+//			r.setChi_tiet_hoa_dons(cthdDAO.getDS(id_nv))
+			return r;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -42,7 +47,7 @@ public class hoa_donBUS {
 
 	public int Add(hoa_don hd) {
 		try {
-			return data.Insert(hd);
+			return hdDAO.Insert(hd);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +56,7 @@ public class hoa_donBUS {
 
 	public int Del(hoa_don hd) {
 		try {
-			return data.Delete(hd);
+			return hdDAO.Delete(hd);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
