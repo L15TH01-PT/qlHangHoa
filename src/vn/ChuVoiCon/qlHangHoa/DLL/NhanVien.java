@@ -5,21 +5,37 @@ import vn.ChuVoiCon.qlHangHoa.DAO.Connect;
 
 public class NhanVien extends Connect {
 	
-	private String id;
+	private int id;
 	private String ma_nhan_vien;
+	private String ho_nhan_vien;
 	private String ten_nhan_vien;
 	private boolean phai;
 	private Date ngay_sinh;
 	private int luong;
+	private String dia_chi;
 	private int ma_phong_ban;
 	private int ma_chuc_vu;
 	private byte trang_thai;
 	private String dien_thoai;
 	private String mat_khau;
-	public String getId() {
+	
+	
+	public String getDia_chi() {
+		return dia_chi;
+	}
+	public void setDia_chi(String dia_chi) {
+		this.dia_chi = dia_chi;
+	}
+	public String getHo_nhan_vien() {
+		return ho_nhan_vien;
+	}
+	public void setHo_nhan_vien(String ho_nhan_vien) {
+		this.ho_nhan_vien = ho_nhan_vien;
+	}
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getMa_nhan_vien() {
@@ -82,16 +98,18 @@ public class NhanVien extends Connect {
 	public void setMat_khau(String mat_khau) {
 		this.mat_khau = mat_khau;
 	}
-	public NhanVien(String id, String ma_nhan_vien, String ten_nhan_vien,
-			boolean phai, Date ngay_sinh, int luong, int ma_phong_ban,
+	public NhanVien(int id, String ma_nhan_vien,String ho_nhan_vien, String ten_nhan_vien,
+			boolean phai, Date ngay_sinh, int luong,String dia_chi, int ma_phong_ban,
 			int ma_chuc_vu, byte trang_thai, String dien_thoai, String mat_khau) {
 		super();
 		this.id = id;
 		this.ma_nhan_vien = ma_nhan_vien;
+		this.ho_nhan_vien = ho_nhan_vien;
 		this.ten_nhan_vien = ten_nhan_vien;
 		this.phai = phai;
 		this.ngay_sinh = ngay_sinh;
 		this.luong = luong;
+		this.dia_chi = dia_chi;
 		this.ma_phong_ban = ma_phong_ban;
 		this.ma_chuc_vu = ma_chuc_vu;
 		this.trang_thai = trang_thai;
@@ -100,6 +118,16 @@ public class NhanVien extends Connect {
 	}
 	public NhanVien() {
 		super();
+	}
+	@Override
+	public String toString() {
+		return "NhanVien [id=" + id + ", ma_nhan_vien=" + ma_nhan_vien
+				+ ", ho_nhan_vien=" + ho_nhan_vien + ", ten_nhan_vien="
+				+ ten_nhan_vien + ", phai=" + phai + ", ngay_sinh=" + ngay_sinh
+				+ ", luong=" + luong + ", dia_chi=" + dia_chi
+				+ ", ma_phong_ban=" + ma_phong_ban + ", ma_chuc_vu="
+				+ ma_chuc_vu + ", trang_thai=" + trang_thai + ", dien_thoai="
+				+ dien_thoai + ", mat_khau=" + mat_khau + "]";
 	}
 	
 	

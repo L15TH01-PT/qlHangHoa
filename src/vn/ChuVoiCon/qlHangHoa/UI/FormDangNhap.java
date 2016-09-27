@@ -125,6 +125,7 @@ public class FormDangNhap extends JFrame {
 					String pass=String.valueOf(txtPassWord.getPassword());					
 //					ArrayList<NhanVien> ds = nvb.getDSNV();
 					NhanVien nv = nvb.getNV(user);
+//					System.out.println(nv.toString());
 //					for (NhanVien nv : ds) {
 //						if (user.equals(nv.getMa_nhan_vien()) && pass.equals(nv.getMat_khau())) {
 //							FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText());

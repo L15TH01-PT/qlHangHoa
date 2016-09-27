@@ -6,53 +6,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vn.ChuVoiCon.qlHangHoa.DAO.Connect;
+import vn.ChuVoiCon.qlHangHoa.DAO.Nhan_VienDAO;
 import vn.ChuVoiCon.qlHangHoa.DLL.NhanVien;
 
 public class NhanVienBUS extends Connect{
+	Nhan_VienDAO nvd = new Nhan_VienDAO();
 	
 	public ArrayList<NhanVien> getDSNV(){
 		
 		ArrayList<NhanVien> arrNhanVien= new ArrayList<NhanVien>();
-		try {
-//			ResultSet rs = executeQuery("select * from nhan_vien where id ="+1);
-//			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id =?");
-//			ps.setInt(1, 1);
-			PreparedStatement ps = getPreparedStatement("select * from nhan_vien");	
-			ResultSet rs = executeQuery(ps);
-			while (rs.next()) {
-				NhanVien nv = new NhanVien();
-				nv.setTen_nhan_vien(rs.getString("ten_nhan_vien"));
-				nv.setLuong(rs.getInt("luong"));
-				nv.setMat_khau(rs.getString("mat_khau"));
-				arrNhanVien.add(nv);
-				
-			}
-			return arrNhanVien;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		arrNhanVien = nvd.getDSNV();
+		
+		return arrNhanVien;
 	}
 	
 	public NhanVien getNV(String manv){
 		NhanVien nv = new NhanVien();
-		try {
-			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where ma_nhan_vien = ?");
-			ps.setString(1, manv);
-			ResultSet rs = executeQuery(ps);
-			while (rs.next()) {			
-				nv.setMa_nhan_vien(rs.getString("ma_nhan_vien"));
-				nv.setLuong(rs.getInt("luong"));
-				nv.setMat_khau(rs.getString("mat_khau"));		
-			}
-			rs.close();
-			ps.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return nv;
-				
+		nv = nvd.getNV(manv);
+		return nv;			
 	}
 }
