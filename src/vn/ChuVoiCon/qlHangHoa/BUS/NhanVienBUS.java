@@ -20,9 +20,18 @@ public class NhanVienBUS extends Connect{
 		return arrNhanVien;
 	}
 	
-	public NhanVien getNV(String manv){
-		NhanVien nv = new NhanVien();
-		nv = nvd.getNV(manv);
+	public NhanVien getNV(int id){
+		NhanVien nv = nvd.getNV(id);
 		return nv;			
+	}
+	
+	public int login(String manv, String pass){
+		try {
+			return nvd.checklogin(manv, pass);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

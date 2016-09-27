@@ -15,7 +15,7 @@ public class NhanVien extends Connect {
 	private String dia_chi;
 	private int ma_phong_ban;
 	private int ma_chuc_vu;
-	private byte trang_thai;
+	private int trang_thai;
 	private String dien_thoai;
 	private String mat_khau;
 	
@@ -80,10 +80,10 @@ public class NhanVien extends Connect {
 	public void setMa_chuc_vu(int ma_chuc_vu) {
 		this.ma_chuc_vu = ma_chuc_vu;
 	}
-	public byte getTrang_thai() {
+	public int getTrang_thai() {
 		return trang_thai;
 	}
-	public void setTrang_thai(byte trang_thai) {
+	public void setTrang_thai(int trang_thai) {
 		this.trang_thai = trang_thai;
 	}
 	public String getDien_thoai() {
@@ -100,7 +100,7 @@ public class NhanVien extends Connect {
 	}
 	public NhanVien(int id, String ma_nhan_vien,String ho_nhan_vien, String ten_nhan_vien,
 			boolean phai, Date ngay_sinh, int luong,String dia_chi, int ma_phong_ban,
-			int ma_chuc_vu, byte trang_thai, String dien_thoai, String mat_khau) {
+			int ma_chuc_vu, int trang_thai, String dien_thoai, String mat_khau) {
 		super();
 		this.id = id;
 		this.ma_nhan_vien = ma_nhan_vien;

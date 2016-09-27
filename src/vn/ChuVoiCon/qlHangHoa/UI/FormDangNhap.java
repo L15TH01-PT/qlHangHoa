@@ -15,6 +15,7 @@ import javax.swing.JButton;
 
 import vn.ChuVoiCon.qlHangHoa.BUS.NhanVienBUS;
 import vn.ChuVoiCon.qlHangHoa.DLL.NhanVien;
+import vn.ChuVoiCon.qlHangHoa.DLL.currentUser;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -122,26 +123,18 @@ public class FormDangNhap extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					
 					String user = txtUser.getText();
-					String pass=String.valueOf(txtPassWord.getPassword());					
-//					ArrayList<NhanVien> ds = nvb.getDSNV();
-					NhanVien nv = nvb.getNV(user);
-//					System.out.println(nv.toString());
-//					for (NhanVien nv : ds) {
-//						if (user.equals(nv.getMa_nhan_vien()) && pass.equals(nv.getMat_khau())) {
-//							FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText());
-//							fmNhanVien.setVisible(true);
-//							setVisible(false);					
-//						}else{
-////							JOptionPane.showMessageDialog(null, "ThÃ´ng tin khÃ´ng Ä‘Ãºng, vui lÃ²ng kiá»ƒm tra láº¡i");
-//							txtPassWord.setText("");
-//							txtUser.setText("");
-//							JOptionPane.showMessageDialog(null, user);
-//							JOptionPane.showMessageDialog(null, pass);
-//						}
-//						break;					
-//					}
-					if (user.equals(nv.getMa_nhan_vien()) && pass.equals(nv.getMat_khau())) {
-						FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText());
+					String pass=String.valueOf(txtPassWord.getPassword());								
+					NhanVien nv1 =new NhanVien();
+//					FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText(),nv1);
+//					fmNhanVien.setVisible(true);
+//					setVisible(false);
+					int r=nvb.login(user, pass);
+					if (r>0) {
+						NhanVien nv = nvb.getNV(r);
+						currentUser.setId(r);
+//						Neu chu vu = 
+						currentUser.setTennv(nv.getTen_nhan_vien());
+						FormMainNhanVien fmNhanVien = new FormMainNhanVien();
 						fmNhanVien.setVisible(true);
 						setVisible(false);
 					}else{
