@@ -1,8 +1,6 @@
 
 package vn.ChuVoiCon.qlHangHoa.UI;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -166,7 +164,7 @@ public class FormDangNhap extends JFrame {
 	}
 	private JButton getBtnThoat() {
 		if (btnThoat == null) {
-			btnThoat = new JButton("ThoÃ¡t");
+			btnThoat = new JButton("Thoát");
 			btnThoat.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					setVisible(false); //you can't see me!
