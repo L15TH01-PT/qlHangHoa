@@ -1,7 +1,7 @@
 package vn.ChuVoiCon.qlHangHoa.DLL;
 
 public class chi_tiet_nhap_kho {
-	private String ma_phieu_nhap;
+	private int ma_phieu_nhap;
 	private String ma_san_pham;
 	private int so_luong;
 	private float don_gia;
@@ -15,11 +15,11 @@ public class chi_tiet_nhap_kho {
 		this.nhap_kho = nhap_kho;
 	}
 
-	public String getMa_phieu_nhap() {
+	public int getMa_phieu_nhap() {
 		return ma_phieu_nhap;
 	}
 
-	public void setMa_phieu_nhap(String ma_phieu_nhap) {
+	public void setMa_phieu_nhap(int ma_phieu_nhap) {
 		this.ma_phieu_nhap = ma_phieu_nhap;
 	}
 

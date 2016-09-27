@@ -9,11 +9,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 public class Kho extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	private JTable tbKho;
+	/**
+	 * @wbp.nonvisual location=26,339
+	 */
+	private final DefaultTableModel modelKho = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
@@ -47,19 +52,26 @@ public class Kho extends JFrame {
 		scrollPane.setBounds(10, 11, 414, 192);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tbKho = new JTable();
+		scrollPane.setViewportView(tbKho);
+		tbKho.setModel(modelKho);
+		String colname[]= {"Mã sản phẩm","Mã loại","Nhà cung cấp","Tên Sản Phẩm","Nội dung", "Bảo hành"};
+		modelKho.setColumnIdentifiers(colname);
 		
-		JButton btnThmSnPhm = new JButton("Th\u00EAm S\u1EA3n ph\u1EA9m m\u1EDBi");
-		btnThmSnPhm.setBounds(10, 217, 127, 23);
-		contentPane.add(btnThmSnPhm);
+		JButton btnNhapKho = new JButton("Nh\u1EADp h\u00E0ng h\u00F3a");
+		btnNhapKho.setBounds(10, 217, 153, 23);
+		contentPane.add(btnNhapKho);
 		
-		JButton btnNewButton = new JButton("Nh\u1EADp h\u00E0ng h\u00F3a");
-		btnNewButton.setBounds(142, 217, 153, 23);
-		contentPane.add(btnNewButton);
+		JButton btnChiTiet = new JButton("Chi ti\u1EBFt nh\u1EADp");
+		btnChiTiet.setBounds(173, 217, 122, 23);
+		contentPane.add(btnChiTiet);
 		
-		JButton btnNewButton_1 = new JButton("Chi ti\u1EBFt nh\u1EADp");
-		btnNewButton_1.setBounds(302, 217, 122, 23);
-		contentPane.add(btnNewButton_1);
+		JButton btnXaPhiu = new JButton("X\u00F3a phi\u1EBFu");
+		btnXaPhiu.setBounds(302, 217, 122, 23);
+		contentPane.add(btnXaPhiu);
+	}
+	
+	private void loadData(){
+		
 	}
 }
