@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JScrollBar;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class LoaiSanPham extends JFrame {
 
@@ -23,7 +25,8 @@ public class LoaiSanPham extends JFrame {
 	private JButton btnThem;
 	private JButton btnXoa;
 	private JButton btnSua;
-	private JList listLoaiSP;
+	private JTable tabLSP;
+	private DefaultTableModel dtmLSP;
 
 	/**
 	 * Launch the application.
@@ -59,7 +62,7 @@ public class LoaiSanPham extends JFrame {
 		contentPane.add(getBtnThem());
 		contentPane.add(getBtnXoa());
 		contentPane.add(getBtnSua());
-		contentPane.add(getListLoaiSP());
+		contentPane.add(getTabLSP());
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
@@ -114,11 +117,20 @@ public class LoaiSanPham extends JFrame {
 		}
 		return btnSua;
 	}
-	private JList getListLoaiSP() {
-		if (listLoaiSP == null) {
-			listLoaiSP = new JList();
-			listLoaiSP.setBounds(22, 113, 368, 103);
+	private JTable getTabLSP() {
+		if (tabLSP == null) {
+			tabLSP = new JTable();
+			tabLSP.setBounds(22, 118, 368, 76);
 		}
-		return listLoaiSP;
+		return tabLSP;
+	}
+	/**
+	 * @wbp.nonvisual location=36,309
+	 */
+	private DefaultTableModel getDtmLSP() {
+		if (dtmLSP == null) {
+			dtmLSP = new DefaultTableModel();
+		}
+		return dtmLSP;
 	}
 }
