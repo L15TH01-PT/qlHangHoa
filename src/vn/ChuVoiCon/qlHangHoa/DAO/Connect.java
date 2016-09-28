@@ -30,7 +30,7 @@ public class Connect {
 	}
 
 	protected Connection getConnection() throws SQLException {
-		if (con == null)
+		if (con == null || con.isClosed())
 			khoiTao();
 		return con;
 	}
@@ -38,6 +38,10 @@ public class Connect {
 	protected void close() throws SQLException {
 		if (!getConnection().isClosed())
 			getConnection().close();
+	}
+	
+	protected void setAutoCommit(boolean arg0) throws SQLException {
+		getConnection().setAutoCommit(arg0);
 	}
 
 	// Statement
@@ -116,6 +120,7 @@ public class Connect {
 			throws SQLException {
 		return getConnection().prepareCall("{ CALL " + procedure + " }");
 	}
+	
 	protected CallableStatement getCallableStatementWithGenKey(String procedure)
 			throws SQLException {
 		return getConnection().prepareCall("{ ? = CALL " + procedure + " }");

@@ -47,12 +47,12 @@ public class hoa_donDAO extends Connect {
 
 	protected void addAllParmater(CallableStatement cstm, hoa_don data)
 			throws SQLException {
-		cstm.setLong(1, data.getMa_hoa_don());
-		cstm.setDate(2, data.getNgay_lap());
-		cstm.setString(3, data.getTen_khach_hang());
-		cstm.setInt(4, data.getId_nv());
-		cstm.setString(5, data.getGhi_chu());
-		cstm.setDate(6, data.getNgay_huy());
+		cstm.setLong(ma_hoa_don, data.getMa_hoa_don());
+		cstm.setDate(ngay_lap, data.getNgay_lap());
+		cstm.setString(ten_khach_hang, data.getTen_khach_hang());
+		cstm.setInt(id_nv, data.getId_nv());
+		cstm.setString(ghi_chu, data.getGhi_chu());
+		cstm.setDate(ngay_huy, data.getNgay_huy());
 	}
 
 	protected ArrayList<hoa_don> getDS(CallableStatement cstm)
@@ -97,32 +97,37 @@ public class hoa_donDAO extends Connect {
 
 	public int Insert(hoa_don hd) throws SQLException {
 		CallableStatement cstm = getCallableStatement(procInsert);
-		cstm.registerOutParameter(1, java.sql.Types.BIGINT);
-		cstm.registerOutParameter(2, java.sql.Types.DATE);
-		cstm.setString(3, hd.getTen_khach_hang());
-		cstm.setInt(4, hd.getId_nv());
-		cstm.setString(5, hd.getGhi_chu());
-		cstm.setDate(6, null);
-		getConnection().setAutoCommit(false);
+		cstm.registerOutParameter(ma_hoa_don, java.sql.Types.BIGINT);
+		cstm.registerOutParameter(ngay_lap, java.sql.Types.DATE);
+		cstm.setString(ten_khach_hang, hd.getTen_khach_hang());
+		cstm.setInt(id_nv, hd.getId_nv());
+		cstm.setString(ghi_chu, hd.getGhi_chu());
+		cstm.setDate(ngay_huy, null);
+
+		setAutoCommit(false);
 		try {
 			int r = cstm.executeUpdate();
-			if(r==0)
+			if (r == 0)
 				throw new SQLException();
-			
+
+			for (chi_tiet_hoa_don item : hd.getChi_tiet_hoa_dons()) {
+				if (cthd.Insert(item) == 0)
+					throw new SQLException();
+			}
 			hd.setMa_hoa_don(cstm.getLong(1));
 			cstm.close();
 			getConnection().commit();
 		} catch (SQLException e) {
 			getConnection().rollback();
 		}
-		getConnection().setAutoCommit(true);
+		setAutoCommit(true);
 		return 0;
 	}
 
 	public int Delete(hoa_don hd) throws SQLException {
 		CallableStatement cstm = getCallableStatement(procSetHuy);
 		addIDParmater(cstm, hd.getMa_hoa_don());
-		// cstm.setDate(2, hd.getNgay_huy());
+		//cstm.setDate(2, hd.getNgay_huy());
 		return executeUpdate(cstm);
 	}
 }

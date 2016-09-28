@@ -9,11 +9,9 @@ import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
 
 public class hoa_donBUS {
 	private hoa_donDAO hdDAO;
-	private chi_tiet_hoa_donDAO cthdDAO;
 
 	public hoa_donBUS() {
 		hdDAO = new hoa_donDAO();
-		cthdDAO = new chi_tiet_hoa_donDAO();
 	}
 
 	public ArrayList<hoa_don> getDS() {
@@ -36,9 +34,7 @@ public class hoa_donBUS {
 
 	public hoa_don getData(long ma_hoa_don) {
 		try {
-			hoa_don r= hdDAO.getData(ma_hoa_don);
-//			r.setChi_tiet_hoa_dons(cthdDAO.getDS(id_nv))
-			return r;
+			return hdDAO.getData(ma_hoa_don);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
