@@ -88,7 +88,7 @@ public class jfThemNhanVien extends JFrame {
 		
 		NhanVienBUS nvb = new NhanVienBUS();
 		HashMap<Integer, String> hm = new HashMap<>();
-		hm = nvb.getAllPhongBan();
+		//hm = nvb.getAllPhongBan();
 		//System.out.println(hm.);
 		
 	}

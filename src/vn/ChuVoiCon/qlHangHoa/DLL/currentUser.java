@@ -1,32 +1,18 @@
 package vn.ChuVoiCon.qlHangHoa.DLL;
 
+import javax.swing.JFrame;
+
+import vn.ChuVoiCon.qlHangHoa.UI.FormDangNhap;
+
 public class currentUser {
-	private static int id = -1;
-	private static String tennv;
-	private static boolean isAdmin;
+	private static NhanVien nv;
 
-	public static boolean isAdmin() {
-		return isAdmin;
+	public static NhanVien getNv() {
+		return nv;
 	}
 
-	public static void setAdmin(boolean isAdmin) {
-		currentUser.isAdmin = isAdmin;
-	}
-
-	public static String getTennv() {
-		return tennv;
-	}
-
-	public static void setTennv(String tennv) {
-		currentUser.tennv = tennv;
-	}
-
-	public static int getId() {
-		return id;
-	}
-
-	public static void setId(int id) {
-		currentUser.id = id;
+	public static void setNv(NhanVien nv) {
+		currentUser.nv = nv;
 	}
 	
 }

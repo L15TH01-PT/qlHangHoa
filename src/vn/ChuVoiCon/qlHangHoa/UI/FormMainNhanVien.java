@@ -74,21 +74,21 @@ public class FormMainNhanVien extends JFrame {
 	private JTextField textField_10;
 	private JTextField textField_11;
 
-	/**
-	 * Launch the application.
-	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// FormMainNhanVien frame = new FormMainNhanVien(currentUser);
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
+//	/**
+//	 * Launch the application.
+//	 */
+//	 public static void main(String[] args) {
+//	 EventQueue.invokeLater(new Runnable() {
+//	 public void run() {
+//	 try {
+//	 FormMainNhanVien frame = new FormMainNhanVien();
+//	 frame.setVisible(true);
+//	 } catch (Exception e) {
+//	 e.printStackTrace();
+//	 }
+//	 }
+//	 });
+//	 }
 
 	/**
 	 * Create the frame.
@@ -105,7 +105,7 @@ public class FormMainNhanVien extends JFrame {
 		contentPane.add(getScrollPane());
 		contentPane.add(getLblXinCho());
 		contentPane.add(getLblU());
-		curUser = currentUser.getTennv();
+		curUser = currentUser.getNv().getTen_nhan_vien();
 		lblU.setText(curUser + "!");
 		contentPane.add(getBtnThemNV());
 		contentPane.add(getLblNewLabel());
@@ -136,10 +136,14 @@ public class FormMainNhanVien extends JFrame {
 		contentPane.add(getTextField_9());
 		contentPane.add(getTextField_10());
 		contentPane.add(getTextField_11());
-		if (!(curUser.equals("Admin"))) {
+		if(currentUser.getNv().getMa_chuc_vu() == 1){
 			btnThemNV.setEnabled(false);
 			btnThemNV.setVisible(false);
 		}
+//		if (!(curUser.equals("Admin"))) {
+//			btnThemNV.setEnabled(false);
+//			btnThemNV.setVisible(false);
+//		}
 		arrNV = nvb.getDSNV();
 		int stt = 0;
 		for (NhanVien nvien : arrNV) {
