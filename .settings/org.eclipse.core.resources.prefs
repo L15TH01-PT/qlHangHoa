@@ -6,5 +6,10 @@ encoding//Document/MYSQL.txt=UTF-8
 encoding//src/vn/ChuVoiCon/qlHangHoa/DAO/Connect.java=UTF-8
 encoding//src/vn/ChuVoiCon/qlHangHoa/DAO/hoa_donDAO.java=UTF-8
 encoding//src/vn/ChuVoiCon/qlHangHoa/UI/FormDangNhap.java=UTF-8
+<<<<<<< HEAD
 encoding//src/vn/ChuVoiCon/qlHangHoa/UI/FormMainNhanVien.java=UTF-8
+=======
+encoding//src/vn/ChuVoiCon/qlHangHoa/UI/Kho.java=UTF-8
+>>>>>>> branch 'master' of https://github.com/L15TH01-PT/qlHangHoa.git
 encoding//src/vn/ChuVoiCon/qlHangHoa/UI/conTestChay.java=UTF-8
+encoding//src/vn/ChuVoiCon/qlHangHoa/UI/jfKho.java=UTF-8
