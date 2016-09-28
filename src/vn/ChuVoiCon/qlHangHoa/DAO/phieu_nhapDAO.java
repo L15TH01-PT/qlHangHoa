@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
 import vn.ChuVoiCon.qlHangHoa.DLL.nhap_kho;
 
@@ -30,6 +31,7 @@ public class phieu_nhapDAO extends Connect {
 			return r;
 		}
 
+		
 		protected void addIDParmater(CallableStatement cstm, int id)
 				throws SQLException {
 			cstm.setInt(1, id);
