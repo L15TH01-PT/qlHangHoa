@@ -15,4 +15,16 @@ public class ChiTietSanPhamBUS extends Connect{
 		arrCTSP=ctspd.getDSCTSP();
 		return arrCTSP;
 	}	
+	
+	public int addSP(String masp, String maloai, String mancc, String tensp, String noidung, int baohanh, String dvt){
+		return ctspd.add(masp,maloai,mancc,tensp,noidung,baohanh,dvt);		
+	}
+	
+	public int deleteSP(String masp){
+		return ctspd.delete(masp);
+	}
+	
+	public int editSP(String masp, String maloai, String mancc, String tensp, String noidung, int baohanh, String dvt){
+		return ctspd.edit(masp,maloai,mancc,tensp,noidung,baohanh,dvt);
+	}
 }
