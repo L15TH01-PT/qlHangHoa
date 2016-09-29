@@ -115,6 +115,18 @@ public class Connect {
 		return r;
 	}
 
+	protected int executeUpdateWithGenKey(PreparedStatement pstm) throws SQLException {
+		int r = pstm.executeUpdate();
+		if(r>0)
+		{
+			ResultSet rs = pstm.getGeneratedKeys();
+			if(rs.next())
+				r = rs.getInt(1);
+		}
+		pstm.close();
+		return r;
+	}
+
 	// CallableStatement
 	protected CallableStatement getCallableStatement(String procedure)
 			throws SQLException {
