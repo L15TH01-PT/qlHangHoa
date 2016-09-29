@@ -32,6 +32,7 @@ public class jfMain extends JFrame {
 	private JMenuItem menuItem;
 	private JMenuItem mntmNhSnXut;
 	private JMenuItem mntmChiTitSn;
+	private JInternalFrame internalFrame;
 
 	/**
 	 * Launch the application.
@@ -62,6 +63,7 @@ public class jfMain extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
+		contentPane.add(getInternalFrame());
 //		if(currentUser.getNv() == null)
 //		{
 //			FormDangNhap ifdn = new FormDangNhap();
@@ -117,6 +119,11 @@ public class jfMain extends JFrame {
 			mnNewMenu_3.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
+					getInternalFrame().dispose();
+					contentPane.remove(getInternalFrame());
+					internalFrame = new jfKho();
+					contentPane.add(internalFrame);
+					internalFrame.setVisible(true);
 				}
 			});
 		}
@@ -154,5 +161,12 @@ public class jfMain extends JFrame {
 			});
 		}
 		return mntmChiTitSn;
+	}
+	private JInternalFrame getInternalFrame() {
+		if (internalFrame == null) {
+			internalFrame = new JInternalFrame();
+			internalFrame.setVisible(true);
+		}
+		return internalFrame;
 	}
 }

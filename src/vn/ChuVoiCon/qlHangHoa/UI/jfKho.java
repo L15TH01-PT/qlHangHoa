@@ -8,12 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
+import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
-public class jfKho extends JFrame {
+public class jfKho extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JPanel panel;
