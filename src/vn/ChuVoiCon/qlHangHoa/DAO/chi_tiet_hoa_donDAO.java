@@ -18,14 +18,10 @@ public class chi_tiet_hoa_donDAO extends Connect {
 
 	protected chi_tiet_hoa_don convertData(ResultSet rs) throws SQLException {
 		chi_tiet_hoa_don r = new chi_tiet_hoa_don();
-		r.setMa_hoa_don(rs.getLong(ma_hoa_don));
+		r.setMa_hoa_don(rs.getInt(ma_hoa_don));
 		r.setId_sp(rs.getString(id_sp));
 		r.setSo_luong(rs.getInt(so_luong));
 		r.setDon_gia(rs.getDouble(don_gia));
-		chi_tiet_san_pham sp = new chi_tiet_san_pham();
-		sp.setId_sp(r.getId_sp());
-		sp.setTen_sp(rs.getString("ten_sp"));
-		sp.setDon_vi_tinh(rs.getString("donvitinh"));
 		return r;
 	}
 	protected chi_tiet_hoa_don convertData(ResultSet rs,hoa_don data) throws SQLException {
@@ -35,15 +31,23 @@ public class chi_tiet_hoa_donDAO extends Connect {
 	}
 	
 	public ArrayList<chi_tiet_hoa_don> getHD(hoa_don data) throws SQLException {
-		String sqlQuery = "SELECT cthd.*,sp.ten_sp";
-		sqlQuery += " FROM chi_tiet_hoa_don cthd INNER JOIN chi_tiet_san_pham sp on cthd.id_sp = sp.id_sp";
-		sqlQuery += " WHERE cthd.ma_hoa_don = ?";
+		String sqlQuery = "SELECT cthd.*,sp.ten_sp,sp.don_vi_tinh"
+		+ " FROM chi_tiet_hoa_don cthd INNER JOIN chi_tiet_san_pham sp on cthd.id_sp = sp.id_sp"
+		+ " WHERE cthd.ma_hoa_don = ?";
 		PreparedStatement ptsm = getPreparedStatement(sqlQuery);
 		ptsm.setLong(1, data.getMa_hoa_don());
 		ResultSet rs = ptsm.executeQuery();
 		ArrayList<chi_tiet_hoa_don> r = new ArrayList<chi_tiet_hoa_don>();
 		while (rs.next()) {
-			r.add(convertData(rs,data));
+			chi_tiet_hoa_don t = convertData(rs,data);
+
+			chi_tiet_san_pham sp = new chi_tiet_san_pham();
+			sp.setId_sp(t.getId_sp());
+			sp.setTen_sp(rs.getString("ten_sp"));
+			sp.setDon_vi_tinh(rs.getString("don_vi_tinh"));
+			t.setSp(sp);
+			
+			r.add(t);
 		}
 		rs.close();
 		ptsm.close();

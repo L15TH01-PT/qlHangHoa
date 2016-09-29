@@ -65,6 +65,22 @@ public class hoa_donDAO extends Connect {
 		return getDS(pstm);
 	}
 
+	public ArrayList<hoa_don> getDSEX(int s) throws SQLException {
+		String sqlQuery = "SELECT hd.*,nv.ten_nhan_vien "
+				+ "FROM hoa_don hd INNER JOIN nhan_vien nv on hd.id_nv = nv.id";
+		switch (s) {
+		case -1:
+			sqlQuery += " WHERE ngay_huy is not null";
+			break;
+		case 1:
+			sqlQuery += " WHERE ngay_huy is null";
+			break;
+		}
+		sqlQuery+= " ORDER BY hd.ma_hoa_don desc";
+		PreparedStatement pstm = getPreparedStatement(sqlQuery);
+		return getDS(pstm);
+	}
+
 	public ArrayList<hoa_don> getDS(int id_nv) throws SQLException {
 		String sqlQuery = "SELECT hd.*,nv.ten_nhan_vien "
 				+ "FROM hoa_don hd INNER JOIN nhan_vien nv on hd.id_nv = nv.id "
@@ -85,6 +101,9 @@ public class hoa_donDAO extends Connect {
 		hoa_don r = null;
 		if (rs.next()) {
 			r = convertData(rs);
+			r.setNv(new NhanVien());
+			r.getNv().setId(r.getId_nv());
+			r.getNv().setTen_nhan_vien(rs.getString("ten_nhan_vien"));
 			r.setChi_tiet_hoa_dons(cthd.getHD(r));
 		}
 		rs.close();
@@ -101,28 +120,29 @@ public class hoa_donDAO extends Connect {
 		pstm.setString(1, hd.getTen_khach_hang());
 		pstm.setInt(2, hd.getId_nv());
 		pstm.setString(3, hd.getGhi_chu());
-
+		int r=0;
 		setAutoCommit(false);
 		try {
-			int r = executeUpdateWithGenKey(pstm);
+			r = executeUpdateWithGenKey(pstm);
 			if (r == 0)
 				throw new SQLException();
 
-			// for (chi_tiet_hoa_don item : hd.getChi_tiet_hoa_dons()) {
-			// if (cthd.Insert(item) == 0)
-			// throw new SQLException();
-			// }
-			// hd.setMa_hoa_don(cstm.getInt(arg0)(1));
+			 for (chi_tiet_hoa_don item : hd.getChi_tiet_hoa_dons()) {
+				 item.setMa_hoa_don(r);
+				 if (cthd.Insert(item) == 0)
+					 throw new SQLException();
+			 }
+			 hd.setMa_hoa_don(r);
 			getConnection().commit();
 		} catch (SQLException e) {
 			getConnection().rollback();
 		}
 		setAutoCommit(true);
-		return 0;
+		return r;
 	}
 
 	public int Delete(int ma_hoa_don) throws SQLException {
-		String sqlQuery = "UPDATE FROM hoa_don SET ngay_huy = NOW() "
+		String sqlQuery = "UPDATE hoa_don SET ngay_huy = NOW() "
 				+ "WHERE ma_hoa_don = ?";
 		PreparedStatement pstm = getPreparedStatementWithGenKey(sqlQuery);
 		pstm.setInt(1, ma_hoa_don);
