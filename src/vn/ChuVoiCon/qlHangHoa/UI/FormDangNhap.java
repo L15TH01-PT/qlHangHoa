@@ -1,5 +1,5 @@
-
 package vn.ChuVoiCon.qlHangHoa.UI;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -21,7 +22,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 
 public class FormDangNhap extends JFrame {
 
@@ -39,12 +39,13 @@ public class FormDangNhap extends JFrame {
 	 */
 	NhanVienBUS nvb = new NhanVienBUS();
 	private JButton btnThoat;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					FormDangNhap frame = new FormDangNhap();
-					frame.setVisible(true);				
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -72,8 +73,9 @@ public class FormDangNhap extends JFrame {
 		contentPane.add(getBtnDangNhap());
 		contentPane.add(getLblTime());
 		contentPane.add(getBtnThoat());
-		
+
 	}
+
 	private JLabel getLblngNhp() {
 		if (lblngNhp == null) {
 			lblngNhp = new JLabel("\u0110\u0103ng Nh\u1EADp");
@@ -84,6 +86,7 @@ public class FormDangNhap extends JFrame {
 		}
 		return lblngNhp;
 	}
+
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("T\u00E0i Kho\u1EA3n");
@@ -92,6 +95,7 @@ public class FormDangNhap extends JFrame {
 		}
 		return lblNewLabel;
 	}
+
 	private JTextField getTxtUser() {
 		if (txtUser == null) {
 			txtUser = new JTextField();
@@ -100,6 +104,7 @@ public class FormDangNhap extends JFrame {
 		}
 		return txtUser;
 	}
+
 	private JPasswordField getTxtPassWord() {
 		if (txtPassWord == null) {
 			txtPassWord = new JPasswordField();
@@ -107,6 +112,7 @@ public class FormDangNhap extends JFrame {
 		}
 		return txtPassWord;
 	}
+
 	private JLabel getLblMtKhu() {
 		if (lblMtKhu == null) {
 			lblMtKhu = new JLabel("M\u1EADt Kh\u1EA9u");
@@ -115,40 +121,42 @@ public class FormDangNhap extends JFrame {
 		}
 		return lblMtKhu;
 	}
-	
+
 	private JButton getBtnDangNhap() {
 		if (btnDangNhap == null) {
 			btnDangNhap = new JButton("\u0110\u0103ng nh\u1EADp");
 			btnDangNhap.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					
+
 					String user = txtUser.getText();
-					String pass=String.valueOf(txtPassWord.getPassword());								
-					NhanVien nv1 =new NhanVien();
-//					FormMainNhanVien fmNhanVien = new FormMainNhanVien(txtUser.getText(),nv1);
-//					fmNhanVien.setVisible(true);
-//					setVisible(false);
-					int r=nvb.login(user, pass);
-					if (r>0) {
+					String pass = String.valueOf(txtPassWord.getPassword());
+					NhanVien nv1 = new NhanVien();
+					// FormMainNhanVien fmNhanVien = new
+					// FormMainNhanVien(txtUser.getText(),nv1);
+					// fmNhanVien.setVisible(true);
+					// setVisible(false);
+					int r = nvb.login(user, pass);
+					if (r > 0) {
 						NhanVien nv = nvb.getNV(r);
-						currentUser.setId(r);
-//						Neu chu vu = 
-						currentUser.setTennv(nv.getTen_nhan_vien());
-						FormMainNhanVien fmNhanVien = new FormMainNhanVien();
-						fmNhanVien.setVisible(true);
+						currentUser.setNv(nv);
+						jfMain ifmain = new jfMain();
+						ifmain.setVisible(true);
 						setVisible(false);
-					}else{
-						JOptionPane.showMessageDialog(null, "Thông tin không chính xác. Xin vui lòng nhập lại.");
+					} else {
+						JOptionPane
+								.showMessageDialog(null,
+										"Thông tin không chính xác. Xin vui lòng nhập lại.");
 						txtPassWord.setText("");
 						txtUser.setText("");
-						}
 					}
+				}
 			});
 			btnDangNhap.setFont(new Font("Cambria Math", Font.PLAIN, 15));
 			btnDangNhap.setBounds(73, 177, 111, 23);
 		}
 		return btnDangNhap;
 	}
+
 	private JLabel getLblTime() {
 		if (lblTime == null) {
 			lblTime = new JLabel("New label");
@@ -156,13 +164,14 @@ public class FormDangNhap extends JFrame {
 		}
 		return lblTime;
 	}
+
 	private JButton getBtnThoat() {
 		if (btnThoat == null) {
 			btnThoat = new JButton("Thoát");
 			btnThoat.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false); //you can't see me!
-					dispose(); //Destroy the JFrame object
+					setVisible(false); // you can't see me!
+					dispose(); // Destroy the JFrame object
 				}
 			});
 			btnThoat.setFont(new Font("Cambria Math", Font.PLAIN, 15));
