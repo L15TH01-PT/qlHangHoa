@@ -2,16 +2,15 @@ package vn.ChuVoiCon.qlHangHoa.UI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JScrollBar;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class jfLoaiSanPham extends JFrame {
 
@@ -24,7 +23,6 @@ public class jfLoaiSanPham extends JFrame {
 	private JButton btnXoa;
 	private JButton btnSua;
 	private JList listLoaiSP;
-
 	/**
 	 * Launch the application.
 	 */
@@ -121,4 +119,5 @@ public class jfLoaiSanPham extends JFrame {
 		}
 		return listLoaiSP;
 	}
+
 }

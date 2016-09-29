@@ -1,11 +1,13 @@
 package vn.ChuVoiCon.qlHangHoa.DAO;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 
+import vn.ChuVoiCon.qlHangHoa.DLL.NhanVien;
 import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
 import vn.ChuVoiCon.qlHangHoa.DLL.nhap_kho;
 
@@ -76,6 +78,70 @@ public class phieu_nhapDAO extends Connect {
 			return r;
 		}
 
+		public ArrayList<NhanVien> getDSNV() {
+			ArrayList<NhanVien> arrNhanVien = new ArrayList<NhanVien>();
+			try {
+				// ResultSet rs =
+				// executeQuery("select * from nhan_vien where id ="+1);
+				// PreparedStatement ps =
+				// getPreparedStatement("select * from nhan_vien where id =?");
+				// ps.setInt(1, 1);
+				PreparedStatement ps = getPreparedStatement("select * from nhan_vien");
+				ResultSet rs = executeQuery(ps);
+				while (rs.next()) {
+					NhanVien nv = new NhanVien();
+					nv.setId(rs.getInt("id"));
+					nv.setMa_nhan_vien(rs.getString("ma_nhan_vien"));
+					nv.setTen_nhan_vien(rs.getString("ho_nhan_vien"));
+					nv.setHo_nhan_vien(rs.getString("ten_nhan_vien"));
+					nv.setPhai(rs.getBoolean("phai"));
+					nv.setNgay_sinh(rs.getDate("ngay_sinh"));
+					nv.setLuong(rs.getInt("luong"));
+					nv.setDia_chi(rs.getString("dia_chi"));
+					nv.setMa_phong_ban(rs.getInt("ma_phong_ban"));
+					nv.setMa_chuc_vu(rs.getInt("ma_chuc_vu"));
+					nv.setTrang_thai(rs.getByte("trang_thai"));
+					nv.setDien_thoai(rs.getString("dien_thoai"));
+					nv.setMat_khau(rs.getString("mat_khau"));
+					nv.setTrang_thai(rs.getInt("trang_thai"));
+					arrNhanVien.add(nv);
+
+				}
+				rs.close();
+				ps.close();
+				return arrNhanVien;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		public ArrayList<nhap_kho> getPhieu() {
+			ArrayList<nhap_kho> arrNhapKho = new ArrayList<nhap_kho>();
+			try {
+				PreparedStatement ps = getPreparedStatement("select * from phieu_nhap");
+			
+				ResultSet rs = executeQuery(ps);
+				if (rs.next()) {
+					nhap_kho nk=new nhap_kho();
+					nk.setMa_phieu_nhap(rs.getInt(1));
+					nk.setNgay_lap(rs.getDate(2));
+					nk.setId_nv(rs.getInt(3));
+					nk.setNgay_huy(rs.getDate(4));
+					arrNhapKho.add(nk);
+				}
+				rs.close();
+				ps.close();
+				return arrNhapKho;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+
+		}
+		
 		public ArrayList<nhap_kho> getDS() throws SQLException {
 			CallableStatement cstm = getCallableStatement(procGetAll);
 			return getDS(cstm);

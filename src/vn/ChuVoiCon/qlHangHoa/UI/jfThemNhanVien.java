@@ -127,7 +127,7 @@ public class jfThemNhanVien extends JFrame {
 	}
 	private JLabel getLabel_11() {
 		if (label_11 == null) {
-			label_11 = new JLabel("Mã Nhân Viên");
+			label_11 = new JLabel("MÃ£ NhÃ¢n ViÃªn");
 			label_11.setBounds(18, 49, 99, 23);
 		}
 		return label_11;
@@ -142,7 +142,7 @@ public class jfThemNhanVien extends JFrame {
 	}
 	private JLabel getLabel_12() {
 		if (label_12 == null) {
-			label_12 = new JLabel("Họ & tên đệm");
+			label_12 = new JLabel("Há»� & tÃªn Ä‘á»‡m");
 			label_12.setBounds(18, 83, 99, 23);
 		}
 		return label_12;
@@ -165,21 +165,21 @@ public class jfThemNhanVien extends JFrame {
 	}
 	private JLabel getLabel_13() {
 		if (label_13 == null) {
-			label_13 = new JLabel("Ngày Sinh");
+			label_13 = new JLabel("NgÃ y Sinh");
 			label_13.setBounds(290, 117, 77, 23);
 		}
 		return label_13;
 	}
 	private JLabel getLabel_14() {
 		if (label_14 == null) {
-			label_14 = new JLabel("Tên NV");
+			label_14 = new JLabel("TÃªn NV");
 			label_14.setBounds(290, 83, 92, 23);
 		}
 		return label_14;
 	}
 	private JRadioButton getRdoNu() {
 		if (rdoNu == null) {
-			rdoNu = new JRadioButton("Nữ");
+			rdoNu = new JRadioButton("Ná»¯");
 			rdoNu.setBounds(185, 117, 67, 23);
 		}
 		return rdoNu;
@@ -193,14 +193,14 @@ public class jfThemNhanVien extends JFrame {
 	}
 	private JLabel getLabel_15() {
 		if (label_15 == null) {
-			label_15 = new JLabel("Giới tính");
+			label_15 = new JLabel("Giá»›i tÃ­nh");
 			label_15.setBounds(18, 117, 99, 23);
 		}
 		return label_15;
 	}
 	private JLabel getLabel_16() {
 		if (label_16 == null) {
-			label_16 = new JLabel("Địa chỉ");
+			label_16 = new JLabel("Ä�á»‹a chá»‰");
 			label_16.setBounds(18, 151, 99, 23);
 		}
 		return label_16;
@@ -223,21 +223,21 @@ public class jfThemNhanVien extends JFrame {
 	}
 	private JLabel getLabel_17() {
 		if (label_17 == null) {
-			label_17 = new JLabel("Điện thoại liên hệ");
+			label_17 = new JLabel("Ä�iá»‡n thoáº¡i liÃªn há»‡");
 			label_17.setBounds(18, 186, 99, 23);
 		}
 		return label_17;
 	}
 	private JLabel getLabel_18() {
 		if (label_18 == null) {
-			label_18 = new JLabel("Tình trạng NV");
+			label_18 = new JLabel("TÃ¬nh tráº¡ng NV");
 			label_18.setBounds(18, 220, 99, 23);
 		}
 		return label_18;
 	}
 	private JLabel getLabel_19() {
 		if (label_19 == null) {
-			label_19 = new JLabel("Phòng ban");
+			label_19 = new JLabel("PhÃ²ng ban");
 			label_19.setBounds(18, 254, 99, 23);
 		}
 		return label_19;
@@ -260,21 +260,21 @@ public class jfThemNhanVien extends JFrame {
 	}
 	private JLabel getLabel_20() {
 		if (label_20 == null) {
-			label_20 = new JLabel("Chức vụ");
+			label_20 = new JLabel("Chá»©c vá»¥");
 			label_20.setBounds(290, 220, 59, 23);
 		}
 		return label_20;
 	}
 	private JLabel getLabel_21() {
 		if (label_21 == null) {
-			label_21 = new JLabel("Lương");
+			label_21 = new JLabel("LÆ°Æ¡ng");
 			label_21.setBounds(290, 186, 59, 23);
 		}
 		return label_21;
 	}
 	private JButton getBtnThemNV() {
 		if (btnThemNV == null) {
-			btnThemNV = new JButton("Thêm");
+			btnThemNV = new JButton("ThÃªm");
 			btnThemNV.setBounds(188, 320, 153, 33);
 			btnThemNV.setIcon(new ImageIcon("E:\\Programs\\icon\\3xhumed-Mega-Games-Pack-31-Dragon-Age-Origins-new-4.ico"));
 		}
