@@ -1,4 +1,3 @@
-
 package vn.ChuVoiCon.qlHangHoa.UI;
 
 import java.awt.BorderLayout;
@@ -39,7 +38,7 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private ArrayList<chi_tiet_san_pham> arrCTSP = new ArrayList<chi_tiet_san_pham>();
 	ChiTietSanPhamBUS ctspb = new ChiTietSanPhamBUS();
 	LoaiSanPhamBUS lspb = new LoaiSanPhamBUS();
-	NhaCungCapBUS nccb=new NhaCungCapBUS();
+	NhaCungCapBUS nccb = new NhaCungCapBUS();
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
@@ -63,6 +62,8 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private DefaultTableModel dtmSanPham;
 	private JTextField txtDVT;
 	private JLabel lblnVTnh;
+	private JTextField txtDonGia;
+	private JLabel lblnGi;
 
 	/**
 	 * Launch the application.
@@ -113,26 +114,29 @@ public class jfChiTietSanPham extends JInternalFrame {
 		btnThem.setEnabled(false);
 		btnXoa.setEnabled(false);
 		btnSua.setEnabled(false);
+		contentPane.add(getTxtDonGia());
+		contentPane.add(getLblnGi());
 
 		for (loai_san_pham lspham : lspb.getDSLSP()) {
-			//Object data1[] = new Object[] { lspham.getId_loai() };
+			// Object data1[] = new Object[] { lspham.getId_loai() };
 			cboMaLSP.addItem(lspham.getId_loai());
-			
+
 		}
-		
+
 		for (nha_cung_cap nccap : nccb.getDSNCC()) {
-			//Object data1[] = new Object[] { lspham.getId_loai() };
+			// Object data1[] = new Object[] { lspham.getId_loai() };
 			cboMaNCC.addItem(nccap.getId_ncc());
-			
+
 		}
 
 		arrCTSP = ctspb.getDSCTSP();
 		for (chi_tiet_san_pham ctspham : arrCTSP) {
-			Object data[] = new Object[] { ctspham.getId_sp(), ctspham.getId_loai(),
-					ctspham.getTen_loai(), ctspham.getId_ncc(),
-					ctspham.getTen_sp(), ctspham.getNoi_dung(),
-					ctspham.getBao_hanh(), ctspham.getDon_vi_tinh() };
-			dtmSanPham.addRow(data);			
+			Object data[] = new Object[] { ctspham.getId_sp(),
+					ctspham.getId_loai(), ctspham.getTen_loai(),
+					ctspham.getId_ncc(), ctspham.getTen_sp(),
+					ctspham.getNoi_dung(), ctspham.getBao_hanh(),
+					ctspham.getDon_vi_tinh(),ctspham.getDon_gia() };
+			dtmSanPham.addRow(data);
 		}
 	}
 
@@ -152,7 +156,7 @@ public class jfChiTietSanPham extends JInternalFrame {
 				@SuppressWarnings("deprecation")
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					JFrame jfLSP=new jfLoaiSanPham();
+					JFrame jfLSP = new jfLoaiSanPham();
 					jfLSP.setVisible(true);
 					jfChiTietSanPham.this.dispose();
 				}
@@ -169,7 +173,7 @@ public class jfChiTietSanPham extends JInternalFrame {
 			lblNewLabel_2.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					JFrame jfNCC=new jfNhaCungCap();
+					JFrame jfNCC = new jfNhaCungCap();
 					jfNCC.setVisible(true);
 					jfChiTietSanPham.this.dispose();
 				}
@@ -258,34 +262,35 @@ public class jfChiTietSanPham extends JInternalFrame {
 		return txtpNoiDung;
 	}
 
-	private void getJTable(){
-		arrCTSP=ctspb.getDSCTSP();
-		while(getDtmSanPham().getRowCount() > 0)
-		{
+	private void getJTable() {
+		arrCTSP = ctspb.getDSCTSP();
+		while (getDtmSanPham().getRowCount() > 0) {
 			getDtmSanPham().removeRow(0);
-		}		
+		}
 		for (chi_tiet_san_pham ctspham : arrCTSP) {
-			Object data[] = new Object[] { ctspham.getId_sp(), ctspham.getId_loai(),
-					ctspham.getTen_loai(), ctspham.getId_ncc(),
-					ctspham.getTen_sp(), ctspham.getNoi_dung(),
-					ctspham.getBao_hanh(), ctspham.getDon_vi_tinh() };
-			dtmSanPham.addRow(data);			
+			Object data[] = new Object[] { ctspham.getId_sp(),
+					ctspham.getId_loai(), ctspham.getTen_loai(),
+					ctspham.getId_ncc(), ctspham.getTen_sp(),
+					ctspham.getNoi_dung(), ctspham.getBao_hanh(),
+					ctspham.getDon_vi_tinh(), ctspham.getDon_gia() };
+			dtmSanPham.addRow(data);
 		}
 	}
-	
+
 	private JButton getBtnThem() {
 		if (btnThem == null) {
 			btnThem = new JButton("Th\u00EAm");
 			btnThem.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					String a=txtMaSP.getText();
-					String b=txtTenSP.getText();
-					int c=Integer.parseInt(txtBaoHanh.getText());
-					String d=txtDVT.getText();
-					String e=txtpNoiDung.getText();
-					String f=cboMaLSP.getSelectedItem().toString();
-					String g=cboMaNCC.getSelectedItem().toString();
-					ctspb.addSP(a,f,g,b,e,c,d);
+					String a = txtMaSP.getText();
+					String b = txtTenSP.getText();
+					int c = Integer.parseInt(txtBaoHanh.getText());
+					String d = txtDVT.getText();
+					String e = txtpNoiDung.getText();
+					String f = cboMaLSP.getSelectedItem().toString();
+					String g = cboMaNCC.getSelectedItem().toString();
+					double h = Double.parseDouble(txtDonGia.getText());
+					ctspb.addSP(a, f, g, b, e, c, d, h);
 					JOptionPane.showMessageDialog(null, "Thêm thành công");
 					getJTable();
 					getRefresh();
@@ -301,18 +306,19 @@ public class jfChiTietSanPham extends JInternalFrame {
 			btnXoa = new JButton("Xo\u00E1");
 			btnXoa.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					int index=tableSanPham.getSelectedRow();
-					if(index!=-1){
-						String a=tableSanPham.getValueAt(index, 0).toString();	
-						Object[] message = {null, "Thông Báo", null, "Bạn có muốn xoá không?"};
-					    Object[] options = { "Yes", "No" };
-					    int n = JOptionPane.showOptionDialog(new JFrame(),
-					            message, "",
-					            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-					            options, options[1]);
-					    if(n == JOptionPane.OK_OPTION){ 
-					    	ctspb.deleteSP(a);
-							String b="";							
+					int index = tableSanPham.getSelectedRow();
+					if (index != -1) {
+						String a = tableSanPham.getValueAt(index, 0).toString();
+						Object[] message = { null, "Thông Báo", null,
+								"Bạn có muốn xoá không?" };
+						Object[] options = { "Yes", "No" };
+						int n = JOptionPane.showOptionDialog(new JFrame(),
+								message, "", JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, options,
+								options[1]);
+						if (n == JOptionPane.OK_OPTION) {
+							ctspb.deleteSP(a);
+							String b = "";
 							txtMaSP.setText(b);
 							txtTenSP.setText(b);
 							txtBaoHanh.setText(b);
@@ -320,10 +326,11 @@ public class jfChiTietSanPham extends JInternalFrame {
 							txtpNoiDung.setText(b);
 							cboMaLSP.setSelectedIndex(0);
 							cboMaNCC.setSelectedIndex(0);
-							JOptionPane.showMessageDialog(null, "Xoá thành công");
-					    }
-					    if(n == JOptionPane.NO_OPTION){ 
-					    }						
+							JOptionPane.showMessageDialog(null,
+									"Xoá thành công");
+						}
+						if (n == JOptionPane.NO_OPTION) {
+						}
 						getJTable();
 					}
 				}
@@ -338,18 +345,19 @@ public class jfChiTietSanPham extends JInternalFrame {
 			btnSua = new JButton("S\u1EEDa");
 			btnSua.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					int index=tableSanPham.getSelectedRow();
-					if(index!=-1){
-						String a=txtMaSP.getText();
-						String b=txtTenSP.getText();
-						int c=Integer.parseInt(txtBaoHanh.getText());
-						String d=txtDVT.getText();
-						String e=txtpNoiDung.getText();
-						String f=cboMaLSP.getSelectedItem().toString();
-						String g=cboMaNCC.getSelectedItem().toString();
-						ctspb.editSP(a,f,g,b,e,c,d);
+					int index = tableSanPham.getSelectedRow();
+					if (index != -1) {
+						String a = txtMaSP.getText();
+						String b = txtTenSP.getText();
+						int c = Integer.parseInt(txtBaoHanh.getText());
+						String d = txtDVT.getText();
+						String e = txtpNoiDung.getText();
+						String f = cboMaLSP.getSelectedItem().toString();
+						String g = cboMaNCC.getSelectedItem().toString();
+						double h = Double.parseDouble(txtDonGia.getText());
+						ctspb.editSP(a, f, g, b, e, c, d, h);
 						JOptionPane.showMessageDialog(null, "Sửa thành công");
-						getJTable();						
+						getJTable();
 					}
 				}
 			});
@@ -358,9 +366,9 @@ public class jfChiTietSanPham extends JInternalFrame {
 		return btnSua;
 	}
 
-	private void getRefresh(){
+	private void getRefresh() {
 		btnThem.setEnabled(true);
-		String b="";							
+		String b = "";
 		txtMaSP.setText(b);
 		txtTenSP.setText(b);
 		txtBaoHanh.setText(b);
@@ -369,7 +377,7 @@ public class jfChiTietSanPham extends JInternalFrame {
 		cboMaLSP.setSelectedIndex(0);
 		cboMaNCC.setSelectedIndex(0);
 	}
-	
+
 	private JButton getBtnNhapLai() {
 		if (btnNhapLai == null) {
 			btnNhapLai = new JButton("Tạo Mới");
@@ -398,18 +406,27 @@ public class jfChiTietSanPham extends JInternalFrame {
 			tableSanPham.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					int index=tableSanPham.getSelectedRow();
-					if(index!=-1){
+					int index = tableSanPham.getSelectedRow();
+					if (index != -1) {
 						btnXoa.setEnabled(true);
 						btnSua.setEnabled(true);
 						btnThem.setEnabled(false);
-						txtMaSP.setText(tableSanPham.getValueAt(index, 0).toString());
-						cboMaLSP.setSelectedItem(tableSanPham.getValueAt(index, 1));
-						cboMaNCC.setSelectedItem(tableSanPham.getValueAt(index, 3));
-						txtpNoiDung.setText(tableSanPham.getValueAt(index, 5).toString());
-						txtBaoHanh.setText(tableSanPham.getValueAt(index, 6).toString());
-						txtTenSP.setText(tableSanPham.getValueAt(index, 4).toString());						
-						txtDVT.setText(tableSanPham.getValueAt(index, 7).toString());
+						txtMaSP.setText(tableSanPham.getValueAt(index, 0)
+								.toString());
+						cboMaLSP.setSelectedItem(tableSanPham.getValueAt(index,
+								1));
+						cboMaNCC.setSelectedItem(tableSanPham.getValueAt(index,
+								3));
+						txtpNoiDung.setText(tableSanPham.getValueAt(index, 5)
+								.toString());
+						txtBaoHanh.setText(tableSanPham.getValueAt(index, 6)
+								.toString());
+						txtTenSP.setText(tableSanPham.getValueAt(index, 4)
+								.toString());
+						txtDVT.setText(tableSanPham.getValueAt(index, 7)
+								.toString());
+						txtDonGia.setText(tableSanPham.getValueAt(index, 8)
+								.toString());
 					}
 				}
 			});
@@ -424,7 +441,7 @@ public class jfChiTietSanPham extends JInternalFrame {
 	}
 
 	/**
-	 * @wbp.nonvisual location=557,109
+	 * @wbp.nonvisual location=607,269
 	 */
 	private DefaultTableModel getDtmSanPham() {
 		if (dtmSanPham == null) {
@@ -438,9 +455,11 @@ public class jfChiTietSanPham extends JInternalFrame {
 			dtmSanPham.addColumn("Nội Dung Sản Phẩm");
 			dtmSanPham.addColumn("Bảo Hành");
 			dtmSanPham.addColumn("Đơn Vị Tính");
+			dtmSanPham.addColumn("Đơn giá");
 		}
 		return dtmSanPham;
 	}
+
 	private JTextField getTxtDVT() {
 		if (txtDVT == null) {
 			txtDVT = new JTextField();
@@ -449,6 +468,7 @@ public class jfChiTietSanPham extends JInternalFrame {
 		}
 		return txtDVT;
 	}
+
 	private JLabel getLblnVTnh() {
 		if (lblnVTnh == null) {
 			lblnVTnh = new JLabel("Đơn vị tính");
@@ -456,5 +476,23 @@ public class jfChiTietSanPham extends JInternalFrame {
 			lblnVTnh.setBounds(290, 61, 78, 14);
 		}
 		return lblnVTnh;
+	}
+
+	private JTextField getTxtDonGia() {
+		if (txtDonGia == null) {
+			txtDonGia = new JTextField();
+			txtDonGia.setColumns(10);
+			txtDonGia.setBounds(528, 61, 85, 20);
+		}
+		return txtDonGia;
+	}
+
+	private JLabel getLblnGi() {
+		if (lblnGi == null) {
+			lblnGi = new JLabel("Đơn giá");
+			lblnGi.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			lblnGi.setBounds(459, 63, 78, 14);
+		}
+		return lblnGi;
 	}
 }

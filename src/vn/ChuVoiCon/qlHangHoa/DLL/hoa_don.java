@@ -5,18 +5,19 @@ import java.util.ArrayList;
 
 
 public class hoa_don {
-	private long ma_hoa_don;
+	private int ma_hoa_don;
 	private Date ngay_lap;
 	private String ten_khach_hang;
 	private int id_nv;
+	private NhanVien nv;
 	private String ghi_chu;
 	private Date ngay_huy;
 	private ArrayList<chi_tiet_hoa_don> chi_tiet_hoa_dons;
 	
-	public long getMa_hoa_don() {
+	public int getMa_hoa_don() {
 		return ma_hoa_don;
 	}
-	public void setMa_hoa_don(long ma_hoa_don) {
+	public void setMa_hoa_don(int ma_hoa_don) {
 		this.ma_hoa_don = ma_hoa_don;
 	}
 	public Date getNgay_lap() {
@@ -36,6 +37,12 @@ public class hoa_don {
 	}
 	public void setId_nv(int id_nv) {
 		this.id_nv = id_nv;
+	}
+	public NhanVien getNv() {
+		return nv;
+	}
+	public void setNv(NhanVien nv) {
+		this.nv = nv;
 	}
 	public String getGhi_chu() {
 		return ghi_chu;

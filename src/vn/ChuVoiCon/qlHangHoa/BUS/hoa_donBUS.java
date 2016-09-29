@@ -32,7 +32,7 @@ public class hoa_donBUS {
 		return null;
 	}
 
-	public hoa_don getData(long ma_hoa_don) {
+	public hoa_don getData(int ma_hoa_don) {
 		try {
 			return hdDAO.getData(ma_hoa_don);
 		} catch (SQLException e) {
@@ -52,7 +52,7 @@ public class hoa_donBUS {
 
 	public int Del(hoa_don hd) {
 		try {
-			return hdDAO.Delete(hd);
+			return hdDAO.Delete(hd.getMa_hoa_don());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

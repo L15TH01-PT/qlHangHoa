@@ -22,6 +22,12 @@ import javax.swing.JTable;
 import javax.swing.JTabbedPane;
 import java.awt.CardLayout;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import vn.ChuVoiCon.qlHangHoa.BUS.ChiTietSanPhamBUS;
+import vn.ChuVoiCon.qlHangHoa.BUS.hoa_donBUS;
+import vn.ChuVoiCon.qlHangHoa.DLL.chi_tiet_san_pham;
+import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -32,13 +38,16 @@ import java.awt.Insets;
 
 public class jfHoaDon extends JInternalFrame {
 
+	private hoa_donBUS hdb;
+	private ChiTietSanPhamBUS ctspb;
+
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
 	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JPanel panel_4;
-	private JLabel label;
+	private JLabel lblMHan;
 	private JLabel label_1;
 	private JLabel label_2;
 	private JTextField txtMaPhieu;
@@ -51,7 +60,7 @@ public class jfHoaDon extends JInternalFrame {
 	private JTable tbSanPham;
 	private JPanel panel_3;
 	private JButton button_3;
-	private JTable table_2;
+	private JTable tbDSHoaDon;
 	private JScrollPane scrollPane_2;
 	private JPanel panel_5;
 	private JRadioButton rdbtnNewRadioButton;
@@ -80,32 +89,65 @@ public class jfHoaDon extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public jfHoaDon() {
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Hóa đơn");
 		setBounds(100, 100, 750, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
 		contentPane.add(getTabbedPane_1());
+
+		hdb = new hoa_donBUS();
+		ctspb=new ChiTietSanPhamBUS();
+		getDSHD();
+		getDSSP();
 	}
+
+	private void getDSHD() {
+		DefaultTableModel tbm = (DefaultTableModel) getTbDSHoaDon().getModel();
+		for (hoa_don item : hdb.getDS()) {
+			Object[] t = new Object[]{
+					item.getMa_hoa_don(),
+					item.getNgay_lap(),
+					item.getTen_khach_hang(),
+					item.getNv().getTen_nhan_vien(),
+					item.getGhi_chu()
+			};
+			tbm.addRow(t);
+		}
+	}
+	private void getDSSP() {
+		DefaultTableModel tbm = (DefaultTableModel) getTbSanPham().getModel();
+		for (chi_tiet_san_pham item : ctspb.getDSCTSP()) {
+			Object[] t = new Object[]{
+					item.getId_sp(),
+					item.getTen_sp(),
+					item.getDon_vi_tinh(),
+					item.getDon_gia()
+			};
+			tbm.addRow(t);
+		}
+	}
+
 	private JTabbedPane getTabbedPane_1() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			tabbedPane.addTab("New tab", null, getPanel_8(), null);
-			tabbedPane.addTab("New tab", null, getPanel_1_1(), null);
+			tabbedPane.addTab("Chi tiết", null, getPanel_8(), null);
+			tabbedPane.addTab("Danh sách", null, getPanel_1_1(), null);
 		}
 		return tabbedPane;
 	}
+
 	private JPanel getPanel_8() {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setLayout(new FormLayout(new ColumnSpec[] {
 					ColumnSpec.decode("default:grow"),
-					ColumnSpec.decode("default:grow"),},
-				new RowSpec[] {
+					ColumnSpec.decode("default:grow"), }, new RowSpec[] {
 					RowSpec.decode("top:200px"),
 					RowSpec.decode("fill:default"),
-					RowSpec.decode("bottom:60px"),}));
+					RowSpec.decode("bottom:60px"), }));
 			panel.add(getPanel_2_1(), "1, 1, 2, 1, fill, fill");
 			panel.add(getScrollPane_1(), "1, 2, fill, fill");
 			panel.add(getScrollPane(), "2, 2, fill, fill");
@@ -113,6 +155,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return panel;
 	}
+
 	private JPanel getPanel_1_1() {
 		if (panel_1 == null) {
 			panel_1 = new JPanel();
@@ -122,6 +165,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return panel_1;
 	}
+
 	private JPanel getPanel_2_1() {
 		if (panel_2 == null) {
 			panel_2 = new JPanel();
@@ -132,24 +176,27 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return panel_2;
 	}
+
 	private JPanel getPanel_4() {
 		if (panel_4 == null) {
 			panel_4 = new JPanel();
-			panel_4.setBorder(new TitledBorder(null, "Th\u00F4ng Tin", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panel_4.setBorder(new TitledBorder(null, "Th\u00F4ng Tin",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panel_4.setBounds(10, 10, 500, 178);
 			GridBagLayout gbl_panel_4 = new GridBagLayout();
-			gbl_panel_4.columnWidths = new int[] {38, 0, 200, 0};
-			gbl_panel_4.rowHeights = new int[] {0, 0, 0, 0, 0, 0};
-			gbl_panel_4.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0};
-			gbl_panel_4.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+			gbl_panel_4.columnWidths = new int[] { 38, 0, 200, 0 };
+			gbl_panel_4.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+			gbl_panel_4.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0 };
+			gbl_panel_4.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+					0.0 };
 			panel_4.setLayout(gbl_panel_4);
-			GridBagConstraints gbc_label = new GridBagConstraints();
-			gbc_label.anchor = GridBagConstraints.NORTH;
-			gbc_label.fill = GridBagConstraints.HORIZONTAL;
-			gbc_label.insets = new Insets(0, 0, 5, 5);
-			gbc_label.gridx = 1;
-			gbc_label.gridy = 1;
-			panel_4.add(getLabel(), gbc_label);
+			GridBagConstraints gbc_lblMHan = new GridBagConstraints();
+			gbc_lblMHan.anchor = GridBagConstraints.NORTH;
+			gbc_lblMHan.fill = GridBagConstraints.HORIZONTAL;
+			gbc_lblMHan.insets = new Insets(0, 0, 5, 5);
+			gbc_lblMHan.gridx = 1;
+			gbc_lblMHan.gridy = 1;
+			panel_4.add(getLblMHan(), gbc_lblMHan);
 			GridBagConstraints gbc_txtMaPhieu = new GridBagConstraints();
 			gbc_txtMaPhieu.anchor = GridBagConstraints.NORTH;
 			gbc_txtMaPhieu.fill = GridBagConstraints.HORIZONTAL;
@@ -199,24 +246,28 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return panel_4;
 	}
-	private JLabel getLabel() {
-		if (label == null) {
-			label = new JLabel("Mã phiếu");
+
+	private JLabel getLblMHan() {
+		if (lblMHan == null) {
+			lblMHan = new JLabel("Mã hóa đơn");
 		}
-		return label;
+		return lblMHan;
 	}
+
 	private JLabel getLabel_1() {
 		if (label_1 == null) {
 			label_1 = new JLabel("Ngày lập");
 		}
 		return label_1;
 	}
+
 	private JLabel getLabel_2() {
 		if (label_2 == null) {
 			label_2 = new JLabel("Nhân Viên");
 		}
 		return label_2;
 	}
+
 	private JTextField getTxtMaPhieu() {
 		if (txtMaPhieu == null) {
 			txtMaPhieu = new JTextField();
@@ -225,6 +276,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return txtMaPhieu;
 	}
+
 	private JTextField getTxtNgayLap() {
 		if (txtNgayLap == null) {
 			txtNgayLap = new JTextField();
@@ -233,6 +285,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return txtNgayLap;
 	}
+
 	private JTextField getTxtNhanVien() {
 		if (txtNhanVien == null) {
 			txtNhanVien = new JTextField();
@@ -241,6 +294,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return txtNhanVien;
 	}
+
 	private JButton getBtnLap() {
 		if (btnLap == null) {
 			btnLap = new JButton("Lập Phiếu");
@@ -248,6 +302,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return btnLap;
 	}
+
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
@@ -255,29 +310,33 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return scrollPane;
 	}
+
 	private JTable getTbChiTiet() {
 		if (tbChiTiet == null) {
 			tbChiTiet = new JTable();
-			tbChiTiet.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-					"M\u00E3 s\u1EA3n ph\u1EA9m", "T\u00EAn s\u1EA3n ph\u1EA9m", "\u0110\u01A1n v\u1ECB t\u00EDnh", "\u0110\u01A1n gi\u00E1", "S\u1ED1 l\u01B0\u1EE3ng", "Th\u00E0nh ti\u1EC1n"
-				}
-			) {
-				Class[] columnTypes = new Class[] {
-					Object.class, Object.class, String.class, Double.class, Integer.class, Object.class
-				};
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, true, true
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
+			tbChiTiet
+					.setModel(new DefaultTableModel(new Object[][] {},
+							new String[] { "M\u00E3 s\u1EA3n ph\u1EA9m",
+									"T\u00EAn s\u1EA3n ph\u1EA9m",
+									"\u0110\u01A1n v\u1ECB t\u00EDnh",
+									"\u0110\u01A1n gi\u00E1",
+									"S\u1ED1 l\u01B0\u1EE3ng",
+									"Th\u00E0nh ti\u1EC1n" }) {
+						Class[] columnTypes = new Class[] { Object.class,
+								Object.class, String.class, Double.class,
+								Integer.class, Object.class };
+
+						public Class getColumnClass(int columnIndex) {
+							return columnTypes[columnIndex];
+						}
+
+						boolean[] columnEditables = new boolean[] { false,
+								false, false, false, true, true };
+
+						public boolean isCellEditable(int row, int column) {
+							return columnEditables[column];
+						}
+					});
 			tbChiTiet.getColumnModel().getColumn(0).setPreferredWidth(110);
 			tbChiTiet.getColumnModel().getColumn(0).setMinWidth(110);
 			tbChiTiet.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -293,6 +352,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return tbChiTiet;
 	}
+
 	private JScrollPane getScrollPane_1() {
 		if (scrollPane_1 == null) {
 			scrollPane_1 = new JScrollPane();
@@ -300,6 +360,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return scrollPane_1;
 	}
+
 	private JTable getTbSanPham() {
 		if (tbSanPham == null) {
 			tbSanPham = new JTable();
@@ -307,11 +368,11 @@ public class jfHoaDon extends JInternalFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"M\u00E3 s\u1EA3n ph\u1EA9m", "T\u00EAn s\u1EA3n ph\u1EA9m", "\u0110\u01A1n v\u1ECB t\u00EDnh"
+					"M\u00E3 s\u1EA3n ph\u1EA9m", "T\u00EAn s\u1EA3n ph\u1EA9m", "\u0110\u01A1n v\u1ECB t\u00EDnh", "\u0110\u01A1n gi\u00E1"
 				}
 			) {
 				Class[] columnTypes = new Class[] {
-					String.class, Object.class, String.class
+					String.class, Object.class, String.class, Object.class
 				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
@@ -320,50 +381,80 @@ public class jfHoaDon extends JInternalFrame {
 			tbSanPham.getColumnModel().getColumn(0).setPreferredWidth(111);
 			tbSanPham.getColumnModel().getColumn(1).setPreferredWidth(338);
 			tbSanPham.getColumnModel().getColumn(2).setPreferredWidth(154);
+			tbSanPham.getColumnModel().getColumn(3).setPreferredWidth(150);
+			tbSanPham.getColumnModel().getColumn(3).setMinWidth(0);
+			tbSanPham.getColumnModel().getColumn(3).setMaxWidth(150);
 		}
 		return tbSanPham;
 	}
+
 	private JPanel getPanel_3() {
 		if (panel_3 == null) {
 			panel_3 = new JPanel();
 			GroupLayout gl_panel_3 = new GroupLayout(panel_3);
-			gl_panel_3.setHorizontalGroup(
-				gl_panel_3.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_panel_3.createSequentialGroup()
-						.addContainerGap(545, Short.MAX_VALUE)
-						.addComponent(getButton_3())
-						.addGap(25))
-			);
-			gl_panel_3.setVerticalGroup(
-				gl_panel_3.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_3.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(getButton_3(), GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGap(41))
-			);
+			gl_panel_3.setHorizontalGroup(gl_panel_3.createParallelGroup(
+					Alignment.TRAILING).addGroup(
+					gl_panel_3.createSequentialGroup()
+							.addContainerGap(545, Short.MAX_VALUE)
+							.addComponent(getButton_3()).addGap(25)));
+			gl_panel_3.setVerticalGroup(gl_panel_3.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					gl_panel_3
+							.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(getButton_3(),
+									GroupLayout.DEFAULT_SIZE,
+									GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(41)));
 			panel_3.setLayout(gl_panel_3);
 		}
 		return panel_3;
 	}
+
 	private JButton getButton_3() {
 		if (button_3 == null) {
 			button_3 = new JButton("Xóa 1 Sản phẩm");
 		}
 		return button_3;
 	}
-	private JTable getTable_2() {
-		if (table_2 == null) {
-			table_2 = new JTable();
+
+	private JTable getTbDSHoaDon() {
+		if (tbDSHoaDon == null) {
+			tbDSHoaDon = new JTable();
+			tbDSHoaDon.setModel(new DefaultTableModel(new Object[][] {},
+					new String[] { "M\u00E3 h\u00F3a \u0111\u01A1n",
+							"Ng\u00E0y l\u1EADp",
+							"T\u00EAn kh\u00E1ch h\u00E0ng",
+							"Nh\u00E2n vi\u00EAn", "Ghi ch\u00FA" }) {
+				Class[] columnTypes = new Class[] { Integer.class,
+						String.class, String.class, String.class, String.class };
+
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			});
+			tbDSHoaDon.getColumnModel().getColumn(0).setPreferredWidth(100);
+			tbDSHoaDon.getColumnModel().getColumn(0).setMinWidth(100);
+			tbDSHoaDon.getColumnModel().getColumn(1).setPreferredWidth(100);
+			tbDSHoaDon.getColumnModel().getColumn(1).setMinWidth(100);
+			tbDSHoaDon.getColumnModel().getColumn(2).setPreferredWidth(150);
+			tbDSHoaDon.getColumnModel().getColumn(2).setMinWidth(150);
+			tbDSHoaDon.getColumnModel().getColumn(3).setPreferredWidth(150);
+			tbDSHoaDon.getColumnModel().getColumn(3).setMinWidth(150);
+			tbDSHoaDon.getColumnModel().getColumn(4).setPreferredWidth(150);
+			tbDSHoaDon.getColumnModel().getColumn(4).setMinWidth(150);
 		}
-		return table_2;
+		return tbDSHoaDon;
 	}
+
 	private JScrollPane getScrollPane_2() {
 		if (scrollPane_2 == null) {
 			scrollPane_2 = new JScrollPane();
-			scrollPane_2.setViewportView(getTable_2());
+			scrollPane_2.setViewportView(getTbDSHoaDon());
 		}
 		return scrollPane_2;
 	}
+
 	private JPanel getPanel_5() {
 		if (panel_5 == null) {
 			panel_5 = new JPanel();
@@ -373,6 +464,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return panel_5;
 	}
+
 	private JRadioButton getRdbtnNewRadioButton() {
 		if (rdbtnNewRadioButton == null) {
 			rdbtnNewRadioButton = new JRadioButton("New radio button");
@@ -380,6 +472,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return rdbtnNewRadioButton;
 	}
+
 	private JRadioButton getRdbtnNewRadioButton_1() {
 		if (rdbtnNewRadioButton_1 == null) {
 			rdbtnNewRadioButton_1 = new JRadioButton("New radio button");
@@ -387,12 +480,14 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return rdbtnNewRadioButton_1;
 	}
+
 	private JLabel getLblTnKhchHng() {
 		if (lblTnKhchHng == null) {
 			lblTnKhchHng = new JLabel("Tên khách hàng");
 		}
 		return lblTnKhchHng;
 	}
+
 	private JTextField getTxtTenKhachHang() {
 		if (txtTenKhachHang == null) {
 			txtTenKhachHang = new JTextField();
@@ -400,6 +495,7 @@ public class jfHoaDon extends JInternalFrame {
 		}
 		return txtTenKhachHang;
 	}
+
 	private JButton getButton_1_1() {
 		if (btnHuy == null) {
 			btnHuy = new JButton("Hủy phiếu");
@@ -408,4 +504,3 @@ public class jfHoaDon extends JInternalFrame {
 		return btnHuy;
 	}
 }
-
