@@ -31,6 +31,7 @@ public class jfKho extends JFrame {
 	private JButton btnLpPhiu;
 	private JButton btnHyPhiu;
 	private JButton btnDanhSch;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -54,7 +55,7 @@ public class jfKho extends JFrame {
 	public jfKho() {
 		setTitle("Phi\u1EBFu Nh\u1EADp");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 474, 488);
+		setBounds(100, 100, 474, 522);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,6 +65,7 @@ public class jfKho extends JFrame {
 		contentPane.add(getBtnLpPhiu());
 		contentPane.add(getBtnHyPhiu());
 		contentPane.add(getBtnDanhSch());
+		contentPane.add(getBtnNewButton());
 	}
 	private JPanel getPanel() {
 		if (panel == null) {
@@ -104,6 +106,7 @@ public class jfKho extends JFrame {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
+			textField.setEnabled(false);
 			textField.setBounds(112, 26, 140, 20);
 			textField.setColumns(10);
 		}
@@ -112,6 +115,7 @@ public class jfKho extends JFrame {
 	private JTextField getTextField_1() {
 		if (textField_1 == null) {
 			textField_1 = new JTextField();
+			textField_1.setEnabled(false);
 			textField_1.setColumns(10);
 			textField_1.setBounds(112, 51, 140, 20);
 		}
@@ -120,6 +124,7 @@ public class jfKho extends JFrame {
 	private JTextField getTextField_2() {
 		if (textField_2 == null) {
 			textField_2 = new JTextField();
+			textField_2.setEnabled(false);
 			textField_2.setColumns(10);
 			textField_2.setBounds(112, 76, 140, 20);
 		}
@@ -167,22 +172,29 @@ public class jfKho extends JFrame {
 	private JButton getBtnLpPhiu() {
 		if (btnLpPhiu == null) {
 			btnLpPhiu = new JButton("L\u1EADp Phi\u1EBFu");
-			btnLpPhiu.setBounds(336, 35, 112, 23);
+			btnLpPhiu.setBounds(336, 35, 112, 40);
 		}
 		return btnLpPhiu;
 	}
 	private JButton getBtnHyPhiu() {
 		if (btnHyPhiu == null) {
 			btnHyPhiu = new JButton("H\u1EE7y Phi\u1EBFu");
-			btnHyPhiu.setBounds(336, 69, 112, 23);
+			btnHyPhiu.setBounds(180, 450, 130, 23);
 		}
 		return btnHyPhiu;
 	}
 	private JButton getBtnDanhSch() {
 		if (btnDanhSch == null) {
 			btnDanhSch = new JButton("Danh s\u00E1ch");
-			btnDanhSch.setBounds(336, 103, 112, 23);
+			btnDanhSch.setBounds(336, 86, 112, 40);
 		}
 		return btnDanhSch;
+	}
+	private JButton getBtnNewButton() {
+		if (btnNewButton == null) {
+			btnNewButton = new JButton("Xóa 1 Sản phẩm");
+			btnNewButton.setBounds(324, 450, 124, 23);
+		}
+		return btnNewButton;
 	}
 }

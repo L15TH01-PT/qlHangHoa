@@ -1,18 +1,18 @@
 package vn.ChuVoiCon.qlHangHoa.DLL;
 
-public class chi_tiet_nhap_kho {
+public class chi_tiet_phieu_nhap {
 	private int ma_phieu_nhap;
 	private String ma_san_pham;
 	private int so_luong;
-	private float don_gia;
-	private nhap_kho nhap_kho;
+	private double don_gia;
+	private phieu_nhap phieu;
 	
-	public nhap_kho getNhap_kho() {
-		return nhap_kho;
+	public phieu_nhap getPhieu_nhap() {
+		return phieu;
 	}
 
-	public void setNhap_kho(nhap_kho nhap_kho) {
-		this.nhap_kho = nhap_kho;
+	public void setPhieu_nhap(phieu_nhap phieu) {
+		this.phieu = phieu;
 	}
 
 	public int getMa_phieu_nhap() {
@@ -39,11 +39,11 @@ public class chi_tiet_nhap_kho {
 		this.so_luong = so_luong;
 	}
 
-	public float getDon_gia() {
+	public double getDon_gia() {
 		return don_gia;
 	}
 
-	public void setDon_gia(float don_gia) {
+	public void setDon_gia(double don_gia) {
 		this.don_gia = don_gia;
 	}
 	
