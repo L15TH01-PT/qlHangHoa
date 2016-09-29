@@ -6,23 +6,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vn.ChuVoiCon.qlHangHoa.DAO.Connect;
-import vn.ChuVoiCon.qlHangHoa.DLL.LoaiSanPham;
+import vn.ChuVoiCon.qlHangHoa.DAO.LoaiSanPhamDAO;
+import vn.ChuVoiCon.qlHangHoa.DLL.loai_san_pham;
 
 public class LoaiSanPhamBUS extends Connect{
-	public ArrayList<LoaiSanPham> getDSLSP() {
-		ArrayList<LoaiSanPham> arrLSP = new ArrayList<LoaiSanPham>();
-		try {
-			PreparedStatement ps=getPreparedStatement("select * from loai_san_pham");
-			ResultSet rs=executeQuery(ps);
-			while(rs.next()) {
-				LoaiSanPham lsp=new LoaiSanPham();
-				lsp.setTen_loai(rs.getString("ten_loai"));
-				arrLSP.add(lsp);
-			}
-			return arrLSP;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+	LoaiSanPhamDAO lspd=new LoaiSanPhamDAO();
+	
+	public ArrayList<loai_san_pham> getDSLSP() {
+		ArrayList<loai_san_pham> arrLSP = new ArrayList<loai_san_pham>();
+		arrLSP=lspd.getDSLSP();
+		return arrLSP;
+	}
+	
+	public int addLSP(String maloai, String tenloai){
+		return lspd.add(maloai, tenloai);		
+	}
+	
+	public int deleteLSP(String maloai){
+		return lspd.delete(maloai);
+	}
+	
+	public int editLSP(String maloai, String tenloai){
+		return lspd.edit(maloai, tenloai);
 	}
 }
