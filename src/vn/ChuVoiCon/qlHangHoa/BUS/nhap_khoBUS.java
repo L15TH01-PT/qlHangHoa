@@ -15,13 +15,9 @@ public class nhap_khoBUS {
 		data=new phieu_nhapDAO();
 	}
 	
-	public ArrayList<nhap_kho> getDS() {
-		try {
-			return data.getDS();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public ArrayList<nhap_kho> getDS() throws SQLException {
+		return data.getPhieu();
+		
 	}
 
 	public ArrayList<nhap_kho> getDS(int id_nv) {
