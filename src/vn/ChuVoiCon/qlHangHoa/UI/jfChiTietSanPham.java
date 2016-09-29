@@ -1,3 +1,4 @@
+
 package vn.ChuVoiCon.qlHangHoa.UI;
 
 import java.awt.BorderLayout;
@@ -8,11 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -28,6 +31,8 @@ import vn.ChuVoiCon.qlHangHoa.DLL.loai_san_pham;
 import vn.ChuVoiCon.qlHangHoa.DLL.nha_cung_cap;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class jfChiTietSanPham extends JInternalFrame {
 
@@ -105,6 +110,9 @@ public class jfChiTietSanPham extends JInternalFrame {
 		contentPane.add(getScrollPane());
 		contentPane.add(getTxtDVT());
 		contentPane.add(getLblnVTnh());
+		btnThem.setEnabled(false);
+		btnXoa.setEnabled(false);
+		btnSua.setEnabled(false);
 
 		for (loai_san_pham lspham : lspb.getDSLSP()) {
 			//Object data1[] = new Object[] { lspham.getId_loai() };
@@ -140,6 +148,15 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("M\u00E3 LSP");
+			lblNewLabel_1.addMouseListener(new MouseAdapter() {
+				@SuppressWarnings("deprecation")
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					JFrame jfLSP=new jfLoaiSanPham();
+					jfLSP.setVisible(true);
+					jfChiTietSanPham.this.dispose();
+				}
+			});
 			lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			lblNewLabel_1.setBounds(230, 11, 46, 14);
 		}
@@ -149,6 +166,14 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private JLabel getLblNewLabel_2() {
 		if (lblNewLabel_2 == null) {
 			lblNewLabel_2 = new JLabel("M\u00E3 NCC");
+			lblNewLabel_2.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					JFrame jfNCC=new jfNhaCungCap();
+					jfNCC.setVisible(true);
+					jfChiTietSanPham.this.dispose();
+				}
+			});
 			lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			lblNewLabel_2.setBounds(413, 11, 46, 14);
 		}
@@ -233,9 +258,39 @@ public class jfChiTietSanPham extends JInternalFrame {
 		return txtpNoiDung;
 	}
 
+	private void getJTable(){
+		arrCTSP=ctspb.getDSCTSP();
+		while(getDtmSanPham().getRowCount() > 0)
+		{
+			getDtmSanPham().removeRow(0);
+		}		
+		for (chi_tiet_san_pham ctspham : arrCTSP) {
+			Object data[] = new Object[] { ctspham.getId_sp(), ctspham.getId_loai(),
+					ctspham.getTen_loai(), ctspham.getId_ncc(),
+					ctspham.getTen_sp(), ctspham.getNoi_dung(),
+					ctspham.getBao_hanh(), ctspham.getDon_vi_tinh() };
+			dtmSanPham.addRow(data);			
+		}
+	}
+	
 	private JButton getBtnThem() {
 		if (btnThem == null) {
 			btnThem = new JButton("Th\u00EAm");
+			btnThem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String a=txtMaSP.getText();
+					String b=txtTenSP.getText();
+					int c=Integer.parseInt(txtBaoHanh.getText());
+					String d=txtDVT.getText();
+					String e=txtpNoiDung.getText();
+					String f=cboMaLSP.getSelectedItem().toString();
+					String g=cboMaNCC.getSelectedItem().toString();
+					ctspb.addSP(a,f,g,b,e,c,d);
+					JOptionPane.showMessageDialog(null, "Thêm thành công");
+					getJTable();
+					getRefresh();
+				}
+			});
 			btnThem.setBounds(62, 245, 89, 23);
 		}
 		return btnThem;
@@ -244,6 +299,35 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private JButton getBtnXoa() {
 		if (btnXoa == null) {
 			btnXoa = new JButton("Xo\u00E1");
+			btnXoa.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int index=tableSanPham.getSelectedRow();
+					if(index!=-1){
+						String a=tableSanPham.getValueAt(index, 0).toString();	
+						Object[] message = {null, "Thông Báo", null, "Bạn có muốn xoá không?"};
+					    Object[] options = { "Yes", "No" };
+					    int n = JOptionPane.showOptionDialog(new JFrame(),
+					            message, "",
+					            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					            options, options[1]);
+					    if(n == JOptionPane.OK_OPTION){ 
+					    	ctspb.deleteSP(a);
+							String b="";							
+							txtMaSP.setText(b);
+							txtTenSP.setText(b);
+							txtBaoHanh.setText(b);
+							txtDVT.setText(b);
+							txtpNoiDung.setText(b);
+							cboMaLSP.setSelectedIndex(0);
+							cboMaNCC.setSelectedIndex(0);
+							JOptionPane.showMessageDialog(null, "Xoá thành công");
+					    }
+					    if(n == JOptionPane.NO_OPTION){ 
+					    }						
+						getJTable();
+					}
+				}
+			});
 			btnXoa.setBounds(195, 245, 89, 23);
 		}
 		return btnXoa;
@@ -252,14 +336,48 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private JButton getBtnSua() {
 		if (btnSua == null) {
 			btnSua = new JButton("S\u1EEDa");
+			btnSua.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int index=tableSanPham.getSelectedRow();
+					if(index!=-1){
+						String a=txtMaSP.getText();
+						String b=txtTenSP.getText();
+						int c=Integer.parseInt(txtBaoHanh.getText());
+						String d=txtDVT.getText();
+						String e=txtpNoiDung.getText();
+						String f=cboMaLSP.getSelectedItem().toString();
+						String g=cboMaNCC.getSelectedItem().toString();
+						ctspb.editSP(a,f,g,b,e,c,d);
+						JOptionPane.showMessageDialog(null, "Sửa thành công");
+						getJTable();						
+					}
+				}
+			});
 			btnSua.setBounds(339, 245, 89, 23);
 		}
 		return btnSua;
 	}
 
+	private void getRefresh(){
+		btnThem.setEnabled(true);
+		String b="";							
+		txtMaSP.setText(b);
+		txtTenSP.setText(b);
+		txtBaoHanh.setText(b);
+		txtDVT.setText(b);
+		txtpNoiDung.setText(b);
+		cboMaLSP.setSelectedIndex(0);
+		cboMaNCC.setSelectedIndex(0);
+	}
+	
 	private JButton getBtnNhapLai() {
 		if (btnNhapLai == null) {
-			btnNhapLai = new JButton("Nh\u1EADp L\u1EA1i");
+			btnNhapLai = new JButton("Tạo Mới");
+			btnNhapLai.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					getRefresh();
+				}
+			});
 			btnNhapLai.setBounds(477, 245, 89, 23);
 		}
 		return btnNhapLai;
@@ -282,6 +400,9 @@ public class jfChiTietSanPham extends JInternalFrame {
 				public void mouseClicked(MouseEvent arg0) {
 					int index=tableSanPham.getSelectedRow();
 					if(index!=-1){
+						btnXoa.setEnabled(true);
+						btnSua.setEnabled(true);
+						btnThem.setEnabled(false);
 						txtMaSP.setText(tableSanPham.getValueAt(index, 0).toString());
 						cboMaLSP.setSelectedItem(tableSanPham.getValueAt(index, 1));
 						cboMaNCC.setSelectedItem(tableSanPham.getValueAt(index, 3));
@@ -294,6 +415,7 @@ public class jfChiTietSanPham extends JInternalFrame {
 			});
 
 			tableSanPham.setModel(getDtmSanPham());
+			tableSanPham.setDefaultEditor(Object.class, null);
 			tableSanPham.getColumnModel().getColumn(1).setMinWidth(0);
 			tableSanPham.getColumnModel().getColumn(1).setMaxWidth(0);
 			tableSanPham.getColumnModel().getColumn(1).setWidth(0);

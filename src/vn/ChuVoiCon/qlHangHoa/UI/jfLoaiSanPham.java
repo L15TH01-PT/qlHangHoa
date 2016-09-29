@@ -26,7 +26,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class jfLoaiSanPham extends JInternalFrame {
+public class jfLoaiSanPham extends JFrame {
 
 	private ArrayList<loai_san_pham> arrLSP=new ArrayList<loai_san_pham>();
 	LoaiSanPhamBUS lspb=new LoaiSanPhamBUS();

@@ -150,7 +150,7 @@ public class jfMain extends JFrame {
 			mntmLoaiSP = new JMenuItem("Loại sản phẩm");
 			mntmLoaiSP.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
-					callNewFrame(new jfLoaiSanPham());
+					//callNewFrame(new jfLoaiSanPham());
 			    }
 			});
 		}
@@ -162,7 +162,7 @@ public class jfMain extends JFrame {
 			mntmNhaCungCap = new JMenuItem("Nhà cung cấp");
 			mntmNhaCungCap.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
-					callNewFrame(new jfNhaCungCap());
+					//callNewFrame(new jfNhaCungCap());
 			    }
 			});
 		}
