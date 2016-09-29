@@ -1,114 +1,84 @@
 package vn.ChuVoiCon.qlHangHoa.DAO;
 
-import java.sql.CallableStatement;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
-import vn.ChuVoiCon.qlHangHoa.DLL.nhap_kho;
+import vn.ChuVoiCon.qlHangHoa.DLL.phieu_nhap;
 
 public class phieu_nhapDAO extends Connect {
-	// Collum name sql
-		private final String ma_phieu_nhap = "ma_phieu_nhap";
-		private final String ngay_lap = "ngay_lap";
-		private final String id_nv = "id_nv";
-		private final String ngay_huy = "ngay_huy";
-		// Action
-		private final String procGetAll = "khoGetALL()";
-		private final String procGetAllNV = "nhap_khoGetALLNV(?)";
-		private final String procGetData = "nhap_khoGetData(?)";
-		private final String procInsert = "nhap_khoInsert(?,?,?,?)";
-		private final String procSetHuy = "nhap_khoSetHuy(?)";
-		
-		protected nhap_kho convertData(ResultSet rs) throws SQLException {
-			nhap_kho r = new nhap_kho();
-			r.setMa_phieu_nhap(rs.getInt(ma_phieu_nhap));
-			r.setNgay_lap(rs.getDate(ngay_lap));
-			r.setId_nv(rs.getInt(id_nv));
-			r.setNgay_huy(rs.getDate(ngay_huy));
-			return r;
-		}
-
-		
-		protected void addIDParmater(CallableStatement cstm, int id)
-				throws SQLException {
-			cstm.setInt(1, id);
-		}
-
-		protected void addAllParmater(CallableStatement cstm, nhap_kho data)
-				throws SQLException {
-			cstm.setInt(1, data.getMa_phieu_nhap());
-			cstm.setDate(2, data.getNgay_lap());
-			cstm.setDate(3, data.getNgay_huy());
-			cstm.setInt(4, data.getId_nv());
-			
-		}
-		protected ArrayList<nhap_kho> getDS(CallableStatement cstm) throws SQLException {
-			ResultSet rs = cstm.executeQuery();
-			ArrayList<nhap_kho> r = new ArrayList<nhap_kho>();
-			while (rs.next()) {
-				r.add(convertData(rs));
-			}
-			rs.close();
-			cstm.close();
-			return r;
-		}
-		
-		protected nhap_kho getData(CallableStatement cstm) throws SQLException {
-			ResultSet rs = cstm.executeQuery();
-			nhap_kho r = null;
+	
+	public phieu_nhap getPhieuNhap(int ma_phieu_nhap) {
+		phieu_nhap nk = null;
+		try {
+			PreparedStatement ps = getPreparedStatement("select * from phieu_nhap where ma_phieu_nhap = ?");
+			ps.setInt(1, ma_phieu_nhap);
+			ResultSet rs = executeQuery(ps);
 			if (rs.next()) {
-				r = convertData(rs);
+				nk = new phieu_nhap();
+				nk.setMa_phieu_nhap(rs.getInt(1));
+				nk.setNgay_lap(rs.getDate(2));
+				nk.setId_nv(rs.getInt(3));
+				nk.setNgay_huy(rs.getDate(4));
 			}
 			rs.close();
-			cstm.close();
-			return r;
+			ps.close();
+			return nk;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		protected int callProcWithData(String procedure, nhap_kho data) throws SQLException {
-			CallableStatement cstm = getCallableStatement(procedure);
-			addAllParmater(cstm, data);
-			int r = 0;
-			r = cstm.executeUpdate();
-			cstm.close();
-			return r;
+		return null;
+	}
+	
+	public ArrayList<phieu_nhap> getDSPhieu(int act) {
+		ArrayList<phieu_nhap> arrPhieuNhap = new ArrayList<phieu_nhap>();
+		String sql = "select * from phieu_nhap";
+		if(act == 1)
+			sql+=" WHERE ngay_huy is null";
+		else if(act==-1)
+			sql+=" WHERE ngay_huy is not null";
+		try {
+			PreparedStatement ps = getPreparedStatement(sql);
+			ResultSet rs = executeQuery(ps);
+			while (rs.next()) {
+				phieu_nhap nk = new phieu_nhap();
+				nk.setMa_phieu_nhap(rs.getInt(1));
+				nk.setNgay_lap(rs.getDate(2));
+				nk.setId_nv(rs.getInt(3));
+				nk.setNgay_huy(rs.getDate(4));
+				arrPhieuNhap.add(nk);
+			}
+			rs.close();
+			ps.close();
+			return arrPhieuNhap;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		public ArrayList<nhap_kho> getDS() throws SQLException {
-			CallableStatement cstm = getCallableStatement(procGetAll);
-			return getDS(cstm);
+		return null;
+	}
+	
+	public int insertPhieuNhap(int ma_nv) {
+		try {
+			PreparedStatement ps = getPreparedStatement("INSERT INTO phieu_nhap(ngay_lap,id_nv,ngay_huy) VALUE (NOW(),?,?)");
+			ps.setInt(1, ma_nv);
+			ps.setDate(2, null);
+			return executeUpdate(ps);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		public ArrayList<nhap_kho> getDS(int id_nv) throws SQLException {
-			CallableStatement cstm = getCallableStatement(procGetAllNV);
-			cstm.setInt(1, id_nv);
-			return getDS(cstm);
+		return 0;
+	}
+	
+	public int deletePhieuNhap(int ma_phieu_nhap){
+		try{
+			PreparedStatement ps = getPreparedStatement("UPDATE phieu_nhap SET ngay_huy=NOW() WHERE ma_phieu_nhap=?");
+			ps.setInt(1, ma_phieu_nhap );
+			return executeUpdate(ps);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		public nhap_kho getData(int ma_phieu_nhap) throws SQLException {
-			CallableStatement cstm = null;
-			cstm = getCallableStatement(procGetData);
-			cstm.setInt(1, ma_phieu_nhap);
-			return getData(cstm);
-		}
-
-		public int Insert(nhap_kho nk) throws SQLException {
-			CallableStatement cstm = getCallableStatement(procInsert);
-			cstm.setInt(1, nk.getMa_phieu_nhap());
-			cstm.registerOutParameter(2,  java.sql.Types.DATE);
-			cstm.registerOutParameter(3, null);
-			cstm.setInt(4, nk.getId_nv());
-			int r = cstm.executeUpdate();
-			cstm.close();
-			return r;
-		}
-
-		public int Delete(nhap_kho nk) throws SQLException {
-			CallableStatement cstm = getCallableStatement(procSetHuy);
-			addIDParmater(cstm, nk.getMa_phieu_nhap());
-			//cstm.setDate(2, hd.getNgay_huy());
-			return executeUpdate(cstm);
-		}
+		return 0;
+	}
 }

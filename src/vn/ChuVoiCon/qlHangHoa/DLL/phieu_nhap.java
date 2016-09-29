@@ -1,19 +1,19 @@
 package vn.ChuVoiCon.qlHangHoa.DLL;
 
 import java.sql.Date;
-import java.util.ArrayList;;
+import java.util.ArrayList;
 
-public class nhap_kho {
+public class phieu_nhap {
 	private int ma_phieu_nhap;
 	private Date ngay_lap;
 	private int id_nv;
 	private Date ngay_huy;
-	private ArrayList<chi_tiet_nhap_kho> ct_nhap_kho;
+	private ArrayList<chi_tiet_phieu_nhap> ct_nhap_kho;
 	
-	public ArrayList<chi_tiet_nhap_kho> getCt_nhap_kho() {
+	public ArrayList<chi_tiet_phieu_nhap> getCt_nhap_kho() {
 		return ct_nhap_kho;
 	}
-	public void setCt_nhap_kho(ArrayList<chi_tiet_nhap_kho> ct_nhap_kho) {
+	public void setCt_nhap_kho(ArrayList<chi_tiet_phieu_nhap> ct_nhap_kho) {
 		this.ct_nhap_kho = ct_nhap_kho;
 	}
 	public int getMa_phieu_nhap() {
