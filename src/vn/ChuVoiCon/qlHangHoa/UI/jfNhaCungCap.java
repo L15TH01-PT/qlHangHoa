@@ -8,11 +8,28 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+
+import vn.ChuVoiCon.qlHangHoa.BUS.NhaCungCapBUS;
+import vn.ChuVoiCon.qlHangHoa.DLL.loai_san_pham;
+import vn.ChuVoiCon.qlHangHoa.DLL.nha_cung_cap;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class jfNhaCungCap extends JFrame {
+	
+	private ArrayList<nha_cung_cap> arrNCC=new ArrayList<nha_cung_cap>();
+	NhaCungCapBUS nccb=new NhaCungCapBUS();
 
 	private JPanel contentPane;
 	private JLabel lblMNhCung;
@@ -28,7 +45,9 @@ public class jfNhaCungCap extends JFrame {
 	private JButton btnThem;
 	private JButton btnXoa;
 	private JButton btnSua;
-	private JList listNCC;
+	private JScrollPane scrollPane;
+	private DefaultTableModel dtmNCC;
+	private JTable tableNCC;
 
 	/**
 	 * Launch the application.
@@ -70,7 +89,16 @@ public class jfNhaCungCap extends JFrame {
 		contentPane.add(getBtnThem());
 		contentPane.add(getBtnXoa());
 		contentPane.add(getBtnSua());
-		contentPane.add(getListNCC());
+		contentPane.add(getScrollPane());
+		
+		arrNCC=nccb.getDSNCC();
+		for (nha_cung_cap nccap : arrNCC){
+			Object data[]=new Object[]{
+					nccap.getId_ncc(),nccap.getTen_ncc(),
+					nccap.getNguoi_lien_he(),nccap.getDien_thoai(),nccap.getDia_chi()
+			};
+			dtmNCC.addRow(data);
+		}
 	}
 
 	private JLabel getLblMNhCung() {
@@ -156,6 +184,18 @@ public class jfNhaCungCap extends JFrame {
 	private JButton getBtnThem() {
 		if (btnThem == null) {
 			btnThem = new JButton("Th\u00EAm");
+			btnThem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String a=txtMaNCC.getText();
+					String b=txtTenNCC.getText();
+					String c=txtNguoiLienHe.getText();
+					String d=txtSoDT.getText();
+					String e=txtDiaChi.getText();
+					nccb.addNCC(a,b,c,d,e);
+					JOptionPane.showMessageDialog(null, "Thêm thành công");
+					getJTable();
+				}
+			});
 			btnThem.setBounds(473, 10, 89, 38);
 		}
 		return btnThem;
@@ -163,6 +203,33 @@ public class jfNhaCungCap extends JFrame {
 	private JButton getBtnXoa() {
 		if (btnXoa == null) {
 			btnXoa = new JButton("Xo\u00E1");
+			btnXoa.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int index=tableNCC.getSelectedRow();
+					if(index!=-1){
+						String a=tableNCC.getValueAt(index, 0).toString();	
+						Object[] message = {null, "Thông Báo", null, "Bạn có muốn xoá không?"};
+					    Object[] options = { "Yes", "No" };
+					    int n = JOptionPane.showOptionDialog(new JFrame(),
+					            message, "",
+					            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					            options, options[1]);
+					    if(n == JOptionPane.OK_OPTION){ 
+					    	nccb.deleteNCC(a);
+							String b="";							
+							txtMaNCC.setText(b);
+							txtTenNCC.setText(b);
+							txtNguoiLienHe.setText(b);
+							txtSoDT.setText(b);
+							txtDiaChi.setText(b);
+							JOptionPane.showMessageDialog(null, "Xoá thành công");
+					    }
+					    if(n == JOptionPane.NO_OPTION){ 
+					    }						
+						getJTable();
+					}
+				}
+			});
 			btnXoa.setBounds(473, 49, 89, 38);
 		}
 		return btnXoa;
@@ -170,15 +237,82 @@ public class jfNhaCungCap extends JFrame {
 	private JButton getBtnSua() {
 		if (btnSua == null) {
 			btnSua = new JButton("S\u1EEDa");
+			btnSua.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int index=tableNCC.getSelectedRow();
+					if(index!=-1){
+						String a=txtMaNCC.getText();
+						String b=txtTenNCC.getText();
+						String c=txtNguoiLienHe.getText();
+						String d=txtSoDT.getText();
+						String e=txtDiaChi.getText();
+						nccb.editNCC(a,b,c,d,e);
+						JOptionPane.showMessageDialog(null, "Sửa thành công");
+						getJTable();						
+					}
+				}
+			});
 			btnSua.setBounds(473, 88, 89, 38);
 		}
 		return btnSua;
 	}
-	private JList getListNCC() {
-		if (listNCC == null) {
-			listNCC = new JList();
-			listNCC.setBounds(10, 136, 569, 193);
+	private void getJTable(){
+		arrNCC=nccb.getDSNCC();
+		while(getDtmNCC().getRowCount() > 0)
+		{
+			getDtmNCC().removeRow(0);
 		}
-		return listNCC;
+		for (nha_cung_cap nccap : arrNCC){
+			Object data[]=new Object[]{
+					nccap.getId_ncc(),nccap.getTen_ncc(),
+					nccap.getNguoi_lien_he(),nccap.getDien_thoai(),nccap.getDia_chi()
+			};
+			getDtmNCC().addRow(data);
+		}
+	}
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 135, 569, 194);
+			scrollPane.setViewportView(getTableNCC());
+		}
+		return scrollPane;
+	}
+	/**
+	 * @wbp.nonvisual location=337,49
+	 */
+	private DefaultTableModel getDtmNCC() {
+		if (dtmNCC == null) {
+			dtmNCC = new DefaultTableModel();
+			
+			dtmNCC.addColumn("Mã NCC");
+			dtmNCC.addColumn("Tên Nhà Cung Cấp");
+			dtmNCC.addColumn("Người Liên Hệ");
+			dtmNCC.addColumn("Số Điện Thoại");
+			dtmNCC.addColumn("Địa Chỉ Công ty");
+		}
+		return dtmNCC;
+	}
+	private JTable getTableNCC() {
+		if (tableNCC == null) {
+			tableNCC = new JTable();
+			tableNCC.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					int index=tableNCC.getSelectedRow();
+					if(index!=-1){
+						txtMaNCC.setText(tableNCC.getValueAt(index, 0).toString());
+						txtTenNCC.setText(tableNCC.getValueAt(index, 1).toString());
+						txtNguoiLienHe.setText(tableNCC.getValueAt(index, 2).toString());
+						txtSoDT.setText(tableNCC.getValueAt(index, 3).toString());
+						txtDiaChi.setText(tableNCC.getValueAt(index, 4).toString());
+					}
+				}
+			});
+			
+			tableNCC.setModel(getDtmNCC());
+			tableNCC.getColumnModel().getColumn(0).setMaxWidth(120);
+		}
+		return tableNCC;
 	}
 }

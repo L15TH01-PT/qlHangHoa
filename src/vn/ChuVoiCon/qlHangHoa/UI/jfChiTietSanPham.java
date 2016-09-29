@@ -8,13 +8,32 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import vn.ChuVoiCon.qlHangHoa.BUS.ChiTietSanPhamBUS;
+import vn.ChuVoiCon.qlHangHoa.BUS.LoaiSanPhamBUS;
+import vn.ChuVoiCon.qlHangHoa.BUS.NhaCungCapBUS;
+import vn.ChuVoiCon.qlHangHoa.DLL.chi_tiet_san_pham;
+import vn.ChuVoiCon.qlHangHoa.DLL.loai_san_pham;
+import vn.ChuVoiCon.qlHangHoa.DLL.nha_cung_cap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class jfChiTietSanPham extends JFrame {
+
+	private ArrayList<chi_tiet_san_pham> arrCTSP = new ArrayList<chi_tiet_san_pham>();
+	ChiTietSanPhamBUS ctspb = new ChiTietSanPhamBUS();
+	LoaiSanPhamBUS lspb = new LoaiSanPhamBUS();
+	NhaCungCapBUS nccb=new NhaCungCapBUS();
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
@@ -33,7 +52,11 @@ public class jfChiTietSanPham extends JFrame {
 	private JButton btnXoa;
 	private JButton btnSua;
 	private JButton btnNhapLai;
-	private JList listHangHoa;
+	private JScrollPane scrollPane;
+	private JTable tableSanPham;
+	private DefaultTableModel dtmSanPham;
+	private JTextField txtDVT;
+	private JLabel lblnVTnh;
 
 	/**
 	 * Launch the application.
@@ -78,7 +101,30 @@ public class jfChiTietSanPham extends JFrame {
 		contentPane.add(getBtnXoa());
 		contentPane.add(getBtnSua());
 		contentPane.add(getBtnNhapLai());
-		contentPane.add(getListHangHoa());
+		contentPane.add(getScrollPane());
+		contentPane.add(getTxtDVT());
+		contentPane.add(getLblnVTnh());
+
+		for (loai_san_pham lspham : lspb.getDSLSP()) {
+			//Object data1[] = new Object[] { lspham.getId_loai() };
+			cboMaLSP.addItem(lspham.getId_loai());
+			
+		}
+		
+		for (nha_cung_cap nccap : nccb.getDSNCC()) {
+			//Object data1[] = new Object[] { lspham.getId_loai() };
+			cboMaNCC.addItem(nccap.getId_ncc());
+			
+		}
+
+		arrCTSP = ctspb.getDSCTSP();
+		for (chi_tiet_san_pham ctspham : arrCTSP) {
+			Object data[] = new Object[] { ctspham.getId_sp(), ctspham.getId_loai(),
+					ctspham.getTen_loai(), ctspham.getId_ncc(),
+					ctspham.getTen_sp(), ctspham.getNoi_dung(),
+					ctspham.getBao_hanh(), ctspham.getDon_vi_tinh() };
+			dtmSanPham.addRow(data);			
+		}
 	}
 
 	private JLabel getLblNewLabel() {
@@ -89,6 +135,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return lblNewLabel;
 	}
+
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("M\u00E3 LSP");
@@ -97,6 +144,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return lblNewLabel_1;
 	}
+
 	private JLabel getLblNewLabel_2() {
 		if (lblNewLabel_2 == null) {
 			lblNewLabel_2 = new JLabel("M\u00E3 NCC");
@@ -105,6 +153,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return lblNewLabel_2;
 	}
+
 	private JTextField getTxtMaSP() {
 		if (txtMaSP == null) {
 			txtMaSP = new JTextField();
@@ -113,6 +162,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return txtMaSP;
 	}
+
 	private JComboBox getCboMaLSP() {
 		if (cboMaLSP == null) {
 			cboMaLSP = new JComboBox();
@@ -120,6 +170,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return cboMaLSP;
 	}
+
 	private JComboBox getCboMaNCC() {
 		if (cboMaNCC == null) {
 			cboMaNCC = new JComboBox();
@@ -127,6 +178,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return cboMaNCC;
 	}
+
 	private JLabel getLblTnSnPhm() {
 		if (lblTnSnPhm == null) {
 			lblTnSnPhm = new JLabel("T\u00EAn S\u1EA3n Ph\u1EA9m");
@@ -135,6 +187,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return lblTnSnPhm;
 	}
+
 	private JLabel getLblThngBoHnh() {
 		if (lblThngBoHnh == null) {
 			lblThngBoHnh = new JLabel("Th\u00E1ng B\u1EA3o H\u00E0nh");
@@ -143,6 +196,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return lblThngBoHnh;
 	}
+
 	private JLabel getLblNiDungSn() {
 		if (lblNiDungSn == null) {
 			lblNiDungSn = new JLabel("N\u1ED9i Dung S\u1EA3n Ph\u1EA9m");
@@ -151,6 +205,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return lblNiDungSn;
 	}
+
 	private JTextField getTxtTenSP() {
 		if (txtTenSP == null) {
 			txtTenSP = new JTextField();
@@ -159,6 +214,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return txtTenSP;
 	}
+
 	private JTextField getTxtBaoHanh() {
 		if (txtBaoHanh == null) {
 			txtBaoHanh = new JTextField();
@@ -167,6 +223,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return txtBaoHanh;
 	}
+
 	private JTextPane getTxtpNoiDung() {
 		if (txtpNoiDung == null) {
 			txtpNoiDung = new JTextPane();
@@ -174,6 +231,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return txtpNoiDung;
 	}
+
 	private JButton getBtnThem() {
 		if (btnThem == null) {
 			btnThem = new JButton("Th\u00EAm");
@@ -181,6 +239,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return btnThem;
 	}
+
 	private JButton getBtnXoa() {
 		if (btnXoa == null) {
 			btnXoa = new JButton("Xo\u00E1");
@@ -188,6 +247,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return btnXoa;
 	}
+
 	private JButton getBtnSua() {
 		if (btnSua == null) {
 			btnSua = new JButton("S\u1EEDa");
@@ -195,6 +255,7 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return btnSua;
 	}
+
 	private JButton getBtnNhapLai() {
 		if (btnNhapLai == null) {
 			btnNhapLai = new JButton("Nh\u1EADp L\u1EA1i");
@@ -202,11 +263,75 @@ public class jfChiTietSanPham extends JFrame {
 		}
 		return btnNhapLai;
 	}
-	private JList getListHangHoa() {
-		if (listHangHoa == null) {
-			listHangHoa = new JList();
-			listHangHoa.setBounds(10, 279, 603, 227);
+
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 279, 603, 227);
+			scrollPane.setViewportView(getTableSanPham());
 		}
-		return listHangHoa;
+		return scrollPane;
+	}
+
+	private JTable getTableSanPham() {
+		if (tableSanPham == null) {
+			tableSanPham = new JTable();
+			tableSanPham.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					int index=tableSanPham.getSelectedRow();
+					if(index!=-1){
+						txtMaSP.setText(tableSanPham.getValueAt(index, 0).toString());
+						cboMaLSP.setSelectedItem(tableSanPham.getValueAt(index, 1));
+						cboMaNCC.setSelectedItem(tableSanPham.getValueAt(index, 3));
+						txtpNoiDung.setText(tableSanPham.getValueAt(index, 5).toString());
+						txtBaoHanh.setText(tableSanPham.getValueAt(index, 6).toString());
+						txtTenSP.setText(tableSanPham.getValueAt(index, 4).toString());						
+						txtDVT.setText(tableSanPham.getValueAt(index, 7).toString());
+					}
+				}
+			});
+
+			tableSanPham.setModel(getDtmSanPham());
+			tableSanPham.getColumnModel().getColumn(1).setMinWidth(0);
+			tableSanPham.getColumnModel().getColumn(1).setMaxWidth(0);
+			tableSanPham.getColumnModel().getColumn(1).setWidth(0);
+		}
+		return tableSanPham;
+	}
+
+	/**
+	 * @wbp.nonvisual location=557,109
+	 */
+	private DefaultTableModel getDtmSanPham() {
+		if (dtmSanPham == null) {
+			dtmSanPham = new DefaultTableModel();
+
+			dtmSanPham.addColumn("Mã SP");
+			dtmSanPham.addColumn("Mã LSP");
+			dtmSanPham.addColumn("Tên LSP");
+			dtmSanPham.addColumn("Mã NCC");
+			dtmSanPham.addColumn("Tên Sản Phẩm");
+			dtmSanPham.addColumn("Nội Dung Sản Phẩm");
+			dtmSanPham.addColumn("Bảo Hành");
+			dtmSanPham.addColumn("Đơn Vị Tính");
+		}
+		return dtmSanPham;
+	}
+	private JTextField getTxtDVT() {
+		if (txtDVT == null) {
+			txtDVT = new JTextField();
+			txtDVT.setColumns(10);
+			txtDVT.setBounds(359, 59, 85, 20);
+		}
+		return txtDVT;
+	}
+	private JLabel getLblnVTnh() {
+		if (lblnVTnh == null) {
+			lblnVTnh = new JLabel("Đơn vị tính");
+			lblnVTnh.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			lblnVTnh.setBounds(290, 61, 78, 14);
+		}
+		return lblnVTnh;
 	}
 }

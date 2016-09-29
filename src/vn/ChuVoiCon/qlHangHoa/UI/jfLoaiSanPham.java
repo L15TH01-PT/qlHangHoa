@@ -3,17 +3,33 @@ package vn.ChuVoiCon.qlHangHoa.UI;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import vn.ChuVoiCon.qlHangHoa.BUS.LoaiSanPhamBUS;
+import vn.ChuVoiCon.qlHangHoa.DLL.loai_san_pham;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class jfLoaiSanPham extends JFrame {
 
+	private ArrayList<loai_san_pham> arrLSP=new ArrayList<loai_san_pham>();
+	LoaiSanPhamBUS lspb=new LoaiSanPhamBUS();
+	
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
@@ -22,7 +38,9 @@ public class jfLoaiSanPham extends JFrame {
 	private JButton btnThem;
 	private JButton btnXoa;
 	private JButton btnSua;
-	private JList listLoaiSP;
+	private JScrollPane scrollPane;
+	private JTable tableLSP;
+	private DefaultTableModel dtmLSP;
 	/**
 	 * Launch the application.
 	 */
@@ -57,7 +75,15 @@ public class jfLoaiSanPham extends JFrame {
 		contentPane.add(getBtnThem());
 		contentPane.add(getBtnXoa());
 		contentPane.add(getBtnSua());
-		contentPane.add(getListLoaiSP());
+		contentPane.add(getScrollPane());
+		
+		arrLSP=lspb.getDSLSP();
+		for (loai_san_pham lspham : arrLSP){
+			Object data[]=new Object[]{
+					lspham.getId_loai(), lspham.getTen_loai()
+			};
+			dtmLSP.addRow(data);
+		}
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
@@ -94,13 +120,59 @@ public class jfLoaiSanPham extends JFrame {
 	private JButton getBtnThem() {
 		if (btnThem == null) {
 			btnThem = new JButton("Th\u00EAm");
+			btnThem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String a=txtMaLSP.getText();
+					String b=txtTenLSP.getText();
+					lspb.addLSP(a, b);
+					JOptionPane.showMessageDialog(null, "Thêm thành công");
+					getJTable();
+				}
+			});
 			btnThem.setBounds(32, 79, 89, 23);
 		}
 		return btnThem;
 	}
+	private void getJTable(){
+		arrLSP=lspb.getDSLSP();
+		while(getDtmLSP().getRowCount() > 0)
+		{
+			getDtmLSP().removeRow(0);
+		}
+		for (loai_san_pham lspham : arrLSP){
+			Object data[]=new Object[]{
+					lspham.getId_loai(), lspham.getTen_loai()
+			};
+			getDtmLSP().addRow(data);
+		}
+	}
 	private JButton getBtnXoa() {
 		if (btnXoa == null) {
 			btnXoa = new JButton("Xo\u00E1");
+			btnXoa.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int index=tableLSP.getSelectedRow();
+					if(index!=-1){
+						String a=tableLSP.getValueAt(index, 0).toString();	
+						Object[] message = {null, "Thông Báo", null, "Bạn có muốn xoá không?"};
+					    Object[] options = { "Yes", "No" };
+					    int n = JOptionPane.showOptionDialog(new JFrame(),
+					            message, "",
+					            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					            options, options[1]);
+					    if(n == JOptionPane.OK_OPTION){ 
+					    	lspb.deleteLSP(a);
+							String b="";							
+							txtMaLSP.setText(b);
+							txtTenLSP.setText(b);
+							JOptionPane.showMessageDialog(null, "Xoá thành công");
+					    }
+					    if(n == JOptionPane.NO_OPTION){ 
+					    }						
+						getJTable();
+					}
+				}
+			});
 			btnXoa.setBounds(162, 79, 89, 23);
 		}
 		return btnXoa;
@@ -108,16 +180,63 @@ public class jfLoaiSanPham extends JFrame {
 	private JButton getBtnSua() {
 		if (btnSua == null) {
 			btnSua = new JButton("S\u1EEDa");
+			btnSua.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int index=tableLSP.getSelectedRow();
+					if(index!=-1){
+						String a=txtMaLSP.getText();
+						String b=txtTenLSP.getText();
+						lspb.editLSP(a, b);
+						JOptionPane.showMessageDialog(null, "Sửa thành công");
+						getJTable();						
+					}
+				}
+			});
 			btnSua.setBounds(289, 79, 89, 23);
 		}
 		return btnSua;
 	}
-	private JList getListLoaiSP() {
-		if (listLoaiSP == null) {
-			listLoaiSP = new JList();
-			listLoaiSP.setBounds(22, 113, 368, 103);
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 111, 393, 105);
+			scrollPane.setViewportView(getTableLSP());
 		}
-		return listLoaiSP;
+		return scrollPane;
 	}
-
+	private JTable getTableLSP() {
+		if (tableLSP == null) {
+			tableLSP = new JTable();
+			tableLSP.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					int index=tableLSP.getSelectedRow();
+					if(index!=-1){
+						txtMaLSP.setText(tableLSP.getValueAt(index, 0).toString());
+						txtTenLSP.setText(tableLSP.getValueAt(index, 1).toString());
+					}
+				}
+			});			
+			
+			tableLSP.setModel(getDtmLSP());
+			
+			tableLSP.setDefaultEditor(Object.class, null);
+//			tableLSP.getColumnModel().getColumn(0).setMinWidth(0);
+			tableLSP.getColumnModel().getColumn(0).setMaxWidth(120);
+//			tableLSP.getColumnModel().getColumn(0).setWidth(80);			
+		}
+		return tableLSP;
+	}
+	/**
+	 * @wbp.nonvisual location=307,59
+	 */
+	private DefaultTableModel getDtmLSP() {
+		if (dtmLSP == null) {
+			dtmLSP = new DefaultTableModel();
+			
+			dtmLSP.addColumn("Mã LSP");
+			dtmLSP.addColumn("Tên Loại Sản Phẩm");
+		}
+		return dtmLSP;
+	}
 }
