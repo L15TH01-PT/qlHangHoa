@@ -4,6 +4,7 @@ package vn.ChuVoiCon.qlHangHoa.DLL;
 public class chi_tiet_hoa_don {
 	private long ma_hoa_don;
 	private String id_sp;
+	private chi_tiet_san_pham sp;
 	private double don_gia;
 	private int so_luong;
 	private hoa_don hoa_don;
@@ -19,6 +20,12 @@ public class chi_tiet_hoa_don {
 	}
 	public void setId_sp(String id_sp) {
 		this.id_sp = id_sp;
+	}
+	public chi_tiet_san_pham getSp() {
+		return sp;
+	}
+	public void setSp(chi_tiet_san_pham sp) {
+		this.sp = sp;
 	}
 	public double getDon_gia() {
 		return don_gia;

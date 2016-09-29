@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.util.ArrayList;
 
+import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
@@ -28,7 +29,7 @@ import vn.ChuVoiCon.qlHangHoa.DLL.nha_cung_cap;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class jfChiTietSanPham extends JFrame {
+public class jfChiTietSanPham extends JInternalFrame {
 
 	private ArrayList<chi_tiet_san_pham> arrCTSP = new ArrayList<chi_tiet_san_pham>();
 	ChiTietSanPhamBUS ctspb = new ChiTietSanPhamBUS();
@@ -65,7 +66,7 @@ public class jfChiTietSanPham extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					jfChiTietSanPham frame = new jfChiTietSanPham();
+					FormDangNhap frame = new FormDangNhap();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

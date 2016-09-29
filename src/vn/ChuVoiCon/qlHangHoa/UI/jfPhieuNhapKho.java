@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,7 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 
-public class jfPhieuNhapKho extends JFrame {
+public class jfPhieuNhapKho extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTable table;
@@ -50,7 +51,7 @@ public class jfPhieuNhapKho extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					jfPhieuNhapKho frame = new jfPhieuNhapKho();
+					FormDangNhap frame = new FormDangNhap();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

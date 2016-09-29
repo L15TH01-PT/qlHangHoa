@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vn.ChuVoiCon.qlHangHoa.DLL.chi_tiet_hoa_don;
+import vn.ChuVoiCon.qlHangHoa.DLL.chi_tiet_san_pham;
 import vn.ChuVoiCon.qlHangHoa.DLL.hoa_don;
 
 public class chi_tiet_hoa_donDAO extends Connect {
@@ -21,6 +22,10 @@ public class chi_tiet_hoa_donDAO extends Connect {
 		r.setId_sp(rs.getString(id_sp));
 		r.setSo_luong(rs.getInt(so_luong));
 		r.setDon_gia(rs.getDouble(don_gia));
+		chi_tiet_san_pham sp = new chi_tiet_san_pham();
+		sp.setId_sp(r.getId_sp());
+		sp.setTen_sp(rs.getString("ten_sp"));
+		sp.setDon_vi_tinh(rs.getString("donvitinh"));
 		return r;
 	}
 	protected chi_tiet_hoa_don convertData(ResultSet rs,hoa_don data) throws SQLException {

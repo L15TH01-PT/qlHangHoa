@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
+import javax.swing.JInternalFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -32,7 +33,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class FormMainNhanVien extends JFrame {
+public class FormMainNhanVien extends JInternalFrame {
 	private ArrayList<NhanVien> arrNV = new ArrayList<NhanVien>();
 	NhanVienBUS nvb = new NhanVienBUS();
 
@@ -74,21 +75,21 @@ public class FormMainNhanVien extends JFrame {
 	private JTextField textField_10;
 	private JTextField textField_11;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	 public static void main(String[] args) {
-//	 EventQueue.invokeLater(new Runnable() {
-//	 public void run() {
-//	 try {
-//	 FormMainNhanVien frame = new FormMainNhanVien();
-//	 frame.setVisible(true);
-//	 } catch (Exception e) {
-//	 e.printStackTrace();
-//	 }
-//	 }
-//	 });
-//	 }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FormDangNhap frame = new FormDangNhap();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
