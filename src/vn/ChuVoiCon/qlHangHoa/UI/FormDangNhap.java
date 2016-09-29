@@ -1,8 +1,6 @@
 package vn.ChuVoiCon.qlHangHoa.UI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +8,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -17,18 +16,19 @@ import javax.swing.JButton;
 
 import vn.ChuVoiCon.qlHangHoa.BUS.NhanVienBUS;
 import vn.ChuVoiCon.qlHangHoa.DLL.NhanVien;
+import vn.ChuVoiCon.qlHangHoa.DLL.currentUser;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class DangNhap extends JFrame {
+public class FormDangNhap extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblngNhp;
 	private JLabel lblNewLabel;
-	private JTextField txtTaiKhoan;
+	private JTextField txtUser;
 	private JPasswordField txtPassWord;
 	private JLabel lblMtKhu;
 	private JButton btnDangNhap;
@@ -38,14 +38,14 @@ public class DangNhap extends JFrame {
 	 * Launch the application.
 	 */
 	NhanVienBUS nvb = new NhanVienBUS();
+	private JButton btnThoat;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DangNhap frame = new DangNhap();
+					FormDangNhap frame = new FormDangNhap();
 					frame.setVisible(true);
-					
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,8 +56,9 @@ public class DangNhap extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DangNhap() {
+	public FormDangNhap() {
 		setTitle("\u0110\u0103ng Nh\u1EADp");
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -66,12 +67,15 @@ public class DangNhap extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getLblngNhp());
 		contentPane.add(getLblNewLabel());
-		contentPane.add(getTxtTaiKhoan());
+		contentPane.add(getTxtUser());
 		contentPane.add(getTxtPassWord());
 		contentPane.add(getLblMtKhu());
 		contentPane.add(getBtnDangNhap());
 		contentPane.add(getLblTime());
+		contentPane.add(getBtnThoat());
+
 	}
+
 	private JLabel getLblngNhp() {
 		if (lblngNhp == null) {
 			lblngNhp = new JLabel("\u0110\u0103ng Nh\u1EADp");
@@ -82,6 +86,7 @@ public class DangNhap extends JFrame {
 		}
 		return lblngNhp;
 	}
+
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("T\u00E0i Kho\u1EA3n");
@@ -90,14 +95,16 @@ public class DangNhap extends JFrame {
 		}
 		return lblNewLabel;
 	}
-	private JTextField getTxtTaiKhoan() {
-		if (txtTaiKhoan == null) {
-			txtTaiKhoan = new JTextField();
-			txtTaiKhoan.setBounds(153, 80, 146, 20);
-			txtTaiKhoan.setColumns(10);
+
+	private JTextField getTxtUser() {
+		if (txtUser == null) {
+			txtUser = new JTextField();
+			txtUser.setBounds(153, 80, 146, 20);
+			txtUser.setColumns(10);
 		}
-		return txtTaiKhoan;
+		return txtUser;
 	}
+
 	private JPasswordField getTxtPassWord() {
 		if (txtPassWord == null) {
 			txtPassWord = new JPasswordField();
@@ -105,6 +112,7 @@ public class DangNhap extends JFrame {
 		}
 		return txtPassWord;
 	}
+
 	private JLabel getLblMtKhu() {
 		if (lblMtKhu == null) {
 			lblMtKhu = new JLabel("M\u1EADt Kh\u1EA9u");
@@ -113,36 +121,62 @@ public class DangNhap extends JFrame {
 		}
 		return lblMtKhu;
 	}
+
 	private JButton getBtnDangNhap() {
 		if (btnDangNhap == null) {
 			btnDangNhap = new JButton("\u0110\u0103ng nh\u1EADp");
 			btnDangNhap.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					String user = txtTaiKhoan.getText();
-					String pass = txtPassWord.getText();
-					
-					ArrayList<NhanVien> ds = nvb.getDSNV();
-					for (NhanVien nv : ds) {
-						txtTaiKhoan.setText(nv.getTen_nhan_vien());
-						txtPassWord.setText((nv.getLuong()+""));
-						user = nv.getLuong()+"";
-						break;
-						
+
+					String user = txtUser.getText();
+					String pass = String.valueOf(txtPassWord.getPassword());
+					NhanVien nv1 = new NhanVien();
+					// FormMainNhanVien fmNhanVien = new
+					// FormMainNhanVien(txtUser.getText(),nv1);
+					// fmNhanVien.setVisible(true);
+					// setVisible(false);
+					int r = nvb.login(user, pass);
+					if (r > 0) {
+						NhanVien nv = nvb.getNV(r);
+						currentUser.setNv(nv);
+						jfMain ifmain = new jfMain();
+						ifmain.setVisible(true);
+						setVisible(false);
+					} else {
+						JOptionPane
+								.showMessageDialog(null,
+										"Thông tin không chính xác. Xin vui lòng nhập lại.");
+						txtPassWord.setText("");
+						txtUser.setText("");
 					}
-					
-					JOptionPane.showMessageDialog(null,pass);
 				}
 			});
 			btnDangNhap.setFont(new Font("Cambria Math", Font.PLAIN, 15));
-			btnDangNhap.setBounds(153, 176, 111, 23);
+			btnDangNhap.setBounds(73, 177, 111, 23);
 		}
 		return btnDangNhap;
 	}
+
 	private JLabel getLblTime() {
 		if (lblTime == null) {
 			lblTime = new JLabel("New label");
 			lblTime.setBounds(378, 236, 46, 14);
 		}
 		return lblTime;
+	}
+
+	private JButton getBtnThoat() {
+		if (btnThoat == null) {
+			btnThoat = new JButton("Thoát");
+			btnThoat.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					setVisible(false); // you can't see me!
+					dispose(); // Destroy the JFrame object
+				}
+			});
+			btnThoat.setFont(new Font("Cambria Math", Font.PLAIN, 15));
+			btnThoat.setBounds(208, 177, 111, 23);
+		}
+		return btnThoat;
 	}
 }

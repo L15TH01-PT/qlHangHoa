@@ -6,38 +6,32 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vn.ChuVoiCon.qlHangHoa.DAO.Connect;
+import vn.ChuVoiCon.qlHangHoa.DAO.Nhan_VienDAO;
 import vn.ChuVoiCon.qlHangHoa.DLL.NhanVien;
 
 public class NhanVienBUS extends Connect{
+	Nhan_VienDAO nvd = new Nhan_VienDAO();
 	
 	public ArrayList<NhanVien> getDSNV(){
 		
 		ArrayList<NhanVien> arrNhanVien= new ArrayList<NhanVien>();
+		arrNhanVien = nvd.getDSNV();
+		
+		return arrNhanVien;
+	}
+	
+	public NhanVien getNV(int id){
+		NhanVien nv = nvd.getNV(id);
+		return nv;			
+	}
+	
+	public int login(String manv, String pass){
 		try {
-//			ResultSet rs = executeQuery("select * from nhan_vien where id ="+1);
-			PreparedStatement ps = getPreparedStatement("select * from nhan_vien where id =?");
-			ps.setInt(1, 1);
-			ResultSet rs = executeQuery(ps);
-			while (rs.next()) {
-				NhanVien nv = new NhanVien();
-				nv.setTen_nhan_vien(rs.getString("ten_nhan_vien"));
-				nv.setLuong(rs.getInt("luong"));
-				nv.setMat_khau(rs.getString("mat_khau"));
-				arrNhanVien.add(nv);
-				
-			}
-			return arrNhanVien;
+			return nvd.checklogin(manv, pass);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
-		
-	}
-	
-	public NhanVien getNV(String id){
-		
-		return null;
-		
+		return -1;
 	}
 }
