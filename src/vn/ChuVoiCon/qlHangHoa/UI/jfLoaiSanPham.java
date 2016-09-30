@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -48,7 +49,7 @@ public class jfLoaiSanPham extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					jfLoaiSanPham frame = new jfLoaiSanPham();
+					FormDangNhap frame = new FormDangNhap();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

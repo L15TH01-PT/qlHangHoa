@@ -15,6 +15,7 @@ import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
@@ -60,7 +61,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class jTEST extends JFrame {
+public class jfPhieuNhapKho extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
@@ -127,7 +128,7 @@ public class jTEST extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					jTEST frame = new jTEST();
+					jfPhieuNhapKho frame = new jfPhieuNhapKho();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -139,7 +140,7 @@ public class jTEST extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public jTEST() {
+	public jfPhieuNhapKho() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 838, 550);
 		contentPane = new JPanel();

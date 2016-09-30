@@ -128,7 +128,7 @@ public class phieu_nhapDAO extends Connect {
 		int r=0;
 		setAutoCommit(false);
 		try {
-			r = executeUpdate(pstm);
+			r = executeUpdateWithGenKey(pstm);
 			if (r == 0)
 				throw new SQLException();
 

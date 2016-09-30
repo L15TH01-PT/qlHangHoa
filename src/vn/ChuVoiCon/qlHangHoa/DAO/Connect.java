@@ -13,8 +13,8 @@ public class Connect {
 	private static Connection con;
 
 	private void khoiTao() {
-		// ResourceBundle rb = ResourceBundle.getBundle("dbLocal");
 		ResourceBundle rb = ResourceBundle.getBundle("dbLocal");
+		//ResourceBundle rb = ResourceBundle.getBundle("db");
 		String driver = rb.getString("driver");
 		String server = rb.getString("server");
 		String user = rb.getString("user");
@@ -111,6 +111,18 @@ public class Connect {
 
 	protected int executeUpdate(PreparedStatement pstm) throws SQLException {
 		int r = pstm.executeUpdate();
+		pstm.close();
+		return r;
+	}
+
+	protected int executeUpdateWithGenKey(PreparedStatement pstm) throws SQLException {
+		int r = pstm.executeUpdate();
+		if(r>0)
+		{
+			ResultSet rs = pstm.getGeneratedKeys();
+			if(rs.next())
+				r = rs.getInt(1);
+		}
 		pstm.close();
 		return r;
 	}

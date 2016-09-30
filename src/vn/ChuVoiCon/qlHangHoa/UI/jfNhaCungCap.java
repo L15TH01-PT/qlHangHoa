@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.util.ArrayList;
 
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -56,7 +57,7 @@ public class jfNhaCungCap extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					jfNhaCungCap frame = new jfNhaCungCap();
+					FormDangNhap frame = new FormDangNhap();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

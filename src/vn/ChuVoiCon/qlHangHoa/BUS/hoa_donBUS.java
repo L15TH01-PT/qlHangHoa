@@ -23,6 +23,15 @@ public class hoa_donBUS {
 		return null;
 	}
 
+	public ArrayList<hoa_don> getDSEX(int s) {
+		try {
+			return hdDAO.getDSEX(s);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public ArrayList<hoa_don> getDS(int id_nv) {
 		try {
 			return hdDAO.getDS(id_nv);
@@ -32,7 +41,7 @@ public class hoa_donBUS {
 		return null;
 	}
 
-	public hoa_don getData(long ma_hoa_don) {
+	public hoa_don getData(int ma_hoa_don) {
 		try {
 			return hdDAO.getData(ma_hoa_don);
 		} catch (SQLException e) {
@@ -50,9 +59,9 @@ public class hoa_donBUS {
 		return 0;
 	}
 
-	public int Del(hoa_don hd) {
+	public int Del(int ma_hoa_don) {
 		try {
-			return hdDAO.Delete(hd);
+			return hdDAO.Delete(ma_hoa_don);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
