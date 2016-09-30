@@ -41,6 +41,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.awt.event.MouseAdapter;
@@ -149,7 +150,7 @@ public class jfHoaDon extends JInternalFrame {
 			Object[] t = new Object[] { item.getMa_hoa_don(),
 					item.getNgay_lap(), item.getTen_khach_hang(),
 					item.getNv().getTen_nhan_vien(), item.getGhi_chu(),
-					item.getNgay_huy() == null ? "" : item.getNgay_huy() };
+					item.getNgay_huy() == null ? "" : "X" };
 			tbm.addRow(t);
 		}
 	}
@@ -196,11 +197,11 @@ public class jfHoaDon extends JInternalFrame {
 		// getTbDSHoaDon().removeAll();
 		while (tbm.getRowCount() > 0)
 			tbm.removeRow(0);
-		txtTenKhachHang.setEnabled(true);
+		txtTenKhachHang.setEditable(true);
 		tbSanPham.setEnabled(true);
 		btnXoaChiTiet.setEnabled(true);
 		btnHuy.setEnabled(true);
-		getTaGhiChu().setEnabled(true);
+		getTaGhiChu().setEditable(true);
 		getTxtTongTien().setText("0");
 		try {
 			Method m = tbChiTiet.getModel().getClass()
@@ -217,10 +218,10 @@ public class jfHoaDon extends JInternalFrame {
 		txtNhanVien.setText(t.getNv().getTen_nhan_vien());
 		txtTenKhachHang.setText(t.getTen_khach_hang());
 		taGhiChu.setText(t.getGhi_chu());
-		txtTenKhachHang.disable();
+		txtTenKhachHang.setEditable(false);
 		tbSanPham.disable();
 		btnXoaChiTiet.setEnabled(false);
-		getTaGhiChu().setEnabled(false);
+		getTaGhiChu().setEditable(false);
 		btnHuy.setEnabled(t.getNgay_huy() == null ? true : false);
 		try {
 			Method m = tbChiTiet.getModel().getClass()
@@ -253,7 +254,10 @@ public class jfHoaDon extends JInternalFrame {
 					.toString());
 			tt += sl * dg;
 		}
-		txtTongTien.setText(tt + "");
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+		String numberAsString = decimalFormat.format(tt);
+		
+		txtTongTien.setText(numberAsString);
 	}
 
 	private JTabbedPane getTabbedPane_1() {
@@ -370,8 +374,8 @@ public class jfHoaDon extends JInternalFrame {
 	private JTextField getTxtMaPhieu() {
 		if (txtMaPhieu == null) {
 			txtMaPhieu = new JTextField();
+			txtMaPhieu.setEditable(false);
 			txtMaPhieu.setBounds(133, 11, 179, 26);
-			txtMaPhieu.setEnabled(false);
 			txtMaPhieu.setColumns(10);
 		}
 		return txtMaPhieu;
@@ -380,10 +384,10 @@ public class jfHoaDon extends JInternalFrame {
 	private JTextField getTxtNgayLap() {
 		if (txtNgayLap == null) {
 			txtNgayLap = new JTextField();
+			txtNgayLap.setEditable(false);
 			txtNgayLap.setBounds(133, 48, 179, 26);
-			txtNgayLap.setEnabled(false);
 			txtNgayLap.setColumns(10);
-			txtNgayLap.setText((new Date().toString()));
+			txtNgayLap.setText((new Date().toLocaleString()));
 		}
 		return txtNgayLap;
 	}
@@ -391,8 +395,8 @@ public class jfHoaDon extends JInternalFrame {
 	private JTextField getTxtNhanVien() {
 		if (txtNhanVien == null) {
 			txtNhanVien = new JTextField();
+			txtNhanVien.setEditable(false);
 			txtNhanVien.setBounds(133, 85, 179, 26);
-			txtNhanVien.setEnabled(false);
 			txtNhanVien.setColumns(10);
 			txtNhanVien.setText(currentUser.getNv().getTen_nhan_vien());
 		}
@@ -639,22 +643,23 @@ public class jfHoaDon extends JInternalFrame {
 					}
 				}
 			});
-			tbDSHoaDon.setModel(new DefaultTableModel(new Object[][] { { null,
-					null, null, null, null, null }, }, new String[] {
-					"M\u00E3 h\u00F3a \u0111\u01A1n", "Ng\u00E0y l\u1EADp",
-					"T\u00EAn kh\u00E1ch h\u00E0ng", "Nh\u00E2n vi\u00EAn",
-					"Ghi ch\u00FA", "Ng\u00E0y h\u1EE7y" }) {
-				Class[] columnTypes = new Class[] { Integer.class,
-						String.class, String.class, String.class, String.class,
-						String.class };
-
+			tbDSHoaDon.setModel(new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null, null, null},
+				},
+				new String[] {
+					"M\u00E3 h\u00F3a \u0111\u01A1n", "Ng\u00E0y l\u1EADp", "T\u00EAn kh\u00E1ch h\u00E0ng", "Nh\u00E2n vi\u00EAn", "Ghi ch\u00FA", "H\u1EE7y"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					Integer.class, String.class, String.class, String.class, String.class, String.class
+				};
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				}
-
-				boolean[] columnEditables = new boolean[] { false, false,
-						false, false, false, false };
-
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false
+				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
 				}
@@ -812,8 +817,8 @@ public class jfHoaDon extends JInternalFrame {
 	private JTextField getTxtTongTien() {
 		if (txtTongTien == null) {
 			txtTongTien = new JTextField();
+			txtTongTien.setEditable(false);
 			txtTongTien.setText("0");
-			txtTongTien.setEnabled(false);
 			txtTongTien.setColumns(10);
 			txtTongTien.setBounds(133, 159, 179, 26);
 		}
