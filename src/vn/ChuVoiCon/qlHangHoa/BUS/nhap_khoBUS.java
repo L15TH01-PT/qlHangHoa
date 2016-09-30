@@ -19,7 +19,7 @@ public class nhap_khoBUS {
 	
 	public ArrayList<phieu_nhap> getDSEX(int s) {
 		try {
-			return pnd.getDS(s);
+			return pnd.getDSPhieu(s);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -36,7 +36,7 @@ public class nhap_khoBUS {
 		return null;
 	}
 	
-	public phieu_nhap getData(int ma_phieu_nhap) throws SQLException {
+	public phieu_nhap getData(int ma_phieu_nhap){
 		try {
 			return pnd.getData(ma_phieu_nhap);
 		} catch (SQLException e) {
@@ -53,6 +53,7 @@ public class nhap_khoBUS {
 		}
 		return 0;
 	}
+	
 	
 	
 	public int Del(int ma_phieu_nhap) {

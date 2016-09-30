@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class jfNhaCungCap extends JFrame {
+public class jfNhaCungCap extends JInternalFrame {
 	
 	private ArrayList<nha_cung_cap> arrNCC=new ArrayList<nha_cung_cap>();
 	NhaCungCapBUS nccb=new NhaCungCapBUS();

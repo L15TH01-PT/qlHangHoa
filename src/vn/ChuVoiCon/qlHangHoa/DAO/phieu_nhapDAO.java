@@ -97,7 +97,7 @@ public class phieu_nhapDAO extends Connect {
 	}
 	
 	public phieu_nhap getData(int ma_phieu_nhap) throws SQLException {
-		String sqlQuery = "SELECT hd.*,nv.ten_nhan_vien "
+		String sqlQuery = "SELECT pn.*,nv.ten_nhan_vien "
 				+ "FROM phieu_nhap pn INNER JOIN nhan_vien nv on pn.id_nv = nv.id "
 				+ "WHERE pn.ma_phieu_nhap = ?";
 		PreparedStatement pstm = getPreparedStatement(sqlQuery);
@@ -122,7 +122,7 @@ public class phieu_nhapDAO extends Connect {
 		String sqlQuery = "INSERT INTO phieu_nhap(ngay_nhap,id_nv) "
 				+ "VALUES(NOW(),?)";
 
-		PreparedStatement pstm = getPreparedStatement(sqlQuery);
+		PreparedStatement pstm = getPreparedStatementWithGenKey(sqlQuery);
 		pstm.setInt(1, pn.getId_nv());
 		
 		int r=0;

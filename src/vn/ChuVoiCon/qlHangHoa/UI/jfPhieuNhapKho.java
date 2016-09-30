@@ -29,6 +29,9 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -89,7 +92,6 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private JRadioButton rdbFull;
 	private JRadioButton rdbNotDel;
 	private JRadioButton rdbDeleted;
-	private JButton btnHuyPhieu;
 	private DefaultTableModel modelDanhSachPhieu;
 	
 	private nhap_khoBUS nkb=new nhap_khoBUS();
@@ -120,6 +122,9 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private currentUser cru=new currentUser();
 	private JLabel lblTngTin;
 	private JTextField txtTongTien;
+	private JButton btnRefesh;
+	private JButton btnTao;
+	private JPanel panel_6;
 
 	/**
 	 * Launch the application.
@@ -128,7 +133,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					jfPhieuNhapKho frame = new jfPhieuNhapKho();
+					FormDangNhap frame = new FormDangNhap();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -153,6 +158,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 		loadDanhSach();
 		panelSua.setVisible(false);
 		txtNgayLap.setText(timeFormat.format(today.getTime()));
+		txtNhanVien.setText(cru.getNv().getTen_nhan_vien());
 //		txtNhanVien.setText(cru.getNv().getTen_nhan_vien());
 	}
 	private JTabbedPane getTabbedPane_1() {
@@ -160,6 +166,18 @@ public class jfPhieuNhapKho extends JInternalFrame {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 			tabbedPane.addTab("Nhập Phiếu", null, getPanel_8(), null);
 			tabbedPane.addTab("Danh sách Phiếu", null, getPanel_1_1(), null);
+			tabbedPane.addChangeListener(new ChangeListener() {
+
+				@Override
+				public void stateChanged(ChangeEvent changeEvent) {
+					// TODO Auto-generated method stub
+					JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent
+							.getSource();
+					int index = sourceTabbedPane.getSelectedIndex();
+					if (index == 1)
+						loadDanhSach();
+				}
+			});
 		}
 		return tabbedPane;
 	}
@@ -194,9 +212,10 @@ public class jfPhieuNhapKho extends JInternalFrame {
 			panel_2 = new JPanel();
 			panel_2.setLayout(null);
 			panel_2.add(getPanel_4());
-			panel_2.add(getPanelSua());
+			panel_2.add(getPanel_6());
 			panel_2.add(getBtnLap());
 			panel_2.add(getBtnHuy());
+			panel_2.add(getBtnTao());
 		}
 		return panel_2;
 	}
@@ -239,7 +258,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private JTextField getTxtMaPhieu() {
 		if (txtMaPhieu == null) {
 			txtMaPhieu = new JTextField();
-			txtMaPhieu.setEnabled(false);
+			txtMaPhieu.setEditable(false);
 			txtMaPhieu.setColumns(10);
 			txtMaPhieu.setBounds(112, 26, 140, 20);
 		}
@@ -248,7 +267,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private JTextField getTxtNgayLap() {
 		if (txtNgayLap == null) {
 			txtNgayLap = new JTextField();
-			txtNgayLap.setEnabled(false);
+			txtNgayLap.setEditable(false);
 			txtNgayLap.setColumns(10);
 			txtNgayLap.setBounds(112, 51, 140, 20);
 		}
@@ -257,7 +276,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private JTextField getTxtNhanVien() {
 		if (txtNhanVien == null) {
 			txtNhanVien = new JTextField();
-			txtNhanVien.setEnabled(false);
+			txtNhanVien.setEditable(false);
 			txtNhanVien.setColumns(10);
 			txtNhanVien.setBounds(112, 76, 140, 20);
 		}
@@ -268,22 +287,21 @@ public class jfPhieuNhapKho extends JInternalFrame {
 			btnLap = new JButton("Lập");
 			btnLap.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					try {
+				
 							int idnew = nkb.Add(getDataInput());
 							if (idnew > 0) {
 								JOptionPane.showMessageDialog(null,
 										"Lập Phiếu thành công");
 								setDataInput(nkb.getData(idnew));
 							}
-						} catch (SQLException e){
-							e.getStackTrace();
+						
 					
-					}
+					
 					
 				}
 			});
 			btnLap.setEnabled(false);
-			btnLap.setBounds(317, 24, 79, 47);
+			btnLap.setBounds(320, 11, 79, 47);
 		}
 
 		return btnLap;
@@ -311,6 +329,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 					lblTenSP.setText(ob[1]+"");
 					txtSL.setText(ob[2]+"");
 					txtDG.setText(ob[3]+"");
+					
 				}
 			});
 			tbCTPN.setModel(getModelCTPN());
@@ -392,7 +411,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 				}
 			});
 			btnHuy.setEnabled(false);
-			btnHuy.setBounds(317, 82, 79, 47);
+			btnHuy.setBounds(320, 114, 79, 47);
 		}
 		return btnHuy;
 	}
@@ -415,6 +434,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 						btnLap.setEnabled(false);
 						btnHuy.setEnabled(false);
 					}
+					tinhTT();
 				}
 			});
 			btnXoa.setEnabled(false);
@@ -429,9 +449,16 @@ public class jfPhieuNhapKho extends JInternalFrame {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					int index=tbDanhSachPhieu.getSelectedRow();
-					String ma=tbDanhSachPhieu.getValueAt(index, 1).toString();
-					getTabbedPane_1().setSelectedIndex(1);
-					
+					String ma=tbDanhSachPhieu.getValueAt(index, 0).toString();
+					phieu_nhap a=nkb.getData(Integer.parseInt(ma));
+					if(a!=null){
+						setDataInput(a);
+						tabbedPane.setSelectedIndex(0);
+						getTbSanPham().setVisible(false);
+						btnTao.setEnabled(true);
+						getPanelSua().setVisible(false);
+						btnLap.setEnabled(false);
+					}
 				}
 			});
 			tbDanhSachPhieu.setModel(getModelDanhSachPhieu());
@@ -452,7 +479,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 			panel_5.add(getRdbFull());
 			panel_5.add(getRdbNotDel());
 			panel_5.add(getRdbDeleted());
-			panel_5.add(getBtnHuyPhieu());
+			panel_5.add(getBtnRefesh());
 		}
 		return panel_5;
 	}
@@ -464,7 +491,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 				public void mouseClicked(MouseEvent arg0) {
 					act=0;
 					loadDanhSach();
-					btnHuyPhieu.setEnabled(true);
+					
 				}
 			});
 			rdbFull.setBounds(31, 7, 109, 23);
@@ -480,7 +507,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 				public void mouseClicked(MouseEvent arg0) {
 					act=1;
 					loadDanhSach();
-					btnHuyPhieu.setEnabled(true);
+					
 				}
 			});
 			rdbNotDel.setBounds(168, 7, 109, 23);
@@ -495,28 +522,12 @@ public class jfPhieuNhapKho extends JInternalFrame {
 				public void mouseClicked(MouseEvent arg0) {
 					act=-1;
 					loadDanhSach();
-					btnHuyPhieu.setEnabled(false);
+					
 				}
 			});
 			rdbDeleted.setBounds(311, 7, 109, 23);
 		}
 		return rdbDeleted;
-	}
-	private JButton getBtnHuyPhieu() {
-		if (btnHuyPhieu == null) {
-			btnHuyPhieu = new JButton("Hủy Phiếu");
-			btnHuyPhieu.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					int index=tbDanhSachPhieu.getSelectedRow();
-					int ma=Integer.parseInt(tbDanhSachPhieu.getValueAt(index, 0).toString());
-					if(nkb.Del(ma)==1){
-						JOptionPane.showMessageDialog(null, "Huy Thanh Cong");
-					}
-				}
-			});
-			btnHuyPhieu.setBounds(672, 7, 109, 23);
-		}
-		return btnHuyPhieu;
 	}
 	/**
 	 * @wbp.nonvisual location=146,329
@@ -590,7 +601,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private JPanel getPanelSua() {
 		if (panelSua == null) {
 			panelSua = new JPanel();
-			panelSua.setBounds(406, 0, 391, 161);
+			panelSua.setBounds(6, 16, 391, 161);
 			panelSua.setLayout(null);
 			panelSua.add(getLblMSnPhm());
 			panelSua.add(getLblNewLabel());
@@ -755,7 +766,7 @@ public class jfPhieuNhapKho extends JInternalFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					if(!kiemTraTable(lblMaSP.getText())){
 						if(lblMaSP.getText().compareTo("Chưa có")!=0){
-						Object ob[]=new Object[]{lblMaSP.getText(),lblTenSP.getText(),txtSL.getText(),txtDG.getText(),lblThTien.getText()};
+						Object ob[]=new Object[]{lblMaSP.getText(),lblTenSP.getText(),txtSL.getText(),Double.parseDouble(txtDG.getText()),lblThTien.getText()};
 						modelCTPN.addRow(ob);
 						btnLap.setEnabled(true);
 						btnHuy.setEnabled(true);
@@ -778,15 +789,15 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	
 	private phieu_nhap getDataInput() {
 		phieu_nhap r = new phieu_nhap();
-//		r.setId_nv(currentUser.getNv().getId());
-		r.setId_nv(1);
+		r.setId_nv(currentUser.getNv().getId());
+//		r.setId_nv(1);
 		ArrayList<chi_tiet_phieu_nhap> ct = new ArrayList<chi_tiet_phieu_nhap>();
 		DefaultTableModel model = (DefaultTableModel) getTbCTPN().getModel();
 		for (int i = 0; i < model.getRowCount(); i++) {
 			chi_tiet_phieu_nhap t = new chi_tiet_phieu_nhap();
 			t.setMa_san_pham(model.getValueAt(i, 0).toString());
-			t.setDon_gia(Double.parseDouble(model.getValueAt(i, 4).toString()));
-			t.setSo_luong(Integer.parseInt(model.getValueAt(i,3).toString()));
+			t.setDon_gia(Double.parseDouble(model.getValueAt(i, 3).toString()));
+			t.setSo_luong(Integer.parseInt(model.getValueAt(i,2).toString()));
 			ct.add(t);
 		}
 		r.setCt_nhap_kho(ct);
@@ -816,8 +827,8 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private void tinhTT() {
 		double tt = 0;
 		for (int i = 0; i < tbCTPN.getRowCount(); i++) {
-			int sl = Integer.parseInt(tbCTPN.getValueAt(i, 3).toString());
-			double dg = Double.parseDouble(tbCTPN.getValueAt(i, 4)
+			int sl = Integer.parseInt(tbCTPN.getValueAt(i, 2).toString());
+			double dg = Double.parseDouble(tbCTPN.getValueAt(i, 3)
 					.toString());
 			tt += sl * dg;
 		}
@@ -832,9 +843,51 @@ public class jfPhieuNhapKho extends JInternalFrame {
 	private JTextField getTxtTongTien() {
 		if (txtTongTien == null) {
 			txtTongTien = new JTextField();
-			txtTongTien.setEnabled(false);
+			txtTongTien.setEditable(false);
 			txtTongTien.setColumns(10);
 		}
 		return txtTongTien;
+	}
+	private JButton getBtnRefesh() {
+		if (btnRefesh == null) {
+			btnRefesh = new JButton("Làm mới");
+			btnRefesh.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					loadDanhSach();
+				}
+			});
+			btnRefesh.setBounds(573, 7, 89, 23);
+		}
+		return btnRefesh;
+	}
+	private JButton getBtnTao() {
+		if (btnTao == null) {
+			btnTao = new JButton("Tạo");
+			btnTao.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					btnHuy.setEnabled(false);
+					getTbSanPham().setVisible(true);
+					getTbSanPham().setEnabled(true);
+					txtMaPhieu.setText("");
+					txtNhanVien.setText(cru.getNv().getTen_nhan_vien());
+					while(getModelCTPN().getRowCount()>0){
+						modelCTPN.removeRow(0);
+					}
+				}
+			});
+			btnTao.setEnabled(false);
+			btnTao.setBounds(320, 63, 79, 47);
+		}
+		return btnTao;
+	}
+	private JPanel getPanel_6() {
+		if (panel_6 == null) {
+			panel_6 = new JPanel();
+			panel_6.setBorder(new TitledBorder(null, "JPanel title", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panel_6.setBounds(400, -16, 403, 184);
+			panel_6.setLayout(null);
+			panel_6.add(getPanelSua());
+		}
+		return panel_6;
 	}
 }

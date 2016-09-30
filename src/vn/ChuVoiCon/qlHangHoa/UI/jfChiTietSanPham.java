@@ -152,15 +152,15 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("M\u00E3 LSP");
-			lblNewLabel_1.addMouseListener(new MouseAdapter() {
-				@SuppressWarnings("deprecation")
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					JFrame jfLSP = new jfLoaiSanPham();
-					jfLSP.setVisible(true);
-					jfChiTietSanPham.this.dispose();
-				}
-			});
+//			lblNewLabel_1.addMouseListener(new MouseAdapter() {
+//				@SuppressWarnings("deprecation")
+//				@Override
+//				public void mouseClicked(MouseEvent arg0) {
+//					JFrame jfLSP = new jfLoaiSanPham();
+//					jfLSP.setVisible(true);
+//					jfChiTietSanPham.this.dispose();
+//				}
+//			});
 			lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			lblNewLabel_1.setBounds(230, 11, 46, 14);
 		}
@@ -170,14 +170,14 @@ public class jfChiTietSanPham extends JInternalFrame {
 	private JLabel getLblNewLabel_2() {
 		if (lblNewLabel_2 == null) {
 			lblNewLabel_2 = new JLabel("M\u00E3 NCC");
-			lblNewLabel_2.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					JFrame jfNCC = new jfNhaCungCap();
-					jfNCC.setVisible(true);
-					jfChiTietSanPham.this.dispose();
-				}
-			});
+//			lblNewLabel_2.addMouseListener(new MouseAdapter() {
+//				@Override
+//				public void mouseClicked(MouseEvent arg0) {
+//					JFrame jfNCC = new jfNhaCungCap();
+//					jfNCC.setVisible(true);
+//					jfChiTietSanPham.this.dispose();
+//				}
+//			});
 			lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			lblNewLabel_2.setBounds(413, 11, 46, 14);
 		}

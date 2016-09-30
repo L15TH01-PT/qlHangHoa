@@ -69,6 +69,7 @@ public class jfMain extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//contentPane.add(getInternalFrame());
 		// if(currentUser.getNv() == null)
 		// {
@@ -138,7 +139,7 @@ public class jfMain extends JFrame {
 			mnKho.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					callNewFrame(new jfKho());
+					callNewFrame(new jfPhieuNhapKho());
 				}
 			});
 		}
@@ -150,7 +151,7 @@ public class jfMain extends JFrame {
 			mntmLoaiSP = new JMenuItem("Loại sản phẩm");
 			mntmLoaiSP.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
-					//callNewFrame(new jfLoaiSanPham());
+					callNewFrame(new jfLoaiSanPham());
 			    }
 			});
 		}
@@ -162,7 +163,7 @@ public class jfMain extends JFrame {
 			mntmNhaCungCap = new JMenuItem("Nhà cung cấp");
 			mntmNhaCungCap.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
-					//callNewFrame(new jfNhaCungCap());
+					callNewFrame(new jfNhaCungCap());
 			    }
 			});
 		}
