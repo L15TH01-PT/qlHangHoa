@@ -9,7 +9,14 @@ public class phieu_nhap {
 	private int id_nv;
 	private Date ngay_huy;
 	private ArrayList<chi_tiet_phieu_nhap> ct_nhap_kho;
+	private NhanVien nv;
 	
+	public NhanVien getNv() {
+		return nv;
+	}
+	public void setNv(NhanVien nv) {
+		this.nv = nv;
+	}
 	public ArrayList<chi_tiet_phieu_nhap> getCt_nhap_kho() {
 		return ct_nhap_kho;
 	}

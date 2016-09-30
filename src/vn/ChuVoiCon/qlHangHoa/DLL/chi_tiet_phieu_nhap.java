@@ -6,7 +6,17 @@ public class chi_tiet_phieu_nhap {
 	private int so_luong;
 	private double don_gia;
 	private phieu_nhap phieu;
+	private chi_tiet_san_pham ctsp;
 	
+
+	public chi_tiet_san_pham getCtsp() {
+		return ctsp;
+	}
+
+	public void setCtsp(chi_tiet_san_pham ctsp) {
+		this.ctsp = ctsp;
+	}
+
 	public phieu_nhap getPhieu_nhap() {
 		return phieu;
 	}

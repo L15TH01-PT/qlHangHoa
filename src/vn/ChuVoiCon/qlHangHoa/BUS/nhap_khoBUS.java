@@ -10,26 +10,60 @@ import vn.ChuVoiCon.qlHangHoa.DAO.phieu_nhapDAO;
 import vn.ChuVoiCon.qlHangHoa.DLL.phieu_nhap;
 
 
-public class nhap_khoBUS extends Connect {
+public class nhap_khoBUS {
 	private phieu_nhapDAO pnd=new phieu_nhapDAO();
 	
-	public ArrayList<phieu_nhap> getDSPhieu(int act){
-		ArrayList<phieu_nhap> arrPhieuNhap = new ArrayList<phieu_nhap>();
-		arrPhieuNhap = pnd.getDSPhieu(act);		
-		return arrPhieuNhap;
+	public nhap_khoBUS() {
+		pnd = new phieu_nhapDAO();
 	}
 	
-	public boolean addPhieu(int ma_nv){
-		if(pnd.insertPhieuNhap(ma_nv)==1){
-			return true;
+	public ArrayList<phieu_nhap> getDSEX(int s) {
+		try {
+			return pnd.getDS(s);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return null;
+	}
+
+	
+	public ArrayList<phieu_nhap> getDS(int id_nv) {
+		try {
+			return pnd.getDS(id_nv);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
-	public boolean delPhieu(int maphieu){
-		if(pnd.deletePhieuNhap(maphieu)==1){
-			return true;
+	public phieu_nhap getData(int ma_phieu_nhap) throws SQLException {
+		try {
+			return pnd.getData(ma_phieu_nhap);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return null;
+	}
+	
+	public int Add(phieu_nhap pn) {
+		try {
+			return pnd.Insert(pn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	
+	public int Del(int ma_phieu_nhap) {
+		try {
+			if(pnd.deletePhieuNhap(ma_phieu_nhap)==1){
+				return 1;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }
